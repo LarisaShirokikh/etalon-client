@@ -6,15 +6,22 @@ import Image from "next/image";
 import DOMPurify from "dompurify";
 import Skeleton from "./Skeleton";
 import { ICatalog } from "@/interface/Catalog";
+import { useRouter } from "next/router";
 
-const CatalogList = () => {
+interface WiteListProps {
+  categoryId: string;
+}
+
+const WiteList: React.FC<WiteListProps> = ({ categoryId }) => {
   const [catalogs, setCatalogs] = useState<ICatalog[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCatalogs = async () => {
       try {
-        const response = await axios.get("/api/catalogs");
+        const response = await axios.get(
+          `/api/catalogs?categoryId=${categoryId}`
+        );
         setCatalogs(response.data);
         console.log("Fetched catalogs:", response.data);
       } catch (error) {
@@ -24,8 +31,10 @@ const CatalogList = () => {
       }
     };
 
-    fetchCatalogs();
-  }, []);
+    if (categoryId) {
+      fetchCatalogs();
+    }
+  }, [categoryId]);
 
   if (loading) {
     return <Skeleton />;
@@ -63,4 +72,4 @@ const CatalogList = () => {
   );
 };
 
-export default CatalogList;
+export default WiteList;
