@@ -8,10 +8,12 @@ const PriceSchema = new Schema({
 const ProductSchema = new Schema(
   {
     title: { type: String, required: true },
+    slug: String,
     description: String,
     price: { type: PriceSchema, required: true }, // Price as a nested schema
     images: [{ type: String }],
     catalog: { type: mongoose.Types.ObjectId, ref: "Catalog" },
+    parents: { type: mongoose.Types.ObjectId, ref: "Category" },
     design: { type: String },
     contours: { type: String },
     insulation: { type: String },

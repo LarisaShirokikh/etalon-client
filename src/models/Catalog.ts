@@ -2,6 +2,7 @@ import mongoose, { model, models, Schema } from "mongoose";
 
 const CatalogSchema = new Schema({
   name: { type: String, required: true },
+  slug: String,
   description: String,
   price: { type: Number },
   images: [{ type: String }],

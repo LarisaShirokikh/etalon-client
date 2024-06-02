@@ -1,13 +1,10 @@
 "use client";
 
-
-//import CustomizeProducts from "@/components/CustomizeProducts";
 import ProductImages from "@/components/ProductImages";
-//import Reviews from "@/components/Reviews";
 import { IProduct } from "@/interface/Product";
 import axios from "axios";
 import { notFound } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const SinglePage = ({ params }: { params: { slug: string } }) => {
   const [product, setProduct] = useState<IProduct | null>(null);
@@ -17,9 +14,7 @@ const SinglePage = ({ params }: { params: { slug: string } }) => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(`/api/products`, {
-          params: {
-            slug: params.slug,
-          },
+          params: { slug: params.slug },
         });
         if (response.data.length > 0) {
           setProduct(response.data[0]);
@@ -52,9 +47,9 @@ const SinglePage = ({ params }: { params: { slug: string } }) => {
   }
 
   return (
-    <div className="px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 relative flex flex-col lg:flex-row gap-16">
+    <div className="px-2 md:px-8 lg:px-16 xl:px-32 2xl:px-64 relative flex flex-col lg:flex-row gap-16">
       {/* IMG */}
-      <div className="w-full lg:w-1/2 lg:sticky top-20 h-max">
+      <div className="w-full lg:w-1/2 lg:sticky top-20 h-max p-4 lg:p-0">
         <ProductImages items={product.images} />
       </div>
       {/* TEXTS */}
@@ -114,14 +109,7 @@ const SinglePage = ({ params }: { params: { slug: string } }) => {
           </div>
         </div>
         <div className="h-[2px] bg-gray-100" />
-        {/* {product.variants && product.productOptions && (
-          <CustomizeProducts
-            productId={product._id!}
-            variants={product.variants}
-            productOptions={product.productOptions}
-          />
-        )} */}
-        <div className="h-[2px] bg-gray-100" />
+        {/* Additional Info Sections */}
         {/* {product.additionalInfoSections?.map((section: any) => (
           <div className="text-sm" key={section.title}>
             <h4 className="font-medium mb-4">{section.title}</h4>
@@ -129,12 +117,11 @@ const SinglePage = ({ params }: { params: { slug: string } }) => {
           </div>
         ))} */}
         <div className="h-[2px] bg-gray-100" />
-        {/* REVIEWS */}
+        {/* Reviews */}
         {/* <h1 className="text-2xl">User Reviews</h1>
         <Suspense fallback="Loading...">
           <Reviews productId={product._id!} />
         </Suspense> */}
-      
       </div>
     </div>
   );
