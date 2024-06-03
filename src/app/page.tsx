@@ -8,21 +8,21 @@ import WiteList from "@/components/WiteList";
 import { Suspense } from "react";
 import { slugify } from "@/utils/slugify";
 
-const brands = [
-  { name: "Labirint", logo: "/labirint.png" },
-  { name: "Intecron", logo: "/intecron.png" },
-  { name: "Asd", logo: "/Asd.png" },
-  { name: "Zd", logo: "/zd.png" },
-  { name: "Doormag", logo: "/doormag.webp" },
-  { name: "Argus", logo: "/argus.svg" },
-  // Добавьте больше брендов по необходимости
-].map((brand) => {
-  const slug = slugify(brand.name);
-  return {
-    ...brand,
-    src: `/catalogs/${slug}/products`,
-  };
-});
+// const brands = [
+//   { name: "Labirint", logo: "/labirint.png" },
+//   { name: "Intecron", logo: "/intecron.png" },
+//   { name: "Asd", logo: "/Asd.png" },
+//   { name: "Zd", logo: "/zd.png" },
+//   { name: "Doormag", logo: "/doormag.webp" },
+//   { name: "Argus", logo: "/argus.svg" },
+//   // Добавьте больше брендов по необходимости
+// ].map((brand) => {
+//   const slug = slugify(brand.name);
+//   return {
+//     ...brand,
+//     src: `/catalogs/${slug}/products`,
+//   };
+// });
 
 const HomePage = async () => {
   const categoryId = "665b2da0845f4980629d771d";
@@ -30,16 +30,16 @@ const HomePage = async () => {
   return (
     <div>
       <Slider />
-      <div className="mt-30">
+      <div className="mt-24">
         {/* <h1 className="text-2xl px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 mb-12">
           Наши Бренды
         </h1> */}
         <Suspense fallback={<Skeleton />}>
-          <BrandCloud brands={brands} />
+          <BrandCloud />
         </Suspense>
       </div>
 
-      <div className="mt-25">
+      <div className="mt-24">
         <h1 className="text-2xl px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 mb-12">
           Белые двери
         </h1>
