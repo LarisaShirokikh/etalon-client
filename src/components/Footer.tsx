@@ -7,6 +7,7 @@ import {
   FaPhoneAlt,
   FaEnvelope,
 } from "react-icons/fa";
+import Button from "./Button";
 
 const Footer = () => {
   return (
@@ -42,7 +43,7 @@ const Footer = () => {
               +7 (926) 021 7365
             </a>
           </div>
-          <div className="flex gap-6">
+          <div className="flex gap-6 mb-4">
             <FaTelegram size={24} className="text-gray-700" />
             <FaVk size={24} className="text-gray-700" />
             <FaYoutube size={24} className="text-gray-700" />
@@ -50,14 +51,14 @@ const Footer = () => {
         </div>
         {/* Right Section */}
         <div className="w-full lg:w-1/3 flex flex-col gap-4 lg:gap-8">
-          <h1 className="text-lg lg:text-xl font-semibold">Подписаться</h1>
+          {/* <h1 className="text-lg lg:text-xl font-semibold">Подписаться</h1> */}
           <div className="flex gap-2">
             <input
               type="text"
               placeholder="Email адрес"
               className="p-2 lg:p-4 flex-grow"
             />
-            <button className="bg-lama text-white py-2 px-4">Отправить</button>
+            <Button text="Отправить" />
           </div>
         </div>
       </div>

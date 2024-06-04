@@ -38,6 +38,14 @@ const HomePage = async () => {
           <BrandCloud />
         </Suspense>
       </div>
+      <div className="mt-14">
+        <h1 className="text-2xl px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 mb-12">
+          Категории
+        </h1>
+        <Suspense fallback={<Skeleton />}>
+          <CategoryList />
+        </Suspense>
+      </div>
 
       <div className="mt-24">
         <h1 className="text-2xl px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 mb-12">
@@ -59,14 +67,6 @@ const HomePage = async () => {
         <h1 className="text-2xl">Новинки</h1>
         <Suspense fallback={<Skeleton />}>
           <ProductList limit={16} />
-        </Suspense>
-      </div>
-      <div className="mt-24">
-        <h1 className="text-2xl px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 mb-12">
-          Категории
-        </h1>
-        <Suspense fallback={<Skeleton />}>
-          <CategoryList />
         </Suspense>
       </div>
     </div>
