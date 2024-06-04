@@ -6,7 +6,7 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const slug = searchParams.get("slug");
   const catalogId = searchParams.get("catalogId");
-  const limit = parseInt(searchParams.get("limit") || "4");
+  const limit = parseInt(searchParams.get("limit") || "16");
   const page = parseInt(searchParams.get("page") || "0");
 
   await mongooseConnect();

@@ -1,5 +1,6 @@
 "use client";
 
+import Button from "@/components/Button";
 import ProductImages from "@/components/ProductImages";
 import { IProduct } from "@/interface/Product";
 import axios from "axios";
@@ -73,6 +74,7 @@ const SinglePage = ({ params }: { params: { slug: string } }) => {
                 </h2>
               </div>
             )}
+            <Button text="Вызвать замерщика" />
             <div className="h-[2px] bg-gray-100" />
           </>
         )}

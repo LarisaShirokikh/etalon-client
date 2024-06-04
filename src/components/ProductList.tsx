@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import DOMPurify from "dompurify";
 import Skeleton from "./Skeleton";
+import Button from "./Button";
 
 interface ProductListProps {
   limit: number;
@@ -99,9 +100,10 @@ const ProductList: React.FC<ProductListProps> = ({ limit }) => {
                 }}
               ></div>
             )}
-            <button className="mt-4 self-center rounded-lg bg-black text-white py-2 px-4 text-sm hover:bg-gray-800 transition-colors">
+            <Button text="Вызвать замерщика" />
+            {/* <button className="mt-4 self-center rounded-lg border border-black bg-transparent text-black py-2 px-4 text-sm hover:bg-black hover:text-white transition-colors">
               Вызвать замерщика
-            </button>
+            </button> */}
           </Link>
         ))}
       </div>

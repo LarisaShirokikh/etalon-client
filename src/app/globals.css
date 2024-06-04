@@ -9,3 +9,17 @@
 .scrollbar-hide{
   scrollbar-width: none;
 }
+
+nav[aria-label="breadcrumb"] ol {
+  list-style: none;
+  padding: 0;
+}
+
+nav[aria-label="breadcrumb"] ol li {
+  display: inline;
+}
+
+nav[aria-label="breadcrumb"] ol li a {
+  text-decoration: none;
+  color: inherit;
+}
