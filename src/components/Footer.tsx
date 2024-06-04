@@ -1,101 +1,73 @@
 import Image from "next/image";
 import Link from "next/link";
+import {
+  FaTelegram,
+  FaVk,
+  FaYoutube,
+  FaPhoneAlt,
+  FaEnvelope,
+} from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <div className="py-24 px-4 md:px-8 lg:px-16 xl:32 2xl:px-64 bg-gray-100 text-sm mt-24">
-      {/* TOP */}
-      <div className="flex flex-col md:flex-row justify-between gap-24">
-        {/* LEFT */}
-        <div className="w-full md:w-1/2 lg:w-1/4 flex flex-col gap-8">
+    <footer className="py-12 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 bg-gray-100 text-sm mt-24">
+      <div className="flex flex-col lg:flex-row justify-between">
+        {/* Left Section */}
+        <div className="w-full lg:w-1/3 flex flex-col gap-4 lg:gap-8">
           <Link href="/">
-            <div className="text-2xl tracking-wide">ДВЕРИ ЭТАЛОН</div>
+            <div className="text-lg lg:text-xl tracking-wide font-semibold">
+              ДВЕРИ ЭТАЛОН
+            </div>
           </Link>
-          <p>
-            3252 Winding Way, Central Plaza, Willowbrook, CA 90210, United
-            States
+          <p className="text-gray-600">
+            Приветствуем вас на нашем сайте. Пожалуйста, обратите внимание, что
+            информация, предоставленная здесь, носит исключительно
+            информационный характер и не является публичной офертой.
           </p>
-          <span className="font-semibold">2823577@mail.ru</span>
-          <span className="font-semibold">+1 234 567 890</span>
+          <div className="flex gap-4 items-center">
+            <FaEnvelope size={24} className="text-gray-700" />
+            <a
+              href="mailto:2823577@mail.ru"
+              className="flex items-center text-gray-700"
+            >
+              2823577@mail.ru
+            </a>
+          </div>
+          <div className="flex gap-4 items-center">
+            <FaPhoneAlt size={24} className="text-gray-700" />
+            <a
+              href="tel:+1234567890"
+              className="flex items-center text-gray-700"
+            >
+              +7 (926) 021 7365
+            </a>
+          </div>
           <div className="flex gap-6">
-            <Image src="/telegram.svg" alt="" width={16} height={16} />
-            <Image src="/vk.svg" alt="" width={16} height={16} />
-            <Image src="/ytb.svg" alt="" width={16} height={16} />
-            {/* <Image src="/pinterest.png" alt="" width={16} height={16} />
-            <Image src="/x.png" alt="" width={16} height={16} /> */}
+            <FaTelegram size={24} className="text-gray-700" />
+            <FaVk size={24} className="text-gray-700" />
+            <FaYoutube size={24} className="text-gray-700" />
           </div>
         </div>
-        {/* CENTER */}
-        <div className="hidden lg:flex justify-between w-1/2">
-          <div className="flex flex-col justify-between">
-            <h1 className="font-medium text-lg">КОМПАНИЯ</h1>
-            <div className="flex flex-col gap-6">
-              <Link href="">About Us</Link>
-              <Link href="">Careers</Link>
-              <Link href="">Affiliates</Link>
-              <Link href="">Blog</Link>
-              <Link href="">Contact Us</Link>
-            </div>
-          </div>
-          <div className="flex flex-col justify-between">
-            <h1 className="font-medium text-lg">МАГАЗИН</h1>
-            <div className="flex flex-col gap-6">
-              <Link href="">New Arrivals</Link>
-              <Link href="">Accessories</Link>
-              <Link href="">Men</Link>
-              <Link href="">Women</Link>
-              <Link href="">All Products</Link>
-            </div>
-          </div>
-          <div className="flex flex-col justify-between">
-            <h1 className="font-medium text-lg">КЛИЕНТАМ</h1>
-            <div className="flex flex-col gap-6">
-              <Link href="">Customer Service</Link>
-              <Link href="">My Account</Link>
-              <Link href="">Find a Store</Link>
-              <Link href="">Legal & Privacy</Link>
-              <Link href="">Gift Card</Link>
-            </div>
-          </div>
-        </div>
-        {/* RIGHT */}
-        <div className="w-full md:w-1/2 lg:w-1/4 flex flex-col gap-8">
-          <h1 className="font-medium text-lg">Подписаться</h1>
-          <p>
-            Be the first to get the latest news about trends, promotions, and
-            much more!
-          </p>
-          <div className="flex">
+        {/* Right Section */}
+        <div className="w-full lg:w-1/3 flex flex-col gap-4 lg:gap-8">
+          <h1 className="text-lg lg:text-xl font-semibold">Подписаться</h1>
+          <div className="flex gap-2">
             <input
               type="text"
               placeholder="Email адрес"
-              className="p-4 w-3/4"
+              className="p-2 lg:p-4 flex-grow"
             />
-            <button className="w-1/4 bg-lama text-white">Отправить</button>
-          </div>
-          {/* <span className="font-semibold">Secure Payments</span> */}
-          <div className="flex justify-between">
-            <Image src="/vk.svg" alt="" width={40} height={20} />
-            <Image src="/telegram.svg" alt="" width={40} height={20} />
-            <Image src="/ytb.svg" alt="" width={40} height={20} />
+            <button className="bg-lama text-white py-2 px-4">Отправить</button>
           </div>
         </div>
       </div>
-      {/* BOTTOM */}
-      <div className="flex flex-col md:flex-row items-center justify-between gap-8 mt-16">
-        <div className="">© 2024 Магазин входных металлических дверей Двери Эталон</div>
-        <div className="flex flex-col gap-8 md:flex-row">
-          <div className="">
-            <span className="text-gray-500 mr-4">Русский</span>
-            <span className="font-medium">Российская Федерация | Москва</span>
-          </div>
-          <div className="">
-            <span className="text-gray-500 mr-4">Currency</span>
-            <span className="font-medium"> RUB</span>
-          </div>
+      {/* Bottom Section */}
+      <div className="flex flex-col md:flex-row items-center justify-between gap-4 mt-8">
+        <div className="text-sm text-gray-600">
+          © 2024 Магазин входных металлических дверей Двери Эталон
         </div>
       </div>
-    </div>
+    </footer>
   );
 };
 

@@ -6,6 +6,7 @@ import Image from "next/image";
 import DOMPurify from "dompurify";
 import Skeleton from "@/components/Skeleton";
 import { ICatalog } from "@/interface/Catalog";
+import Breadcrumbs from "@/components/BreadCrumbs";
 
 const CatalogPage = ({ params }: { params: { slug: string } }) => {
   const { slug } = params;
@@ -38,8 +39,9 @@ const CatalogPage = ({ params }: { params: { slug: string } }) => {
   }
 
   return (
-    <div className="px-4">
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 md:gap-8">
+    <div className="px-4 mt-12">
+      <Breadcrumbs />
+      <div className="grid grid-cols-2 mt-12 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 md:gap-8">
         {catalogs.map((catalog) => (
           <Link href={`/catalog/${catalog.slug}`} key={catalog._id}>
             <div className="relative bg-slate-100 w-full h-96">

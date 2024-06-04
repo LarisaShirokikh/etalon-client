@@ -3,8 +3,13 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { TranslationsProvider } from "@/context/translationsContext"; 
+import { translations } from "@/utils/translations";
 
 const inter = Inter({ subsets: ["latin"] });
+
+// Define your translations
+
 
 export const metadata: Metadata = {
   title: "Входные металлические двери в Москве",
@@ -19,9 +24,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar />
-        {children}
-        <Footer />
+        {/* Wrap the content with TranslationsProvider and pass translations */}
+        <TranslationsProvider translations={translations}>
+          <Navbar />
+          {children}
+          <Footer />
+        </TranslationsProvider>
       </body>
     </html>
   );
