@@ -51,7 +51,7 @@ export async function GET(request: NextRequest) {
   //   const [sortType, sortBy] = (searchParams.get("sort") as string).split(" ");
   //   dbQuery.sort({ [sortBy]: sortType === "asc" ? 1 : -1 });
   // }
-
+dbQuery.sort({ _id: -1 });
   dbQuery.limit(limit).skip(page * limit);
 
   const products = await dbQuery.exec();

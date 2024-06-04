@@ -16,12 +16,16 @@ const BrandCloud = () => {
     const fetchBrands = async () => {
       try {
         const response = await axios.get("/api/brands");
-        const brandsWithSlug = response.data.map((brand: IBrand) => ({
-          ...brand,
-          src: `/catalogs/${slugify(brand.name)}/products`,
-        }));
-        setBrands(brandsWithSlug);
-        console.log("Fetched brands:", brandsWithSlug);
+        // const brandsWithSlug = response.data.map((brand: IBrand) => {
+        //   const slug = slugify(brand.name);
+        //   return {
+        //     ...brand,
+        //     slug: slug,
+        //     src: `/brands/${slug}/catalogs`,
+        //   };
+        // });
+        setBrands(response.data);
+        console.log("Fetched brands:", response.data);
       } catch (error) {
         console.error("Error fetching brands:", error);
       } finally {
@@ -42,17 +46,11 @@ const BrandCloud = () => {
 
   return (
     <div className="py-8 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 justify-items-center">
+      <div className="flex flex-wrap gap-4 justify-center">
         {brands.map((brand) => (
-          <Link href={`/list?brand=${brand.slug}`} key={brand.name}>
-            <div className="relative w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 p-2 hover:scale-110 hover:shadow-lg transition-transform duration-300 cursor-pointer">
-              <Image
-                src={brand.images?.[0] || "/category.png"}
-                alt={brand.name}
-                fill
-                sizes="20vw"
-                className="object-contain"
-              />
+          <Link href={`/brands/${brand.slug}/catalogs`} key={brand.name}>
+            <div className="bg-gray-100 text-gray-800 py-2 px-4 rounded-full shadow hover:bg-gray-200 transition-transform duration-300 cursor-pointer">
+              {brand.name}
             </div>
           </Link>
         ))}

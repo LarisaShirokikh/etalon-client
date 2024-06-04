@@ -40,21 +40,21 @@ const ProductList: React.FC<ProductListProps> = ({ limit }) => {
   }
 
   return (
-    <div className="mt-12">
-      <div className="flex flex-wrap justify-center gap-8 lg:flex-row">
+    <div className="mt-12 px-1 sm:px-5">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
         {products.map((product: any) => (
           <Link
             href={"/" + product.slug}
-            className="w-full sm:w-[45%] lg:w-[30%] flex flex-col gap-4 group"
+            className="flex flex-col gap-2 group p-2 bg-white rounded-md"
             key={product._id}
           >
-            <div className="relative w-full h-80 overflow-hidden rounded-md shadow-lg">
+            <div className="relative w-full h-48 overflow-hidden rounded-md">
               <Image
                 src={product.images[0] || "/product.png"}
                 alt={product.title}
-                fill
-                sizes="25vw"
-                className="object-cover rounded-md group-hover:opacity-75 transition-opacity duration-300"
+                layout="fill"
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                className="object-contain w-full h-full group-hover:opacity-75 transition-opacity duration-300"
               />
               {product.images[0]?.items && (
                 <Image
@@ -66,12 +66,14 @@ const ProductList: React.FC<ProductListProps> = ({ limit }) => {
                 />
               )}
             </div>
-            <div className="flex flex-col gap-2">
-              <span className="font-medium text-lg">{product.title}</span>
-              <div className="flex items-center gap-2">
+            <div className="flex flex-col gap-2 flex-grow">
+              <span className="mt-2 font-light text-m tracking-wide text-center">
+                {product.title}
+              </span>
+              <div className="flex flex-col items-center gap-1 sm:flex-row sm:justify-center sm:gap-2">
                 {product.price.discountedPrice ? (
                   <>
-                    <span className="line-through text-gray-500">
+                    <span className="line-through text-gray-500 text-sm sm:text-base">
                       {product.price.price}
                     </span>
                     <span className="font-semibold text-lg text-gray-700">
@@ -97,7 +99,7 @@ const ProductList: React.FC<ProductListProps> = ({ limit }) => {
                 }}
               ></div>
             )}
-            <button className="mt-4 self-start rounded-lg bg-black text-white py-2 px-4 text-sm hover:bg-gray-800 transition-colors">
+            <button className="mt-4 self-center rounded-lg bg-black text-white py-2 px-4 text-sm hover:bg-gray-800 transition-colors">
               Вызвать замерщика
             </button>
           </Link>

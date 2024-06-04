@@ -7,11 +7,11 @@ import { useEffect, useState } from "react";
 const slides = [
   {
     id: 1,
-    title: "Summer Sale Collections",
-    description: "Sale! Up to 50% off!",
+    title: "Профессиональный монтаж с гарантией!",
+    description: "Привезем и установим в 1 день!",
     img: "/wite.webp",
     url: "/",
-    bg: "bg-gradient-to-r from-yellow-50 to-pink-50",
+    bg: "bg-gradient-to-r from-black-50 to-red-50",
   },
   {
     id: 2,
@@ -23,9 +23,9 @@ const slides = [
   },
   {
     id: 3,
-    title: "Spring Sale Collections",
-    description: "Sale! Up to 50% off!",
-    img: "",
+    title: "Подберем отделку двери под ваш интерьер",
+    description: "Скидка на доборы!",
+    img: "/wite.webp",
     url: "/",
     bg: "bg-gradient-to-r from-blue-50 to-yellow-50",
   },
@@ -43,7 +43,7 @@ const Slider = () => {
   }, []);
 
   return (
-    <div className="relative h-[500px] overflow-hidden">
+    <div className="relative h-[300px] overflow-hidden">
       <div
         className="w-max h-full flex transition-transform duration-1000 ease-in-out"
         style={{ transform: `translateX(-${current * 100}vw)` }}
@@ -55,10 +55,10 @@ const Slider = () => {
           >
             {/* Text Container */}
             <div className="flex flex-col items-center justify-center gap-8 xl:w-1/2 text-center p-4">
-              <h2 className="text-xl lg:text-3xl 2xl:text-5xl">
+              <h2 className="text-l lg:text-2xl 2xl:text-2xl">
                 {slide.description}
               </h2>
-              <h1 className="text-5xl lg:text-6xl 2xl:text-8xl font-semibold">
+              <h1 className="text-3xl lg:text-4xl 2xl:text-8xl font-semibold">
                 {slide.title}
               </h1>
               <Link href={slide.url}>
@@ -97,8 +97,6 @@ const Slider = () => {
       </div>
     </div>
   );
-
-
 };
 
 export default Slider;
