@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
   try {
     // Проверяем, есть ли каталог с указанным идентификатором
     const catalog = await Catalog.findOne({ slug: slug });
-    console.log("Catalog found catalog catalog:", catalog);
+    //console.log("Catalog found catalog catalog:", catalog);
 
     if (!catalog) {
       console.log("Catalog not found for slug:", slug);
@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
     }
 
     const catalogId = catalog._id;
-    console.log("Catalog catalogId:", catalogId);
+    //console.log("Catalog catalogId:", catalogId);
     // Находим все продукты, связанные с каталогом
     const products = await Product.find(
       catalog._id ? { catalog: catalog._id } : {}
@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
       .skip(page * limit)
       .exec();
 
-    console.log("Products found for catalog:", products.length);
+    //console.log("Products found for catalog:", products.length);
 
     return NextResponse.json(products);
   } catch (error) {

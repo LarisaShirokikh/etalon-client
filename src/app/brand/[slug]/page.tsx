@@ -7,31 +7,44 @@ import DOMPurify from "dompurify";
 import Skeleton from "@/components/Skeleton";
 import { ICatalog } from "@/interface/Catalog";
 import Breadcrumbs from "@/components/BreadCrumbs";
+import BrandHeader from "@/components/BrandHeader";
+import { IBrand } from "@/interface/Brand";
 
 const CatalogPage = ({ params }: { params: { slug: string } }) => {
   const { slug } = params;
   const [catalogs, setCatalogs] = useState<ICatalog[]>([]);
+  const [brand, setBrand] = useState<IBrand | null>(null);
   const [loading, setLoading] = useState(true);
 
+  
+
   useEffect(() => {
-    const fetchCatalogs = async () => {
-      console.log("param slug", slug)
+    const fetchCatalogsAndBrand = async () => {
       try {
-        const response = await axios.get(`/api/brands/${slug}/catalogs`);
-        setCatalogs(response.data);
-        console.log("Fetched catalogs:", response.data);
+        const [catalogResponse, brandResponse] = await Promise.all([
+          axios.get(`/api/brands/${slug}/catalogs`),
+          axios.get(`/api/brands/${slug}`),
+        ]);
+
+        
+        setCatalogs(catalogResponse.data);
+        setBrand(brandResponse.data);
       } catch (error) {
-        console.error("Error fetching catalogs:", error);
+        console.error("Error fetching data:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchCatalogs();
-  }, []);
+    fetchCatalogsAndBrand();
+  }, [slug]);
 
   if (loading) {
     return <Skeleton />;
+  }
+
+  if (!brand) {
+    return <div>No brand found</div>;
   }
 
   if (catalogs.length === 0) {
@@ -39,8 +52,9 @@ const CatalogPage = ({ params }: { params: { slug: string } }) => {
   }
 
   return (
-    <div className="px-4 mt-12">
+    <div className="px-4 mt-12 mb-12">
       <Breadcrumbs />
+      <BrandHeader brand={brand} />
       <div className="grid grid-cols-2 mt-12 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 md:gap-8">
         {catalogs.map((catalog) => (
           <Link href={`/catalog/${catalog.slug}`} key={catalog._id}>

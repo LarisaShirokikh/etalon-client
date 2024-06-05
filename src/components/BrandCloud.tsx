@@ -48,7 +48,7 @@ const BrandCloud = () => {
     <div className="py-8 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
       <div className="flex flex-wrap gap-4 justify-center">
         {brands.map((brand) => (
-          <Link href={`/brands/${brand.slug}`} key={brand.name}>
+          <Link href={`/brand/${brand.slug}`} key={brand.name}>
             <div className="bg-gray-100 text-gray-800 py-2 px-4 rounded-full  hover:bg-gray-200 transition-transform duration-300 cursor-pointer">
               {brand.name}
             </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { translations } from "@/utils/translations";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -25,34 +26,24 @@ const Breadcrumbs = () => {
     }
   }, [pathname]);
 
-   const translations: { [key: string]: string } = {
-     home: "Главная",
-     catalog: "Каталог",
-     vhodnye: "Входные",
-     dveri: "Двери",
-     labirint: "Лабиринт",
-     line: "Лайн",
-     white: "Белые",
-   };
-
-   // Функция для преобразования пути в человеко-понятный формат на русском языке
-   const formatBreadcrumb = (breadcrumb: string) => {
-     // Разделяем путь по дефисам и преобразуем каждое слово
-     const words = breadcrumb.split("-");
-     const formattedWords = words.map((word) => {
-       // Делаем первую букву слова заглавной, а остальные строчными
-       return (
-         translations[word.toLowerCase()] ||
-         word.charAt(0).toUpperCase() + word.slice(1)
-       );
-     });
-     // Соединяем слова обратно в строку с пробелами
-     return formattedWords.join(" ");
-   };
+  // Функция для преобразования пути в человеко-понятный формат на русском языке
+  const formatBreadcrumb = (breadcrumb: string) => {
+    // Разделяем путь по дефисам и преобразуем каждое слово
+    const words = breadcrumb.split("-");
+    const formattedWords = words.map((word) => {
+      // Делаем первую букву слова заглавной, а остальные строчными
+      return (
+        translations[word.toLowerCase()] ||
+        word.charAt(0).toUpperCase() + word.slice(1)
+      );
+    });
+    // Соединяем слова обратно в строку с пробелами
+    return formattedWords.join(" ");
+  };
 
   return (
     <nav aria-label="breadcrumb">
-      <ol className="flex space-x-2">
+      <ol className="flex space-x-2 text-base sm:text-sm flex-wrap">
         <li>
           <Link
             href="/"
@@ -60,17 +51,19 @@ const Breadcrumbs = () => {
           >
             Главная
           </Link>
-          {breadcrumbs.length > 0 && <span className="mx-2">/</span>}
         </li>
         {breadcrumbs.map((crumb, index) => (
-          <li key={crumb.href} className="flex items-center">
+          <li
+            key={crumb.href}
+            className="flex items-center"
+            style={{ flexWrap: "wrap", marginBottom: "1.6rem" }}
+          >
             <Link
               href={crumb.href}
               className="text-gray-600 hover:text-gray-800 bg-gray-100 py-2 px-4 rounded-full hover:bg-gray-200 transition-transform duration-300"
             >
               {formatBreadcrumb(crumb.breadcrumb)}
             </Link>
-            {index < breadcrumbs.length - 1 && <span className="mx-2">/</span>}
           </li>
         ))}
       </ol>

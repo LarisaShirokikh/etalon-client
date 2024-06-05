@@ -1,5 +1,6 @@
 "use client";
 
+import Breadcrumbs from "@/components/BreadCrumbs";
 import Button from "@/components/Button";
 import ProductImages from "@/components/ProductImages";
 import { IProduct } from "@/interface/Product";
@@ -49,6 +50,7 @@ const SinglePage = ({ params }: { params: { slug: string } }) => {
 
   return (
     <div className="px-2 md:px-8 lg:px-16 xl:px-32 2xl:px-64 relative flex flex-col lg:flex-row gap-16">
+      <Breadcrumbs />
       {/* IMG */}
       <div className="w-full lg:w-1/2 lg:sticky top-20 h-max p-4 lg:p-0">
         <ProductImages items={product.images} />

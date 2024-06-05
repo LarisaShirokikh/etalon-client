@@ -18,7 +18,7 @@ const CatalogProducts = ({ params }: { params: { slug: string } }) => {
       try {
         const response = await axios.get(`/api/catalogs/${slug}/products`);
         setProducts(response.data);
-        console.log("Fetched products:", response.data);
+        //console.log("Fetched products:", response.data);
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {

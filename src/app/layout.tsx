@@ -8,7 +8,6 @@ import { translations } from "@/utils/translations";
 
 const inter = Inter({ subsets: ["latin"] });
 
-// Define your translations
 
 
 export const metadata: Metadata = {
@@ -24,7 +23,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {/* Wrap the content with TranslationsProvider and pass translations */}
         <TranslationsProvider translations={translations}>
           <Navbar />
           {children}
