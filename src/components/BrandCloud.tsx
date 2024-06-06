@@ -54,8 +54,8 @@ const BrandCloud = () => {
                 }
                 alt={brand.name}
                 layout="responsive"
-                width={200}
-                height={150}
+                width={500}
+                height={300}
                 objectFit="contain"
                 className="rounded-md"
               />
@@ -68,6 +68,14 @@ const BrandCloud = () => {
           </Link>
         ))}
       </div>
+      <style jsx>{`
+        @media screen and (max-width: 640px) {
+          .inline-block {
+            max-width: 100%;
+            width: 100%;
+          }
+        }
+      `}</style>
     </div>
   );
 };
