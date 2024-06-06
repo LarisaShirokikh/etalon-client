@@ -14,7 +14,7 @@ const HomePage = async () => {
   return (
     <div>
       <Slider />
-        <div className="mt-14">
+        <div className="mt-5">
           {/* <h1 className="text-2xl px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 mb-12">
             Категории
           </h1> */}
@@ -22,7 +22,7 @@ const HomePage = async () => {
             <CategoryList />
           </Suspense>
         </div>
-      <div className="mt-14">
+      <div className="mt-5">
         {/* <h1 className="text-2xl px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 mb-12">
           Наши Бренды
         </h1> */}
@@ -31,7 +31,7 @@ const HomePage = async () => {
         </Suspense>
       </div>
 
-      <div className="mt-24">
+      <div className="mt-5">
         <h1 className="text-2xl px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 mb-12">
           Белые двери
         </h1>
