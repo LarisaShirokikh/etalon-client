@@ -8,19 +8,27 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "static.wixstatic.com",
+        hostname: "dveribunker.ru",
       },
       {
         protocol: "https",
-        hostname: "people.pic1.co",
+        hostname: "dveri-ratibor.ru",
       },
       {
         protocol: "https",
-        hostname: "app-uploads-cdn.fera.ai",
+        hostname: "xn--80aeahafcjmeq0c7ah.xn--p1ai",
       },
       {
         protocol: "https",
         hostname: "labirintdoors.ru",
+      },
+      {
+        protocol: "https",
+        hostname: "rex-doors.ru",
+      },
+      {
+        protocol: "https",
+        hostname: "intecron.ru",
       },
     ],
   },

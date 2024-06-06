@@ -35,23 +35,23 @@ const CategoryList = () => {
   }
 
   return (
-    <div className="px-4 overflow-x-scroll scrollbar-hide">
-      <div className="grid grid-cols-3 gap-4 md:grid-cols-6 lg:grid-cols-10">
+    <div className="py-8 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
+      <div className="flex flex-wrap gap-4 justify-center">
         {categories.map((item) => (
           <Link
-            href={`/list?cat=${item.slug}`}
+            href={`/category/${item.slug}`}
             className="flex-shrink-0"
             key={item._id}
           >
-            <div className="relative bg-slate-100 w-full h-48 rounded-lg overflow-hidden">
+            {/* <div className="relative bg-slate-100 w-full h-48 rounded-lg overflow-hidden">
               <Image
                 src={item.images?.[0] || "/category.png"}
                 alt={item.name || "Category"}
                 layout="fill"
                 className="object-cover rounded-lg"
               />
-            </div>
-            <h1 className="mt-4 font-light text-center text-lg tracking-wide">
+            </div> */}
+            <h1 className="bg-blue-50 text-gray-500 py-2 px-4 rounded-full  hover:bg-gray-200 transition-transform duration-300 cursor-pointer">
               {item.name}
             </h1>
           </Link>

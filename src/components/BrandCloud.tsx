@@ -16,14 +16,6 @@ const BrandCloud = () => {
     const fetchBrands = async () => {
       try {
         const response = await axios.get("/api/brands");
-        // const brandsWithSlug = response.data.map((brand: IBrand) => {
-        //   const slug = slugify(brand.name);
-        //   return {
-        //     ...brand,
-        //     slug: slug,
-        //     src: `/brands/${slug}/catalogs`,
-        //   };
-        // });
         setBrands(response.data);
         console.log("Fetched brands:", response.data);
       } catch (error) {
@@ -45,12 +37,26 @@ const BrandCloud = () => {
   }
 
   return (
-    <div className="py-8 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
-      <div className="flex flex-wrap gap-4 justify-center">
+    <div className="py-8 px-4 sm:px-8 lg:px-16 xl:px-32 2xl:px-64">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
         {brands.map((brand) => (
           <Link href={`/brand/${brand.slug}`} key={brand.name}>
-            <div className="bg-gray-100 text-gray-800 py-2 px-4 rounded-full  hover:bg-gray-200 transition-transform duration-300 cursor-pointer">
-              {brand.name}
+            <div className="relative w-full h-96 sm:h-40 md:h-48 lg:h-96">
+              <Image
+                src={
+                  brand.images && brand.images[0]
+                    ? brand.images[0]
+                    : "/brand.png"
+                }
+                alt={brand.name}
+                layout="fill"
+                objectFit="cover"
+              />
+            </div>
+            <div className="p-4">
+              <h3 className="mt-2 font-light text-m tracking-wide text-center">
+                {brand.name}
+              </h3>
             </div>
           </Link>
         ))}
