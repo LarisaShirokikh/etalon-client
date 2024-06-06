@@ -2,20 +2,18 @@
 
 import axios from "axios";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Image from "next/image";
 import DOMPurify from "dompurify";
 import Skeleton from "./Skeleton";
 import Button from "./Button";
 import Pagination from "./Pagination";
-import { useSearchParams, useRouter } from "next/navigation";
 
 const PRODUCT_PER_PAGE = 8;
 
 interface ProductListProps {
   limit?: number;
   searchParams?: {
-    page?: string;
     category?: string;
     name?: string;
   };
@@ -28,10 +26,13 @@ const ProductList: React.FC<ProductListProps> = ({
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(0);
-  const searchParamsString = new URLSearchParams(searchParams).toString();
-  const router = useRouter();
-  const searchParamsUrl = useSearchParams();
-  const currentPage = parseInt(searchParamsUrl.get("page") || "0");
+  const [currentPage, setCurrentPage] = useState(0);
+
+  // Use useMemo to avoid recreating searchParams on every render
+  const memoizedSearchParams = useMemo(
+    () => searchParams,
+    [searchParams.category, searchParams.name]
+  );
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -41,8 +42,8 @@ const ProductList: React.FC<ProductListProps> = ({
           params: {
             limit: limit,
             skip: currentPage * limit,
-            category: searchParams.category,
-            name: searchParams.name,
+            category: memoizedSearchParams.category,
+            name: memoizedSearchParams.name,
           },
         });
         setProducts(response.data.products);
@@ -55,7 +56,11 @@ const ProductList: React.FC<ProductListProps> = ({
     };
 
     fetchProducts();
-  }, [currentPage, limit, searchParamsString]);
+  }, [currentPage, limit, memoizedSearchParams]);
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
 
   if (loading) {
     return <Skeleton />;
@@ -132,13 +137,7 @@ const ProductList: React.FC<ProductListProps> = ({
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
-        hasPrev={currentPage > 0}
-        hasNext={currentPage < totalPages - 1}
-        onPageChange={(page: number) => {
-          const params = new URLSearchParams(searchParamsString);
-          params.set("page", page.toString());
-          router.push(`${window.location.pathname}?${params.toString()}`);
-        }}
+        onPageChange={handlePageChange}
       />
     </div>
   );

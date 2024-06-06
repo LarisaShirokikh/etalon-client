@@ -7,11 +7,11 @@ export async function GET(request: NextRequest) {
   const slug = searchParams.get("slug");
   const catalogId = searchParams.get("catalogId");
   const limit = parseInt(searchParams.get("limit") || "10");
-  const page = parseInt(searchParams.get("page") || "0");
+  const skip = parseInt(searchParams.get("skip") || "0");
 
   await mongooseConnect();
 
-  console.log("API request params:", { catalogId, limit, page });
+  console.log("API request params:", { catalogId, limit, skip });
 
   const dbQuery = Product.find();
 
@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
 
 
 dbQuery.sort({ _id: -1 });
-  dbQuery.limit(limit).skip(page * limit);
+  dbQuery.limit(limit).skip(skip);
 
   const products = await dbQuery.exec();
   const totalCount = await Product.countDocuments().exec();
