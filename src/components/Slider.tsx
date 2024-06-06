@@ -11,7 +11,7 @@ const slides = [
     description: "Привезем и установим в 1 день!",
     img: "/wite.webp",
     url: "/",
-    bg: "bg-gradient-to-r from-black-50 to-red-50",
+    bg: "bg-gradient-to-r from-blue-100 to-red-50",
   },
   {
     id: 2,

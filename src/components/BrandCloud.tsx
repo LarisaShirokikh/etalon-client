@@ -38,10 +38,14 @@ const BrandCloud = () => {
 
   return (
     <div className="py-8 px-4 sm:px-8 lg:px-16 xl:px-32 2xl:px-64">
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+      <div className="flex flex-wrap gap-6 justify-center">
         {brands.map((brand) => (
-          <Link href={`/brand/${brand.slug}`} key={brand.name}>
-            <div className="relative w-full h-96 sm:h-40 md:h-48 lg:h-96 flex">
+          <Link
+            href={`/brand/${brand.slug}`}
+            key={brand.name}
+            className="inline-flex flex-col items-center"
+          >
+            <div className="relative inline-block w-auto max-w-xs p-2  rounded-md">
               <Image
                 src={
                   brand.images && brand.images[0]
@@ -49,12 +53,15 @@ const BrandCloud = () => {
                     : "/brand.png"
                 }
                 alt={brand.name}
-                layout="fill"
-                objectFit="cover"
+                layout="responsive"
+                width={200}
+                height={150}
+                objectFit="contain"
+                className="rounded-md"
               />
             </div>
-            <div className="p-4">
-              <h3 className="mt-1 font-light text-m tracking-wide text-center">
+            <div className="p-2 text-center">
+              <h3 className="mt-2 font-light text-m tracking-wide">
                 {brand.name}
               </h3>
             </div>

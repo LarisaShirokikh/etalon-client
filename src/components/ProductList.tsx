@@ -7,21 +7,46 @@ import Image from "next/image";
 import DOMPurify from "dompurify";
 import Skeleton from "./Skeleton";
 import Button from "./Button";
+import Pagination from "./Pagination";
+import { useSearchParams, useRouter } from "next/navigation";
+
+const PRODUCT_PER_PAGE = 8;
 
 interface ProductListProps {
-  limit: number;
+  limit?: number;
+  searchParams?: {
+    page?: string;
+    category?: string;
+    name?: string;
+  };
 }
 
-const ProductList: React.FC<ProductListProps> = ({ limit }) => {
+const ProductList: React.FC<ProductListProps> = ({
+  limit = PRODUCT_PER_PAGE,
+  searchParams = {},
+}) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [totalPages, setTotalPages] = useState(0);
+  const searchParamsString = new URLSearchParams(searchParams).toString();
+  const router = useRouter();
+  const searchParamsUrl = useSearchParams();
+  const currentPage = parseInt(searchParamsUrl.get("page") || "0");
 
   useEffect(() => {
     const fetchProducts = async () => {
+      setLoading(true);
       try {
-        const response = await axios.get("/api/products");
-        setProducts(response.data);
-        console.log("Fetched products:", response.data);
+        const response = await axios.get("/api/products", {
+          params: {
+            limit: limit,
+            skip: currentPage * limit,
+            category: searchParams.category,
+            name: searchParams.name,
+          },
+        });
+        setProducts(response.data.products);
+        setTotalPages(Math.ceil(response.data.totalCount / limit));
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
@@ -30,7 +55,7 @@ const ProductList: React.FC<ProductListProps> = ({ limit }) => {
     };
 
     fetchProducts();
-  }, []);
+  }, [currentPage, limit, searchParamsString]);
 
   if (loading) {
     return <Skeleton />;
@@ -59,7 +84,7 @@ const ProductList: React.FC<ProductListProps> = ({ limit }) => {
               />
               {product.images[0]?.items && (
                 <Image
-                  src={product.images?.url || "/product.png"}
+                  src={product.images[0].url || "/product.png"}
                   alt=""
                   fill
                   sizes="25vw"
@@ -101,12 +126,20 @@ const ProductList: React.FC<ProductListProps> = ({ limit }) => {
               ></div>
             )}
             <Button text="Вызвать замерщика" />
-            {/* <button className="mt-4 self-center rounded-lg border border-black bg-transparent text-black py-2 px-4 text-sm hover:bg-black hover:text-white transition-colors">
-              Вызвать замерщика
-            </button> */}
           </Link>
         ))}
       </div>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        hasPrev={currentPage > 0}
+        hasNext={currentPage < totalPages - 1}
+        onPageChange={(page: number) => {
+          const params = new URLSearchParams(searchParamsString);
+          params.set("page", page.toString());
+          router.push(`${window.location.pathname}?${params.toString()}`);
+        }}
+      />
     </div>
   );
 };
