@@ -1,21 +1,45 @@
 "use client";
 import axios from "axios";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Skeleton from "./Skeleton";
 import { ICatalog } from "@/interface/Catalog";
 
-const CatalogList = () => {
+const PRODUCT_PER_PAGE = 12;
+
+interface ProductListProps {
+  limit?: number;
+  searchParams?: {
+    category?: string;
+    name?: string;
+  };
+}
+
+const CatalogList: React.FC<ProductListProps> = ({
+  limit = PRODUCT_PER_PAGE,
+  searchParams = {},
+}) => {
   const [catalogs, setCatalogs] = useState<ICatalog[]>([]);
   const [loading, setLoading] = useState(true);
+  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const memoizedSearchParams = useMemo(() => searchParams, [searchParams]);
 
   useEffect(() => {
     const fetchCatalogs = async () => {
       try {
-        const response = await axios.get("/api/catalogs");
+        const response = await axios.get("/api/catalogs", {
+          params: {
+            limit: limit,
+            skip: currentPage * limit,
+            category: memoizedSearchParams.category,
+            name: memoizedSearchParams.name,
+          },
+        });
         setCatalogs(response.data);
-        //console.log("Fetched catalogs:", response.data);
+        setTotalPages(Math.ceil(response.data.totalCount / limit));
       } catch (error) {
         console.error("Error fetching catalogs:", error);
       } finally {
@@ -24,7 +48,11 @@ const CatalogList = () => {
     };
 
     fetchCatalogs();
-  }, []);
+  }, [currentPage, limit, memoizedSearchParams]);
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
 
   if (loading) {
     return <Skeleton />;
@@ -38,8 +66,7 @@ const CatalogList = () => {
     <div className="px-4">
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4  xl:grid-cols-6  gap-4 md:gap-8">
         {catalogs.map((catalog) => (
-          <Link href={`/catalog/${catalog.slug}`} 
-          key={catalog.name}>
+          <Link href={`/catalog/${catalog.slug}`} key={catalog.name}>
             <div className="relative bg-slate-100 w-full h-96 sm:h-86 md:h-96 rounded-lg overflow-hidden">
               <Image
                 src={

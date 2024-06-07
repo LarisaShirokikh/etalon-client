@@ -7,24 +7,19 @@ import DOMPurify from "dompurify";
 import Skeleton from "@/components/Skeleton";
 import Button from "@/components/Button";
 import Breadcrumbs from "@/components/BreadCrumbs";
-import { ICatalog } from "@/interface/Catalog";
 import Pagination from "@/components/Pagination";
 import { usePathname, useSearchParams } from "next/navigation";
 
-const CATALOG_PER_PAGE = 12;
+const PRODUCT_PER_PAGE = 12;
 
-interface CategoryCatalogsProps {
+interface CatalogProductsProps {
   limit?: number;
-  searchParams?: {
-    category?: string;
-    name?: string;
-  };
 }
 
-const CategoryCatalogs: React.FC<CategoryCatalogsProps> = ({
-  limit = CATALOG_PER_PAGE,
+const CatalogProducts: React.FC<CatalogProductsProps> = ({
+  limit = PRODUCT_PER_PAGE,
 }) => {
-  const [catalogs, setCatalogs] = useState<ICatalog[]>([]);
+  const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
@@ -34,55 +29,48 @@ const CategoryCatalogs: React.FC<CategoryCatalogsProps> = ({
 
   const memoizedSearchParams = useMemo(
     () => ({
-      category: searchParams.get("category"),
+      catalog: searchParams.get("catalog"),
       name: searchParams.get("name"),
     }),
-    [searchParams.get("category"), searchParams.get("name")]
+    [searchParams]
   );
 
   useEffect(() => {
-    const fetchCatalogs = async () => {
+    const fetchProducts = async () => {
       setLoading(true);
       try {
-        if (slug) {
-          console.log("category", slug);
-          const response = await axios.get(`/api/categories/${slug}/catalogs`, {
-            params: {
-              limit: limit,
-              skip: currentPage * limit,
-              category: memoizedSearchParams.category,
-              name: memoizedSearchParams.name,
-            },
-          });
-         
-          setCatalogs(response.data.catalogs);
-          setTotalPages(Math.ceil(response.data.totalCount / limit));
+        if (!slug) {
+          throw new Error("Slug not found");
         }
+        const response = await axios.get(`/api/catalogs/${slug}/products`, {
+          params: {
+            limit,
+            skip: currentPage * limit,
+            catalog: memoizedSearchParams.catalog,
+            name: memoizedSearchParams.name,
+          },
+        });
+        setProducts(response.data.products);
+        setTotalPages(Math.ceil(response.data.totalCount / limit));
       } catch (error) {
-        console.error("Error fetching catalogs:", error);
+        console.error("Error fetching products:", error);
       } finally {
         setLoading(false);
       }
     };
-    if (slug) {
-      fetchCatalogs();
-    }
-  }, [
-    slug,
-    currentPage,
-    memoizedSearchParams.category,
-    memoizedSearchParams.name,
-  ]);
+    fetchProducts();
+  }, [slug, currentPage, memoizedSearchParams, limit]);
 
   if (!slug) {
     return <div>Loading...</div>;
   }
+
   if (loading) {
     return <Skeleton />;
   }
 
-  if (catalogs.length === 0) {
-    return <div>No catalogs found</div>;
+  if (products.length === 0) {
+    return <div>No products found</div>;
   }
 
   const handlePageChange = (pageNumber: number) => {
@@ -90,28 +78,59 @@ const CategoryCatalogs: React.FC<CategoryCatalogsProps> = ({
   };
 
   return (
-    <div className="px-4 mt-12 mb-12">
+    <div className="mt-12 px-1 sm:px-5">
       <Breadcrumbs />
-      {/* <BrandHeader brand={brand} /> */}
-      <div className="grid grid-cols-2 mt-12 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 md:gap-8">
-        {catalogs.map((catalog) => (
-          <Link href={`/catalog/${catalog.slug}`} key={catalog._id}>
-            <div className="relative bg-slate-100 w-full h-96">
+      <div className="grid grid-cols-2 mt-12 gap-4 md:grid-cols-3 lg:grid-cols-4">
+        {products.map((product) => (
+          <Link
+            href={`/${product.slug}`}
+            className="flex flex-col gap-2 group p-2 bg-white rounded-md"
+            key={product._id}
+          >
+            <div className="relative w-full h-48 overflow-hidden rounded-md">
               <Image
-                src={
-                  catalog.images && catalog.images[0]
-                    ? catalog.images[0]
-                    : "/catalog.png"
-                }
-                alt={catalog.name}
-                fill
-                sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
-                className="object-cover"
+                src={product.images[0] || "/product.png"}
+                alt={product.title}
+                layout="fill"
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                className="object-contain w-full h-full group-hover:opacity-75 transition-opacity duration-300"
               />
             </div>
-            <h1 className="mt-2 font-light text-m tracking-wide text-center">
-              {catalog.name}
-            </h1>
+            <div className="flex flex-col gap-2 flex-grow">
+              <span className="mt-2 font-light text-m tracking-wide text-center">
+                {product.title}
+              </span>
+              <div className="flex items-center gap-2">
+                {product.price.discountedPrice ? (
+                  <>
+                    <span className="line-through text-gray-500">
+                      {product.price.price} рублей
+                    </span>
+                    <span className="font-semibold text-lg text-gray-700">
+                      {product.price.discountedPrice} рублей
+                    </span>
+                  </>
+                ) : (
+                  <span className="font-semibold text-lg text-gray-700">
+                    {product.price.price} рублей
+                  </span>
+                )}
+              </div>
+              {product.additionalInfoSections && (
+                <div
+                  className="text-sm text-gray-500"
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(
+                      product.additionalInfoSections.find(
+                        (section: any) => section.title === "shortDesc"
+                      )?.description || ""
+                    ),
+                  }}
+                ></div>
+              )}
+              <div className="flex-grow"></div>
+              <Button text="Вызвать замерщика" />
+            </div>
           </Link>
         ))}
       </div>
@@ -124,4 +143,4 @@ const CategoryCatalogs: React.FC<CategoryCatalogsProps> = ({
   );
 };
 
-export default CategoryCatalogs;
+export default CatalogProducts;

@@ -29,10 +29,7 @@ const ProductList: React.FC<ProductListProps> = ({
   const [currentPage, setCurrentPage] = useState(0);
 
   // Use useMemo to avoid recreating searchParams on every render
-  const memoizedSearchParams = useMemo(
-    () => searchParams,
-    [searchParams.category, searchParams.name]
-  );
+  const memoizedSearchParams = useMemo(() => searchParams, [searchParams]);
 
   useEffect(() => {
     const fetchProducts = async () => {

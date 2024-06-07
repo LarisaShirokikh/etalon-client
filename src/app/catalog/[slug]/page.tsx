@@ -8,28 +8,25 @@ import Skeleton from "@/components/Skeleton";
 import Button from "@/components/Button";
 import Breadcrumbs from "@/components/BreadCrumbs";
 import Pagination from "@/components/Pagination";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 
 const PRODUCT_PER_PAGE = 12;
 
-interface CatalogsProductProps {
+interface CatalogListProps {
   limit?: number;
-  searchParams?: {
-    catalog?: string;
-    name?: string;
-  };
 }
 
-const CatalogProducts: React.FC<CatalogsProductProps> = ({
+const CatalogProducts: React.FC<CatalogListProps> = ({
   limit = PRODUCT_PER_PAGE,
 }) => {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const slug = pathname?.split("/").pop();
+
 
   const memoizedSearchParams = useMemo(
     () => ({
@@ -38,8 +35,6 @@ const CatalogProducts: React.FC<CatalogsProductProps> = ({
     }),
     [searchParams]
   );
-
-  console.log("catalog[slug]", slug);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -50,7 +45,7 @@ const CatalogProducts: React.FC<CatalogsProductProps> = ({
         }
         const response = await axios.get(`/api/catalogs/${slug}/products`, {
           params: {
-            limit: limit,
+            limit,
             skip: currentPage * limit,
             catalog: memoizedSearchParams.catalog,
             name: memoizedSearchParams.name,
@@ -65,12 +60,7 @@ const CatalogProducts: React.FC<CatalogsProductProps> = ({
       }
     };
     fetchProducts();
-  }, [
-    slug,
-    currentPage,
-    memoizedSearchParams.catalog,
-    memoizedSearchParams.name,
-  ]);
+  }, [slug, currentPage, memoizedSearchParams, limit]);
 
   if (!slug) {
     return <div>Loading...</div>;
@@ -92,9 +82,9 @@ const CatalogProducts: React.FC<CatalogsProductProps> = ({
     <div className="mt-12 px-1 sm:px-5">
       <Breadcrumbs />
       <div className="grid grid-cols-2 mt-12 gap-4 md:grid-cols-3 lg:grid-cols-4">
-        {products.map((product: any) => (
+        {products.map((product) => (
           <Link
-            href={"/" + product.slug}
+            href={`/${product.slug}`}
             className="flex flex-col gap-2 group p-2 bg-white rounded-md"
             key={product._id}
           >
