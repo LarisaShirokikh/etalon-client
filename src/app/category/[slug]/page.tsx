@@ -9,7 +9,7 @@ import Button from "@/components/Button";
 import Breadcrumbs from "@/components/BreadCrumbs";
 import { ICatalog } from "@/interface/Catalog";
 import Pagination from "@/components/Pagination";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 
 const CATALOG_PER_PAGE = 12;
 
@@ -54,11 +54,7 @@ const CategoryCatalogs: React.FC<CategoryCatalogsProps> = ({
               name: memoizedSearchParams.name,
             },
           });
-         if (response.data.catalogs.length === 0) {
-           const router = useRouter();
-           router.push("/404"); // Redirect to 404
-           return;
-         }
+         
           setCatalogs(response.data.catalogs);
           setTotalPages(Math.ceil(response.data.totalCount / limit));
         }
