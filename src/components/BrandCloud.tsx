@@ -6,7 +6,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import Skeleton from "./Skeleton";
 import { IBrand } from "@/interface/Brand";
-import { slugify } from "@/utils/slugify";
 
 const BrandCloud = () => {
   const [brands, setBrands] = useState<IBrand[]>([]);

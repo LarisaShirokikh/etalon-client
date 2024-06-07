@@ -10,13 +10,10 @@ export async function GET(request: NextRequest) {
 
   await mongooseConnect();
 
-  console.log("API request params:", { categoryId, limit, page });
-
   const dbQuery = Category.find();
   dbQuery.limit(limit).skip(page * limit);
 
   const categories = await dbQuery.exec();
-  console.log("Category found:", categories.length);
 
   return NextResponse.json(categories);
 }

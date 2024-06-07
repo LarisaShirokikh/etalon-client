@@ -10,8 +10,6 @@ export async function GET(request: NextRequest) {
 
   await mongooseConnect();
 
-  //console.log("API request params:", { brandId, limit, page });
-
   const dbQuery = Brand.find();
   dbQuery.limit(limit).skip(page * limit);
 

@@ -14,15 +14,12 @@ export async function GET(request: NextRequest) {
 
   await mongooseConnect();
 
-  // console.log("API request params:", { categoryId, limit, page });
-
   const dbQuery = Catalog.find(
     categoryId ? { parents: new ObjectId(categoryId) } : {}
   );
   dbQuery.limit(limit).skip(page * limit);
 
   const catalogs = await dbQuery.exec();
-  // console.log("Catalog found:", catalogs.length);
 
   return NextResponse.json(catalogs);
 }

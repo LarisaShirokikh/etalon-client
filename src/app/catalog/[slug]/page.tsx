@@ -1,34 +1,80 @@
 "use client";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import DOMPurify from "dompurify";
 import Skeleton from "@/components/Skeleton";
 import Button from "@/components/Button";
 import Breadcrumbs from "@/components/BreadCrumbs";
+import Pagination from "@/components/Pagination";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
-const CatalogProducts = ({ params }: { params: { slug: string } }) => {
-  const { slug } = params;
+const PRODUCT_PER_PAGE = 12;
+
+interface CatalogsProductProps {
+  limit?: number;
+  searchParams?: {
+    catalog?: string;
+    name?: string;
+  };
+}
+
+const CatalogProducts: React.FC<CatalogsProductProps> = ({
+  limit = PRODUCT_PER_PAGE,
+}) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const slug = pathname?.split("/").pop();
+
+  const memoizedSearchParams = useMemo(
+    () => ({
+      catalog: searchParams.get("catalog"),
+      name: searchParams.get("name"),
+    }),
+    [searchParams]
+  );
+
+  console.log("catalog[slug]", slug);
 
   useEffect(() => {
     const fetchProducts = async () => {
+      setLoading(true);
       try {
-        const response = await axios.get(`/api/catalogs/${slug}/products`);
-        setProducts(response.data);
-        //console.log("Fetched products:", response.data);
+        if (!slug) {
+          throw new Error("Slug not found");
+        }
+        const response = await axios.get(`/api/catalogs/${slug}/products`, {
+          params: {
+            limit: limit,
+            skip: currentPage * limit,
+            catalog: memoizedSearchParams.catalog,
+            name: memoizedSearchParams.name,
+          },
+        });
+        setProducts(response.data.products);
+        setTotalPages(Math.ceil(response.data.totalCount / limit));
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
         setLoading(false);
       }
     };
-    if (slug) {
-      fetchProducts();
-    }
-  }, [slug]);
+    fetchProducts();
+  }, [
+    slug,
+    currentPage,
+    memoizedSearchParams.catalog,
+    memoizedSearchParams.name,
+  ]);
+
+  if (!slug) {
+    return <div>Loading...</div>;
+  }
 
   if (loading) {
     return <Skeleton />;
@@ -37,6 +83,10 @@ const CatalogProducts = ({ params }: { params: { slug: string } }) => {
   if (products.length === 0) {
     return <div>No products found</div>;
   }
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
 
   return (
     <div className="mt-12 px-1 sm:px-5">
@@ -61,7 +111,7 @@ const CatalogProducts = ({ params }: { params: { slug: string } }) => {
               <span className="mt-2 font-light text-m tracking-wide text-center">
                 {product.title}
               </span>
-              <div className="flex items-center gap-2 ">
+              <div className="flex items-center gap-2">
                 {product.price.discountedPrice ? (
                   <>
                     <span className="line-through text-gray-500">
@@ -95,6 +145,11 @@ const CatalogProducts = ({ params }: { params: { slug: string } }) => {
           </Link>
         ))}
       </div>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 };

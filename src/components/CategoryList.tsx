@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+
 import Link from "next/link";
 import Skeleton from "./Skeleton";
 import { useEffect, useState } from "react";
@@ -15,7 +15,6 @@ const CategoryList = () => {
       try {
         const response = await axios.get("/api/categories");
         setCategories(response.data);
-       // console.log("Fetched categories:", response.data);
       } catch (error) {
         console.error("Error fetching categories:", error);
       } finally {
@@ -39,18 +38,10 @@ const CategoryList = () => {
       <div className="flex flex-wrap gap-4 justify-center">
         {categories.map((item) => (
           <Link
-            href={`/category/${item.slug}`}
+            href={ `/category/${item.slug}`}
             className="flex-shrink-0"
-            key={item._id}
+            key={item.name}
           >
-            {/* <div className="relative bg-slate-100 w-full h-48 rounded-lg overflow-hidden">
-              <Image
-                src={item.images?.[0] || "/category.png"}
-                alt={item.name || "Category"}
-                layout="fill"
-                className="object-cover rounded-lg"
-              />
-            </div> */}
             <h1 className="bg-blue-50 text-gray-500 py-2 px-4 rounded-full  hover:bg-gray-200 transition-transform duration-300 cursor-pointer">
               {item.name}
             </h1>
