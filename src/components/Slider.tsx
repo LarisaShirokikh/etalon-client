@@ -11,7 +11,6 @@ const slides = [
     description: "Привезем и установим в 1 день!",
     img: "/wite.webp",
     url: "/",
-    bg: "bg-gradient-to-r from-blue-100 to-red-50",
   },
   {
     id: 2,
@@ -19,7 +18,6 @@ const slides = [
     description: "Цены от 52300 руб!",
     img: "/issida.webp",
     url: "/",
-    bg: "bg-gradient-to-r from-pink-50 to-blue-50",
   },
   {
     id: 3,
@@ -27,7 +25,6 @@ const slides = [
     description: "Скидка на доборы!",
     img: "/wite.webp",
     url: "/",
-    bg: "bg-gradient-to-r from-blue-50 to-yellow-50",
   },
 ];
 
@@ -49,35 +46,26 @@ const Slider = () => {
         style={{ transform: `translateX(-${current * 100}vw)` }}
       >
         {slides.map((slide) => (
-          <div
-            className={`${slide.bg} w-screen h-full flex flex-col xl:flex-row gap-16`}
-            key={slide.id}
-          >
-            {/* Text Container */}
-            <div className="flex flex-col items-center justify-center gap-8 xl:w-1/2 text-center p-4">
-              <h2 className="text-l lg:text-2xl 2xl:text-2xl">
-                {slide.description}
-              </h2>
-              <h1 className="text-3xl lg:text-4xl 2xl:text-8xl font-semibold">
-                {slide.title}
-              </h1>
-              <Link href={slide.url}>
-                <button className="bg-black text-white py-3 px-4 rounded-md">
-                  Подробнее...
-                </button>
-              </Link>
+          <Link href={slide.url} key={slide.id} className="w-screen h-full">
+            <div
+              className="w-full h-full flex flex-col xl:flex-row gap-16"
+              style={{
+                backgroundImage: `url(${slide.img})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            >
+              {/* Text Container */}
+              <div className="flex flex-col items-center justify-center gap-8 w-full h-full text-center p-4 bg-black bg-opacity-50">
+                <h2 className="text-white text-l lg:text-2xl 2xl:text-2xl">
+                  {slide.description}
+                </h2>
+                <h1 className="text-white text-3xl lg:text-4xl 2xl:text-8xl font-semibold">
+                  {slide.title}
+                </h1>
+              </div>
             </div>
-            {/* Image Container */}
-            <div className="relative h-1/2 xl:h-full xl:w-1/2">
-              <Image
-                src={slide.img}
-                alt={slide.title}
-                fill
-                sizes="100%"
-                className="object-cover rounded-md"
-              />
-            </div>
-          </div>
+          </Link>
         ))}
       </div>
       {/* Slide Indicators */}
@@ -88,6 +76,7 @@ const Slider = () => {
               current === index ? "scale-150" : ""
             }`}
             key={slide.id}
+            onClick={() => setCurrent(index)}
           >
             {current === index && (
               <div className="w-[6px] h-[6px] bg-gray-600 rounded-full"></div>

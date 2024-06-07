@@ -19,7 +19,7 @@ const BrandHeader: React.FC<BrandHeaderProps> = ({ brand }) => {
         />
       </div>
       <div className="flex flex-col justify-center">
-        <h1 className="text-xl sm:text-2xl font-semibold text-gray-700 mb-2">
+        <h1 className="text-sm sm:text-xl font-semibold text-gray-700 mb-2">
           {brand.name}
         </h1>
         {/* Дополнительные детали бренда могут быть добавлены здесь */}
