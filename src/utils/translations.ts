@@ -14,4 +14,7 @@ export const translations: { [key: string]: string } = {
   vse: "Все",
   povyshennaya: "Повышенная",
   shumoizolyaciya: "шумоизоляция",
+  classic: "классик",
+  shagren: "шагрень",
+  chernaya: "черная",
 };

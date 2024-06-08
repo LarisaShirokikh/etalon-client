@@ -12,8 +12,8 @@ const ProductSchema = new Schema(
     description: String,
     price: { type: PriceSchema, required: true }, // Price as a nested schema
     images: [{ type: String }],
-    catalog: { type: mongoose.Types.ObjectId, ref: "Catalog" },
-    parents: { type: mongoose.Types.ObjectId, ref: "Category" },
+    catalog: { type: mongoose.Schema.Types.ObjectId, ref: "Catalog" },
+    parents: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
     design: { type: String },
     contours: { type: String },
     insulation: { type: String },
@@ -30,4 +30,4 @@ const ProductSchema = new Schema(
   }
 );
 
-export const Product = models.Product || model("Product", ProductSchema);
+export const Product = models?.Product || model("Product", ProductSchema);

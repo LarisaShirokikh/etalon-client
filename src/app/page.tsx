@@ -4,28 +4,20 @@ import CategoryList from "@/components/CategoryList";
 import ProductList from "@/components/ProductList";
 import Skeleton from "@/components/Skeleton";
 import Slider from "@/components/Slider";
-import WiteList from "@/components/WiteList";
 import { Suspense } from "react";
-
 
 const HomePage = async () => {
   const categoryId = "665b2da0845f4980629d771d";
 
   return (
     <div>
-      <Slider />
-        <div className="mt-5">
-          {/* <h1 className="text-2xl px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 mb-12">
-            Категории
-          </h1> */}
-          <Suspense fallback={<Skeleton />}>
-            <CategoryList />
-          </Suspense>
-        </div>
+      {/* <Slider /> */}
       <div className="mt-5">
-        {/* <h1 className="text-2xl px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 mb-12">
-          Наши Бренды
-        </h1> */}
+        <Suspense fallback={<Skeleton />}>
+          <CategoryList />
+        </Suspense>
+      </div>
+      <div className="mt-5">
         <Suspense fallback={<Skeleton />}>
           <BrandCloud />
         </Suspense>
@@ -36,7 +28,7 @@ const HomePage = async () => {
           Белые двери
         </h1>
         <Suspense fallback={<Skeleton />}>
-          <WiteList categoryId={categoryId} />
+          <CatalogList limit={6} categoryId={categoryId} />
         </Suspense>
       </div>
       <div className="mt-24">
@@ -44,7 +36,7 @@ const HomePage = async () => {
           Каталоги
         </h1>
         <Suspense fallback={<Skeleton />}>
-          <CatalogList />
+          <CatalogList limit={12} />
         </Suspense>
       </div>
       <div className="mt-24 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">

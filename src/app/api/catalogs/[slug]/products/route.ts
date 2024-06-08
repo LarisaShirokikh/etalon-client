@@ -11,11 +11,11 @@ export async function GET(request: NextRequest) {
   const slug = pathname.split("/")[3];
   const limit = parseInt(searchParams.get("limit") || "20");
   const page = parseInt(searchParams.get("page") || "0");
+  
   await mongooseConnect();
 
   try {
     const catalog = await Catalog.findOne({ slug: slug });
-
     if (!catalog) {
       return new NextResponse(`Catalog not found for slug: ${slug}`, {
         status: 404,

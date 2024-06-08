@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { TranslationsProvider } from "@/context/translationsContext"; 
 import { translations } from "@/utils/translations";
 import YandexMetrika from "@/components/YandexMetrika";
+import Slider from "@/components/Slider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,6 +28,7 @@ export default function RootLayout({
         <YandexMetrika />
         <TranslationsProvider translations={translations}>
           <Navbar />
+          <Slider/>
           {children}
           <Footer />
         </TranslationsProvider>

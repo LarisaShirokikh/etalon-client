@@ -1,44 +1,45 @@
 "use client";
 import axios from "axios";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Skeleton from "./Skeleton";
-import { ICatalog } from "@/interface/Catalog";
+import Pagination from "./Pagination";
 
-const PRODUCT_PER_PAGE = 12;
 
-interface ProductListProps {
+interface CatalogListProps {
   limit?: number;
-  searchParams?: {
-    category?: string;
-    name?: string;
-  };
+  categoryId?: string;
+  catalogId?: string;
+  searchParams?: any;
+  slug?: string;
 }
 
-const CatalogList: React.FC<ProductListProps> = ({
-  limit = PRODUCT_PER_PAGE,
-  searchParams = {},
+const CatalogList: React.FC<CatalogListProps> = ({
+  limit = 12,
+  categoryId,
+  catalogId,
+  slug,
 }) => {
-  const [catalogs, setCatalogs] = useState<ICatalog[]>([]);
+  const [catalogs, setCatalogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
 
-  const memoizedSearchParams = useMemo(() => searchParams, [searchParams]);
-
   useEffect(() => {
     const fetchCatalogs = async () => {
+      setLoading(true);
       try {
         const response = await axios.get("/api/catalogs", {
           params: {
-            limit: limit,
+            limit,
             skip: currentPage * limit,
-            category: memoizedSearchParams.category,
-            name: memoizedSearchParams.name,
+            categoryId,
+            catalogId,
+            slug,
           },
         });
-        setCatalogs(response.data);
+        setCatalogs(response.data.catalogs);
         setTotalPages(Math.ceil(response.data.totalCount / limit));
       } catch (error) {
         console.error("Error fetching catalogs:", error);
@@ -48,7 +49,7 @@ const CatalogList: React.FC<ProductListProps> = ({
     };
 
     fetchCatalogs();
-  }, [currentPage, limit, memoizedSearchParams]);
+  }, [currentPage, limit, categoryId, catalogId, slug]);
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -65,8 +66,8 @@ const CatalogList: React.FC<ProductListProps> = ({
   return (
     <div className="px-4">
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4  xl:grid-cols-6  gap-4 md:gap-8">
-        {catalogs.map((catalog) => (
-          <Link href={`/catalog/${catalog.slug}`} key={catalog.name}>
+        {catalogs.map((catalog: any) => (
+          <Link href={`/catalog/${catalog.slug}`} key={catalog._id}>
             <div className="relative bg-slate-100 w-full h-96 sm:h-86 md:h-96 rounded-lg overflow-hidden">
               <Image
                 src={
@@ -86,6 +87,11 @@ const CatalogList: React.FC<ProductListProps> = ({
           </Link>
         ))}
       </div>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 };

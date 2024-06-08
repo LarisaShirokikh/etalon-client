@@ -1,7 +1,5 @@
 "use client";
 
-import { useMemo } from "react";
-
 interface PaginationProps {
   currentPage: number;
   totalPages: number;

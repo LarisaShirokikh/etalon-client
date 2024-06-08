@@ -1,8 +1,7 @@
 "use client";
-
 import axios from "axios";
 import Link from "next/link";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import DOMPurify from "dompurify";
 import Skeleton from "./Skeleton";
@@ -13,23 +12,22 @@ const PRODUCT_PER_PAGE = 8;
 
 interface ProductListProps {
   limit?: number;
-  searchParams?: {
-    category?: string;
-    name?: string;
-  };
+  categoryId?: string;
+  catalogId?: string;
+  searchParams?: any;
+  slug?: string
 }
 
 const ProductList: React.FC<ProductListProps> = ({
   limit = PRODUCT_PER_PAGE,
-  searchParams = {},
+  categoryId,
+  catalogId,
+  slug,
 }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
-
-  // Use useMemo to avoid recreating searchParams on every render
-  const memoizedSearchParams = useMemo(() => searchParams, [searchParams]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -37,10 +35,11 @@ const ProductList: React.FC<ProductListProps> = ({
       try {
         const response = await axios.get("/api/products", {
           params: {
-            limit: limit,
+            limit,
             skip: currentPage * limit,
-            category: memoizedSearchParams.category,
-            name: memoizedSearchParams.name,
+            categoryId,
+            catalogId,
+            slug,
           },
         });
         setProducts(response.data.products);
@@ -53,7 +52,7 @@ const ProductList: React.FC<ProductListProps> = ({
     };
 
     fetchProducts();
-  }, [currentPage, limit, memoizedSearchParams]);
+  }, [slug, currentPage, limit, categoryId, catalogId]);
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -141,3 +140,4 @@ const ProductList: React.FC<ProductListProps> = ({
 };
 
 export default ProductList;
+
