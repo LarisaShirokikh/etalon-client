@@ -43,7 +43,7 @@ const Navbar = () => {
             <div className="text-2xl tracking-wide">Двери Эталон</div>
           </Link>
           <div className="hidden lg:flex gap-6">
-            <Link href="/">Все двери</Link>
+            {/* <Link href="/">Все двери</Link> */}
             <Link href="/">Сервисная служба</Link>
           </div>
         </div>

@@ -37,7 +37,7 @@ const Footer = () => {
           <div className="flex gap-4 items-center">
             <FaPhoneAlt size={24} className="text-gray-700" />
             <a
-              href="tel:+1234567890"
+              href="tel:+79260217365"
               className="flex items-center text-gray-700"
             >
               +7 (926) 021 7365
@@ -65,7 +65,7 @@ const Footer = () => {
       {/* Bottom Section */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-4 mt-8">
         <div className="text-sm text-gray-600">
-          © 2024 Магазин входных металлических дверей Двери Эталон
+          © 2024 Двери Эталон. Магазин входных металлических дверей.
         </div>
       </div>
     </footer>

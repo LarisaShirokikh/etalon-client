@@ -17,4 +17,13 @@ export const translations: { [key: string]: string } = {
   classic: "классик",
   shagren: "шагрень",
   chernaya: "черная",
+  oreh: "орех",
+  premium: "премиум",
+  dver: "дверь",
+  lajn: "Лайн",
+  vhodnaya: "Входная",
+  storm: "Шторм",
+  venge: "Венге",
+  kontura: "контура",
+  byudzhet: "бюджет",
 };

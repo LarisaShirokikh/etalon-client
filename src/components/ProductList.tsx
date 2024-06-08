@@ -23,6 +23,7 @@ const ProductList: React.FC<ProductListProps> = ({
   categoryId,
   catalogId,
   slug,
+  searchParams,
 }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -40,6 +41,7 @@ const ProductList: React.FC<ProductListProps> = ({
             categoryId,
             catalogId,
             slug,
+            searchParams,
           },
         });
         setProducts(response.data.products);
@@ -52,7 +54,7 @@ const ProductList: React.FC<ProductListProps> = ({
     };
 
     fetchProducts();
-  }, [slug, currentPage, limit, categoryId, catalogId]);
+  }, [slug, currentPage, limit, categoryId, catalogId, searchParams]);
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -126,7 +128,7 @@ const ProductList: React.FC<ProductListProps> = ({
                 }}
               ></div>
             )}
-            <Button text="Вызвать замерщика" />
+            {/* <Button text="Вызвать замерщика" /> */}
           </Link>
         ))}
       </div>
