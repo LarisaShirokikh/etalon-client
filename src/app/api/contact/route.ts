@@ -1,7 +1,7 @@
 // api/contact.ts
 import { NextRequest, NextResponse } from "next/server";
 import { mongooseConnect } from "@/lib/mongoose";
-import { ContactForm } from "@/models/ContactForm"; // Подставьте соответствующую модель
+import { ContactForm } from "@/models/ContactForm"; 
 
 export async function POST(request: NextRequest) {
   const { name, phone, address, contactMethod, isAgreed } =
@@ -9,7 +9,6 @@ export async function POST(request: NextRequest) {
 
   try {
     await mongooseConnect();
-    // Создайте новый объект Contact и сохраните его в базу данных
     const newContact = new ContactForm({
       name,
       phone,
@@ -18,7 +17,6 @@ export async function POST(request: NextRequest) {
       isAgreed,
     });
 
-    console.log("newContact", newContact);
 
     await newContact.save();
     return NextResponse.json({

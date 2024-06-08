@@ -20,7 +20,7 @@ const Button: React.FC<ButtonProps> = ({ text }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     name: "",
-    phone: "",
+    phone: "+7",
     address: "",
     contactMethod: "phone",
     isAgreed: true,
@@ -36,6 +36,10 @@ const Button: React.FC<ButtonProps> = ({ text }) => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    if (name === "phone" && !/^[\d+]*$/.test(value)) {
+      // Если введенный символ не является цифрой или "+", игнорируем его
+      return;
+    }
     setFormData({ ...formData, [name]: value });
   };
 
@@ -49,6 +53,13 @@ const Button: React.FC<ButtonProps> = ({ text }) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const phoneRegex = /^\+?\d{11,}$/; // Регулярное выражение для проверки номера телефона
+    if (!phoneRegex.test(formData.phone)) {
+      alert(
+        "Неверный формат номера телефона. Введите номер в формате +7(___)___-__-__"
+      );
+      return;
+    }
     try {
       const response = await axios.post("/api/contact", formData);
       if (response.data.success) {
