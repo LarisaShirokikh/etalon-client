@@ -131,7 +131,7 @@ const DoorTrimsInfo = () => {
   };
 
   return (
-    <div id="dobori" className="mt-12 max-w-3xl mx-auto p-4 text-gray-600">
+    <div  className="mt-12 max-w-3xl mx-auto p-4 text-gray-600">
       <h1 className="mt-12 text-2xl md:text-3xl font-bold mb-4 text-center">
         Доборы для входных дверей
       </h1>

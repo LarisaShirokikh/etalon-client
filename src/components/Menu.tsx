@@ -38,7 +38,7 @@ const Menu = () => {
           <Link href="/service" passHref>
             <p onClick={handleCloseMenu}>Сервисная служба</p>
           </Link>
-          <Link href="#dobori" passHref>
+          <Link href="/service/#dobori" passHref>
             <p onClick={handleCloseMenu}>Доборы</p>
           </Link>
           <a
