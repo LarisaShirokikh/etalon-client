@@ -5,6 +5,8 @@ import axios from "axios";
 
 interface ButtonProps {
   text: string;
+  className?: string;
+  href?: string;
 }
 
 interface FormData {
@@ -15,7 +17,7 @@ interface FormData {
   isAgreed: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({ text }) => {
+const Button: React.FC<ButtonProps> = ({ text, className, href }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState<FormData>({
@@ -53,7 +55,7 @@ const Button: React.FC<ButtonProps> = ({ text }) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const phoneRegex = /^\+?\d{11,}$/; // Регулярное выражение для проверки номера телефона
+    const phoneRegex = /^\+?\d{11,}$/;
     if (!phoneRegex.test(formData.phone)) {
       alert(
         "Неверный формат номера телефона. Введите номер в формате +7(___)___-__-__"
@@ -76,12 +78,14 @@ const Button: React.FC<ButtonProps> = ({ text }) => {
 
   return (
     <div>
-      <button
-        className="mt-2 mb-2 self-center rounded-lg border border-black bg-transparent text-black py-2 px-4 text-sm hover:bg-black hover:text-white transition-colors"
-        onClick={handleOpenModal}
-      >
-        {text}
-      </button>
+      <a href={href}>
+        <button
+          className={`${className} mt-2 mb-2 self-center rounded-lg border border-black bg-transparent text-black py-2 px-4 text-sm hover:bg-black hover:text-white transition-colors`}
+          onClick={handleOpenModal}
+        >
+          {text}
+        </button>
+      </a>
 
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         {isSubmitted ? (

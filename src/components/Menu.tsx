@@ -35,10 +35,10 @@ const Menu = () => {
           <Link href="/category/dveri-byudzhet/catalogs" passHref>
             <p onClick={handleCloseMenu}>Распродажа</p>
           </Link>
-          <Link href="/" passHref>
+          <Link href="/service" passHref>
             <p onClick={handleCloseMenu}>Сервисная служба</p>
           </Link>
-          <Link href="/" passHref>
+          <Link href="#dobori" passHref>
             <p onClick={handleCloseMenu}>Доборы</p>
           </Link>
           <a

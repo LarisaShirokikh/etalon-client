@@ -47,7 +47,7 @@ const Navbar = () => {
           </Link>
           <div className="hidden lg:flex gap-6">
             {/* <Link href="/">Все двери</Link> */}
-            <Link href="/">Сервисная служба</Link>
+            <Link href="/service">Сервисная служба</Link>
           </div>
         </div>
         {/* RIGHT */}
