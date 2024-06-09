@@ -38,9 +38,9 @@ const Menu = () => {
           <Link href="/service" passHref>
             <p onClick={handleCloseMenu}>Сервисная служба</p>
           </Link>
-          <Link href="/service/#dobori" passHref>
+          {/* <Link href="/service/#dobori" passHref>
             <p onClick={handleCloseMenu}>Доборы</p>
-          </Link>
+          </Link> */}
           <a
             href="tel:+79260217365"
             className="flex items-center text-white"

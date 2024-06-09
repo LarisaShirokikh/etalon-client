@@ -103,10 +103,12 @@ const DoorTrimsInfo = () => {
   
 
 
-  const handleMouseDown = (e: { preventDefault: () => void; }) => {
+  const handleMouseDown = (e) => {
     e.preventDefault();
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
+    const eventType = e.type.startsWith("touch") ? "touchmove" : "mousemove";
+    const endEventType = e.type.startsWith("touch") ? "touchend" : "mouseup";
+    document.addEventListener(eventType, handleMouseMove);
+    document.addEventListener(endEventType, handleMouseUp);
   };
 
   const handleMouseMove = (e: { clientX: number; }) => {

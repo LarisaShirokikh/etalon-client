@@ -7,9 +7,9 @@ const ServicePage = () => {
   return (
     <div className="space-y-8">
       <ServiceDetails />
-      <div id="dobori">
+     
         <StandardDoorsInfo />
-      </div>
+      
       <DoorTrimsInfo />
     </div>
   );
