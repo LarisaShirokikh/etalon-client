@@ -1,19 +1,22 @@
 import Link from "next/link";
 import Image from "next/image";
-import { FaPhoneAlt, FaTelegram, FaVk } from "react-icons/fa";
+import { FaPhoneAlt, FaTelegram,  } from "react-icons/fa";
 import SearchBar from "./SearchBar";
 import Menu from "./Menu";
-import Button from "./Button";
+import { FaWhatsapp } from "react-icons/fa6";
 
 const Navbar = () => {
   return (
     <div className="px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 relative bg-white ">
       {/* MOBILE */}
       <div className="h-20 flex items-center justify-between md:hidden">
-        <Link href="/">
-          <div className="text-2xl tracking-wide">Двери Эталон</div>
+        <Link href="/" className="flex tracking-wide gap-3">
+          <Image src="/logo.png" alt="Логотип" width={200} height={200} />
         </Link>
         <Menu />
+        {/* <Link href="/">
+          <div className="text-2xl tracking-wide">Двери Эталон</div>
+        </Link> */}
       </div>
       {/* MOBILE CONTACT */}
       <div className="mb-4 md:hidden flex flex-col items-center gap-2 ">
@@ -26,10 +29,10 @@ const Navbar = () => {
             <span className="whitespace-nowrap ml-1">+7 (926) 021 7365</span>
           </a>
           <a href="https://t.me/your_telegram" className="text-gray-700">
-            <FaTelegram size={20} />
+            <FaTelegram size={20} color="00A1FE" />
           </a>
-          <a href="https://vk.com/your_vk" className="text-gray-700">
-            <FaVk size={20} />
+          <a href="https://wa.me/your_whatsapp" className="text-gray-700">
+            <FaWhatsapp size={20} color="1EB100" />
           </a>
         </div>
         {/* <Button text="Заказать звонок" /> */}
@@ -39,8 +42,8 @@ const Navbar = () => {
         {/* LEFT */}
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center gap-3">
-            <Image src="/logo.svg" alt="Логотип" width={24} height={24} />
-            <div className="text-2xl tracking-wide">Двери Эталон</div>
+            <Image src="/logo.png" alt="Логотип" width={300} height={300} />
+            {/* <div className="text-2xl tracking-wide">Двери Эталон</div> */}
           </Link>
           <div className="hidden lg:flex gap-6">
             {/* <Link href="/">Все двери</Link> */}
@@ -59,10 +62,10 @@ const Navbar = () => {
               <span className="whitespace-nowrap ml-1">+7 (926) 021 7365</span>
             </a>
             <a href="https://t.me/your_telegram" className="text-gray-700">
-              <FaTelegram size={20} />
+              <FaTelegram size={20} color="00A1FE" />
             </a>
-            <a href="https://vk.com/your_vk" className="text-gray-700">
-              <FaVk size={20} />
+            <a href="https://wa.me/your_whatsapp" className="text-gray-700">
+              <FaWhatsapp size={20} color="1EB100" />
             </a>
           </div>
           {/* <Button text="Заказать звонок" /> */}

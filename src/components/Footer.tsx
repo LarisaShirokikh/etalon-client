@@ -6,6 +6,7 @@ import {
   FaYoutube,
   FaPhoneAlt,
   FaEnvelope,
+  FaWhatsapp,
 } from "react-icons/fa";
 import Button from "./Button";
 
@@ -44,9 +45,18 @@ const Footer = () => {
             </a>
           </div>
           <div className="flex gap-6 mb-4">
-            <FaTelegram size={24} className="text-gray-700" />
-            <FaVk size={24} className="text-gray-700" />
-            <FaYoutube size={24} className="text-gray-700" />
+            <a href="https://t.me/your_telegram" className="text-gray-700">
+              <FaTelegram size={24} color="navi" />
+            </a>
+            <a href="https://wa.me/your_whatsapp" className="text-gray-700">
+              <FaWhatsapp size={24} color="light-green" />
+            </a>
+            <a href="https://vk.com/your_vk" className="text-gray-700">
+              <FaVk size={24} color="light-green" />
+            </a>
+            <a href="https://vk.com/your_vk" className="text-gray-700">
+              <FaYoutube size={24} color="light-green" />
+            </a>
           </div>
         </div>
         {/* Right Section */}

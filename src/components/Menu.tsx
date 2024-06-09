@@ -59,7 +59,7 @@ const Menu = () => {
               <FaTelegram size={40} />
             </a>
             <a
-              href="https://vk.com/your_vk"
+              href="https://wa.me/your_whatsapp"
               target="_blank"
               className="text-gray-700"
               onClick={handleCloseMenu}
