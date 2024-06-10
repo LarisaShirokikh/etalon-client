@@ -43,7 +43,7 @@ const Breadcrumbs = () => {
 
   return (
     <nav aria-label="breadcrumb">
-      <ol className="flex space-x-2 text-base sm:text-sm flex-wrap">
+      <ol className="flex mt-12  space-x-2 text-base sm:text-sm flex-wrap">
         <li>
           <Link
             href="/"

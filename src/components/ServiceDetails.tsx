@@ -8,19 +8,7 @@ const ServiceDetails = () => {
 
   return (
     <div className=" mt-12 max-w-4xl mx-auto p-4">
-      <Breadcrumbs />
-      <h1 className="mt-12 text-2xl md:text-3xl text-gray-700 font-bold mb-4 text-center">
-        Сервисная служба компании Двери Эталон
-      </h1>
-      <p className="text-center text-gray-700 mb-6">
-        Вы можете доверять нам, мы отлично делаем свою работу!
-      </p>
-      {/* <button
-        onClick={() => setOpen(!open)}
-        className="w-full md:w-auto bg-black text-white py-2 px-4 rounded-lg mb-4 hover:bg-gray-800 transition-colors"
-      >
-        {open ? "Скрыть детали" : "Показать детали"}
-      </button> */}
+      
 
       <div className="bg-gray-100 p-6 rounded-lg text-gray-600">
         <h2 className="text-xl md:text-2xl font-semibold mb-4">

@@ -2,8 +2,10 @@
 
 import Breadcrumbs from "@/components/BreadCrumbs";
 import Button from "@/components/Button";
+import FrameInstallationInfo from "@/components/FrameInstallationInfo";
 import ProductImages from "@/components/ProductImages";
 import ProductList from "@/components/ProductList";
+import ServiceDetails from "@/components/ServiceDetails";
 import Skeleton from "@/components/Skeleton";
 import { IProduct } from "@/interface/Product";
 import axios from "axios";
@@ -130,6 +132,8 @@ const SinglePage = ({ params }: { params: { slug: string } }) => {
         </Suspense> */}
         </div>
       </div>
+      <ServiceDetails />
+      <FrameInstallationInfo />
       <div className="mt-24 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
         <h1 className="text-2xl">Рекомендуем посмотреть</h1>
         <Suspense fallback={<Skeleton />}>

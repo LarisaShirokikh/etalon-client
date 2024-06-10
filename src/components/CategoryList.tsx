@@ -36,19 +36,26 @@ const CategoryList = () => {
 
   return (
     <div className="py-8 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
-      
       <div className="flex flex-wrap gap-4 justify-center">
-        {categories.map((item) => (
-          <Link
-            href={ `/category/${item.slug}/catalogs`}
-            className="flex-shrink-0"
-            key={item.name}
-          >
-            <h1 className="bg-blue-50 text-gray-500 py-2 px-4 rounded-full  hover:bg-gray-200 transition-transform duration-300 cursor-pointer">
-              {item.name}
-            </h1>
-          </Link>
-        ))}
+        {categories.map((item) =>
+          item.url ? (
+            <a href={item.url} className="flex-shrink-0" key={item.name}>
+              <h1 className="bg-blue-50 text-gray-500 py-2 px-4 rounded-full hover:bg-gray-200 transition-transform duration-300 cursor-pointer">
+                {item.name}
+              </h1>
+            </a>
+          ) : (
+            <Link
+              href={`/category/${item.slug}/catalogs`}
+              className="flex-shrink-0"
+              key={item.name}
+            >
+              <h1 className="bg-blue-50 text-gray-500 py-2 px-4 rounded-full hover:bg-gray-200 transition-transform duration-300 cursor-pointer">
+                {item.name}
+              </h1>
+            </Link>
+          )
+        )}
       </div>
     </div>
   );

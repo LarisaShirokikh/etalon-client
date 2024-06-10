@@ -51,7 +51,7 @@ const Menu = () => {
           </a>
           <div className="flex items-center gap-4">
             <a
-              href="https://t.me/your_telegram"
+              href="https://t.me/Dveri_Etalon"
               target="_blank"
               className="text-gray-700"
               onClick={handleCloseMenu}
@@ -59,7 +59,7 @@ const Menu = () => {
               <FaTelegram size={40} />
             </a>
             <a
-              href="https://wa.me/your_whatsapp"
+              href="https://wa.me/+79250217365"
               target="_blank"
               className="text-gray-700"
               onClick={handleCloseMenu}

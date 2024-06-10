@@ -1,11 +1,29 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
-import { FaPhoneAlt, FaTelegram,  } from "react-icons/fa";
+import { FaPhoneAlt, FaTelegram } from "react-icons/fa";
 import SearchBar from "./SearchBar";
 import Menu from "./Menu";
 import { FaWhatsapp } from "react-icons/fa6";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Navbar = () => {
+  // const [location, setLocation] = useState("");
+
+  // useEffect(() => {
+  //   const fetchLocation = async () => {
+  //     try {
+  //       const response = await axios.get("https://ipapi.co/json/?lang=ru");
+  //       setLocation(response.data.city);
+  //     } catch (error) {
+  //       console.error("Error fetching the location data", error);
+  //     }
+  //   };
+
+  //   fetchLocation();
+  // }, []);
+
   return (
     <div className="px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 relative bg-white ">
       {/* MOBILE */}
@@ -14,9 +32,6 @@ const Navbar = () => {
           <Image src="/logo.png" alt="Логотип" width={200} height={200} />
         </Link>
         <Menu />
-        {/* <Link href="/">
-          <div className="text-2xl tracking-wide">Двери Эталон</div>
-        </Link> */}
       </div>
       {/* MOBILE CONTACT */}
       <div className="mb-4 md:hidden flex flex-col items-center gap-2 ">
@@ -28,12 +43,17 @@ const Navbar = () => {
             <FaPhoneAlt size={20} />
             <span className="whitespace-nowrap ml-1">+7 (926) 021 7365</span>
           </a>
-          <a href="https://t.me/your_telegram" className="text-gray-700">
-            <FaTelegram size={20} color="00A1FE" />
+          <a href="https://t.me/Dveri_Etalon" className="text-gray-700">
+            <FaTelegram size={20} color="00A1FE" target="_blank" />
           </a>
-          <a href="https://wa.me/your_whatsapp" className="text-gray-700">
-            <FaWhatsapp size={20} color="1EB100" />
+          <a href="https://wa.me/+79250217365" className="text-gray-700">
+            <FaWhatsapp size={20} color="1EB100" target="_blank" />
           </a>
+          {/* {location && ( */}
+          <div className="flex items-center gap-2 text-gray-700">
+            <span>📍Москва</span>
+          </div>
+          {/* )} */}
         </div>
         {/* <Button text="Заказать звонок" /> */}
       </div>
@@ -61,12 +81,17 @@ const Navbar = () => {
               <FaPhoneAlt size={20} />
               <span className="whitespace-nowrap ml-1">+7 (926) 021 7365</span>
             </a>
-            <a href="https://t.me/your_telegram" className="text-gray-700">
-              <FaTelegram size={20} color="00A1FE" />
+            <a href="https://t.me/Dveri_Etalon" className="text-gray-700">
+              <FaTelegram size={20} color="00A1FE" target="_blank" />
             </a>
-            <a href="https://wa.me/your_whatsapp" className="text-gray-700">
-              <FaWhatsapp size={20} color="1EB100" />
+            <a href="https://wa.me/+79250217365" className="text-gray-700">
+              <FaWhatsapp size={20} color="1EB100" target="_blank" />
             </a>
+            <div className="flex items-center gap-2 text-gray-700">
+              <span>📍Москва</span>
+            </div>
+            {/* {location && ( */}
+            {/* )} */}
           </div>
           {/* <Button text="Заказать звонок" /> */}
         </div>

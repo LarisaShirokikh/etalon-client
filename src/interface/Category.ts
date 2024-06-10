@@ -11,6 +11,7 @@ interface ICategory extends Document {
   name: string;
   slug: string;
   description?: string;
+  url?: string;
   images?: string[];
   properties?: CategoryProperties[];
   

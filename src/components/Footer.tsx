@@ -29,7 +29,7 @@ const Footer = () => {
           <div className="flex gap-4 items-center">
             <FaEnvelope size={24} className="text-gray-700" />
             <a
-              href="mailto:2823577@mail.ru"
+              href="mailto:2081837@gmail.ru"
               className="flex items-center text-gray-700"
             >
               2823577@mail.ru
@@ -45,17 +45,17 @@ const Footer = () => {
             </a>
           </div>
           <div className="flex gap-6 mb-4">
-            <a href="https://t.me/your_telegram" className="text-gray-700">
-              <FaTelegram size={24} color="navi" />
+            <a href="https://t.me/Dveri_Etalon" className="text-gray-700">
+              <FaTelegram size={24} target="_blank" />
             </a>
-            <a href="https://wa.me/your_whatsapp" className="text-gray-700">
-              <FaWhatsapp size={24} color="light-green" />
-            </a>
-            <a href="https://vk.com/your_vk" className="text-gray-700">
-              <FaVk size={24} color="light-green" />
+            <a href="https://wa.me/+79250217365" className="text-gray-700">
+              <FaWhatsapp size={24} target="_blank" />
             </a>
             <a href="https://vk.com/your_vk" className="text-gray-700">
-              <FaYoutube size={24} color="light-green" />
+              <FaVk size={24} target="_blank" />
+            </a>
+            <a href="https://vk.com/your_vk" className="text-gray-700">
+              <FaYoutube size={24} target="_blank" />
             </a>
           </div>
         </div>

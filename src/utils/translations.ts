@@ -28,4 +28,5 @@ export const translations: { [key: string]: string } = {
   byudzhet: "бюджет",
   zerkalo: "Зеркало",
   service: "Сервис",
+  hillsboro: "Хиллсборо",
 };
