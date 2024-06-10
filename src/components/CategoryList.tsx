@@ -35,7 +35,7 @@ const CategoryList = () => {
   }
 
   return (
-    <div className="py-8 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
+    <div className="py-8 px-4 md:px-2 lg:px-4 xl:px-8 2xl:px-16">
       <div className="flex flex-wrap gap-4 justify-center">
         {categories.map((item) =>
           item.url ? (

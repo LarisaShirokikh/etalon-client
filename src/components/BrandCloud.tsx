@@ -36,7 +36,7 @@ const BrandCloud = () => {
   }
 
   return (
-    <div className="py-8 px-4 sm:px-8 lg:px-16 xl:px-32 2xl:px-64">
+    <div className="py-2 px-2 sm:px-2 text-sm lg:px-4 xl:px-8 2xl:px-12">
       <div className="flex flex-wrap gap-6 justify-center">
         {brands.map((brand) => (
           <Link

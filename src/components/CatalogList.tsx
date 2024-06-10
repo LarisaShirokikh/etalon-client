@@ -87,11 +87,11 @@ const CatalogList: React.FC<CatalogListProps> = ({
           </Link>
         ))}
       </div>
-      <Pagination
+      {/* <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={handlePageChange}
-      />
+      /> */}
     </div>
   );
 };

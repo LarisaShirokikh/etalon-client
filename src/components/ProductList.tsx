@@ -69,12 +69,12 @@ const ProductList: React.FC<ProductListProps> = ({
   }
 
   return (
-    <div className="mt-12 px-1 sm:px-5">
+    <div className="mt-6 py-4 px-2 md:px-2 lg:px-4 xl:px-4 2xl:px-8">
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
         {products.map((product: any) => (
           <Link
             href={"/" + product.slug}
-            className="flex flex-col gap-2 group p-2 bg-white rounded-md"
+            className="flex flex-col gap-2 group  bg-white rounded-md"
             key={product._id}
           >
             <div className="relative w-full h-48 overflow-hidden rounded-md">
@@ -132,11 +132,11 @@ const ProductList: React.FC<ProductListProps> = ({
           </Link>
         ))}
       </div>
-      <Pagination
+      {/* <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={handlePageChange}
-      />
+      /> */}
     </div>
   );
 };
