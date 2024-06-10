@@ -64,7 +64,7 @@ const CatalogList: React.FC<CatalogListProps> = ({
   }
 
   return (
-    <div className="px-4">
+    <div className="px-4 mt-12 ">
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4  xl:grid-cols-6  gap-4 md:gap-8">
         {catalogs.map((catalog: any) => (
           <Link href={`/catalog/${catalog.slug}`} key={catalog._id}>

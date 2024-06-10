@@ -25,7 +25,7 @@ const Navbar = () => {
   // }, []);
 
   return (
-    <div className="px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 relative bg-white ">
+    <div className="px-2 md:px-8 lg:px-8 xl:px-16 2xl:px-32 relative bg-white ">
       {/* MOBILE */}
       <div className="h-20 flex items-center justify-between md:hidden">
         <Link href="/" className="flex tracking-wide gap-3">
@@ -51,7 +51,14 @@ const Navbar = () => {
           </a>
           {/* {location && ( */}
           <div className="flex items-center gap-2 text-gray-700">
-            <span>📍Москва</span>
+            <Image
+              src="/map.svg"
+              alt="touch"
+              width={20}
+              height={20}
+              color="B51700"
+            />
+            Москва и МО
           </div>
           {/* )} */}
         </div>
@@ -88,7 +95,14 @@ const Navbar = () => {
               <FaWhatsapp size={20} color="1EB100" target="_blank" />
             </a>
             <div className="flex items-center gap-2 text-gray-700">
-              <span>📍Москва</span>
+              <Image
+                src="/map.svg"
+                alt="touch"
+                width={20}
+                height={20}
+                color="B51700"
+              />
+              Москва и МО
             </div>
             {/* {location && ( */}
             {/* )} */}
