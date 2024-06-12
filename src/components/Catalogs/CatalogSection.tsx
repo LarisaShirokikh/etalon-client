@@ -3,6 +3,9 @@ import ProductSet from "@/components/Products/ProductSet";
 import Skeleton from "@/components/Skeleton";
 import CatalogSet from "./CatalogSet";
 
+const one = "665b4315845f4980629d773c";
+const two = "665c6779517f618c930fba02";
+
 const CatalogSection = () => (
   <div className="flex flex-col md:flex-row gap-3">
     <div className="flex-1">
@@ -12,12 +15,12 @@ const CatalogSection = () => (
     </div>
     <div className="flex-1">
       {/* <Suspense fallback={<Skeleton />}> */}
-      <ProductSet />
+      <ProductSet catalogId={one} />
       {/* </Suspense> */}
     </div>
     <div className="flex-1">
       {/* <Suspense fallback={<Skeleton />}> */}
-      <ProductSet />
+      <ProductSet catalogId={two} />
       {/* </Suspense> */}
     </div>
   </div>

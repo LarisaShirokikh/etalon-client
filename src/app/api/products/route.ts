@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
   const slug = searchParams.get("slug");
   const catalogId = searchParams.get("catalogId");
   const productId = searchParams.get("productId");
-  const limit = parseInt(searchParams.get("limit") || "10");
+  // const limit = parseInt(searchParams.get("limit"));
   const skip = parseInt(searchParams.get("skip") || "0");
 
   await mongooseConnect();
@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
 
       const products = await dbQuery
         .sort({ _id: -1 })
-        .limit(limit)
+        // .limit(limit)
         .skip(skip)
         .exec();
 
@@ -59,7 +59,7 @@ export async function GET(request: NextRequest) {
       .where("catalog")
       .equals(catalogId)
       .sort({ _id: -1 })
-      .limit(limit)
+      // .limit(limit)
       .skip(skip);
     const products = await dbQuery.exec();
 
@@ -71,7 +71,7 @@ export async function GET(request: NextRequest) {
   }
 
   // Возвращаем все продукты без фильтрации по каталогу
-  const dbQuery = Product.find().sort({ _id: -1 }).limit(limit).skip(skip);
+  const dbQuery = Product.find().sort({ _id: -1 }).skip(skip);
   const products = await dbQuery.exec();
 
   const totalCount = await Product.countDocuments().exec();

@@ -24,7 +24,6 @@ const ProductItem: React.FC<ProductItemProps> = ({
   searchParams,
 }) => {
   const [product, setProduct] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
   const [bgColor, setBgColor] = useState<string>("");
 
   const colors = ["bg-red-100", "bg-green-100", "bg-blue-100", "bg-yellow-100"];
@@ -34,12 +33,6 @@ const ProductItem: React.FC<ProductItemProps> = ({
 
   useEffect(() => {
     const fetchProduct = async () => {
-      if (!slug) {
-        console.error("No slug provided");
-        return;
-      }
-
-      setLoading(true);
       try {
         const response = await axios.get(`/api/products`, {
           params: {
@@ -55,20 +48,15 @@ const ProductItem: React.FC<ProductItemProps> = ({
         setBgColor(getRandomColor());
       } catch (error) {
         console.error("Error fetching product:", error);
-      } finally {
-        setLoading(false);
-      }
+      } 
     };
 
     fetchProduct();
   }, [productId, categoryId, catalogId, slug, searchParams]);
 
-  if (loading) {
-    return <Skeleton />;
-  }
 
   if (!product) {
-    return <div>No product found</div>;
+    return <div><Skeleton/></div>;
   }
 
   return (

@@ -44,8 +44,13 @@ const HomePage = () => {
 
   return (
     <div>
+      
       <ProductSection  />
+     
+      
       <CatalogSection/>
+      
+
       {/* {productSections.map((section) => (
         <ProductSection key={section} />
       ))} */}

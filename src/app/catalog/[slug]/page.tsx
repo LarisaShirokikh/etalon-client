@@ -1,6 +1,7 @@
 "use client";
 import Breadcrumbs from "@/components/BreadCrumbs";
 import ProductList from "@/components/Products/ProductList";
+import ProductPage from "@/components/Products/ProductPage";
 import { usePathname } from "next/navigation";
 
 function CategoryCatalogsPage() {
@@ -11,7 +12,7 @@ function CategoryCatalogsPage() {
   return (
     <div className="mt-12 px-1 sm:px-5">
       <Breadcrumbs />
-      <ProductList slug={slug} limit={24} />
+      <ProductPage slug={slug} />
     </div>
   );
 }

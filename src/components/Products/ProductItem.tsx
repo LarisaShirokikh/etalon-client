@@ -55,12 +55,16 @@ const ProductItem: React.FC<ProductItemProps> = ({
   
 
   if (!product) {
-    return <div>No product found</div>;
+    return (
+      <div>
+        <Skeleton />
+      </div>
+    );
   }
 
   return (
     <Link href={`/${product.slug}`}>
-      <div className="w-full rounded-md overflow-hidden bg-white flex flex-col justify-center items-center">
+      <div className="w-full  rounded-md overflow-hidden bg-white flex flex-col justify-center items-center">
         <div className="relative h-48 w-48">
           <Image
             src={product.images[0] || "/product.png"}

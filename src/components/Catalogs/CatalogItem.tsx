@@ -25,11 +25,9 @@ const CatalogItem: React.FC<CatalogItemProps> = ({
   const [catalog, setCatalog] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
-
-  console.log("catalog slug", slug)
+ 
   useEffect(() => {
     const fetchCatalog = async () => {
-      setLoading(true);
       try {
         const response = await axios.get(`/api/catalogs`, {
           params: {
@@ -40,22 +38,26 @@ const CatalogItem: React.FC<CatalogItemProps> = ({
             searchParams,
           },
         });
-        console.log("setCatalog", response.data);
+        
         setCatalog(response.data);
       } catch (error) {
         console.error("Error fetching catalog:", error);
-      } 
+      }
     };
 
     fetchCatalog();
   }, [productId, categoryId, catalogId, slug, searchParams]);
 
   if (!catalog) {
-    return <div>No catalog found</div>;
+    return (
+      <div>
+        <Skeleton />
+      </div>
+    );
   }
- console.log("catalog1", catalog);
+
   return (
-    <Link href={`/${catalog.slug}`}>
+    <Link href={`/catalog/${catalog.slug}`}>
       <div className="w-full p-1 rounded-md overflow-hidden bg-white flex flex-col justify-center items-center">
         <div className="relative h-32 w-16">
           <Image

@@ -1,16 +1,20 @@
-"use client";
+// CatalogSet.js
 import { useEffect, useState } from "react";
 import axios from "axios";
 import CatalogItem from "./CatalogItem";
 import Link from "next/link";
+
+interface CatalogSetProps {
+  categoryId: string;
+}
 
 const getRandomCatalogs = (catalogs: any[], count: number) => {
   const shuffled = catalogs.sort(() => 0.5 - Math.random());
   return shuffled.slice(0, count);
 };
 
-const CatalogSet = ({ categoryId }: { categoryId: string }) => {
-  const [productSlugs, setProductSlugs] = useState<string[]>([]);
+const CatalogSet: React.FC<CatalogSetProps> = ({ categoryId }) => {
+  const [catalogSlugs, setCatalogSlugs] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchCatalogs = async () => {
@@ -23,7 +27,7 @@ const CatalogSet = ({ categoryId }: { categoryId: string }) => {
         const slugs = randomCatalogs.map(
           (catalog: { slug: any }) => catalog.slug
         );
-        setProductSlugs(slugs);
+        setCatalogSlugs(slugs);
       } catch (error) {
         console.error("Error fetching catalog :", error);
       }
@@ -45,7 +49,7 @@ const CatalogSet = ({ categoryId }: { categoryId: string }) => {
         </Link>
       </div>
       <div className="grid grid-cols-2 gap-4">
-        {productSlugs.map((slug, index) => (
+        {catalogSlugs.map((slug) => (
           <CatalogItem key={slug} slug={slug} />
         ))}
       </div>
