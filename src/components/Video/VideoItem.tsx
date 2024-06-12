@@ -38,8 +38,8 @@ const VideoItem = ({ src, onNext }: VideoItemProps) => {
         src={"/test.mp4"}
         className="w-full h-full rounded-lg object-cover"
         controls={false}
-        autoPlay={true}
         loop={true}
+        playsInline
         muted={true} // Ensure the video is muted by default
         // onClick={() => {
         //   const videoElement = videoRef.current;
@@ -53,7 +53,7 @@ const VideoItem = ({ src, onNext }: VideoItemProps) => {
         //     }
         //   }
         // }}
-      />
+      ></video>
     </div>
   );
 };
