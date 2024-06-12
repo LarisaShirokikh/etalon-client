@@ -2,8 +2,8 @@ import { Suspense } from "react";
 import ProductSet from "@/components/Products/ProductSet";
 import CatalogSet from "../Catalogs/CatalogSet";
 
-const one = "665b4315845f4980629d773c";
-const two = "665c6779517f618c930fba02";
+const one = "665c67e2517f618c930fba0a";
+const two = "665c680c517f618c930fba0e";
 
 const ProductSection = () => (
   <div className="flex flex-col md:flex-row gap-3">

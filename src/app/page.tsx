@@ -45,10 +45,10 @@ const HomePage = () => {
   return (
     <div>
       
+      <CatalogSection/>
       <ProductSection  />
      
       
-      <CatalogSection/>
       
 
       {/* {productSections.map((section) => (
