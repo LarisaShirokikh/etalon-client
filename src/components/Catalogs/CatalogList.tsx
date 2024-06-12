@@ -3,9 +3,8 @@ import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import Skeleton from "./Skeleton";
-import Pagination from "./Pagination";
-
+import Skeleton from "../Skeleton";
+import Pagination from "../Pagination";
 
 interface CatalogListProps {
   limit?: number;

@@ -5,7 +5,6 @@ import Skeleton from "./Skeleton";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { ICategory } from "@/interface/Category";
-import CatalogList from "./CatalogList";
 
 const CategoryList = () => {
   const [categories, setCategories] = useState<ICategory[]>([]);
@@ -35,8 +34,8 @@ const CategoryList = () => {
   }
 
   return (
-    <div className="py-8 px-4 md:px-2 lg:px-4 xl:px-8 2xl:px-16">
-      <div className="flex flex-wrap gap-4 justify-center">
+    <div className="py-1 px-1 md:px-1 lg:px-1 xl:px-2 2xl:px-2">
+      <div className="flex gap-4 overflow-x-auto scrollbar-hide">
         {categories.map((item) =>
           item.url ? (
             <a href={item.url} className="flex-shrink-0" key={item.name}>

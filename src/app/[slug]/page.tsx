@@ -3,8 +3,8 @@
 import Breadcrumbs from "@/components/BreadCrumbs";
 import Button from "@/components/Button";
 import FrameInstallationInfo from "@/components/FrameInstallationInfo";
-import ProductImages from "@/components/ProductImages";
-import ProductList from "@/components/ProductList";
+import ProductImages from "@/components/Products/ProductImages";
+import ProductList from "@/components/Products/ProductList";
 import ServiceDetails from "@/components/ServiceDetails";
 import Skeleton from "@/components/Skeleton";
 import { IProduct } from "@/interface/Product";
@@ -23,9 +23,8 @@ const SinglePage = ({ params }: { params: { slug: string } }) => {
           params: { slug: params.slug },
         });
         console.log("response found:", response.data);
-        
-          setProduct(response.data);
-        
+
+        setProduct(response.data);
       } catch (error) {
         console.error("Error fetching product:", error);
         setProduct(null);

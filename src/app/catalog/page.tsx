@@ -1,6 +1,6 @@
 "use client";
 import Breadcrumbs from "@/components/BreadCrumbs";
-import CatalogList from "@/components/CatalogList";
+import CatalogList from "@/components/Catalogs/CatalogList";
 import { usePathname } from "next/navigation";
 
 function CategoryCatalogsPage() {

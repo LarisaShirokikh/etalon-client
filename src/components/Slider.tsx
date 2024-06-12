@@ -2,34 +2,34 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 const slides = [
   {
     id: 1,
-    title: "Профессиональный монтаж с гарантией!",
-    description: "Привезем и установим в 1 день!",
     img: "/wite.webp",
     url: "/",
   },
   {
     id: 2,
-    title: "Новая коллекция входных дверей ISSIDA",
-    description: "Цены от 52300 руб!",
     img: "/issida.webp",
     url: "/",
   },
   {
     id: 3,
-    title: "Подберем отделку двери под ваш интерьер",
-    description: "Скидка на доборы!",
     img: "/wite.webp",
+    url: "/",
+  },
+  {
+    id: 4,
+    img: "/labirint-posle.webp",
     url: "/",
   },
 ];
 
 const Slider = () => {
   const [current, setCurrent] = useState(0);
+  const sliderRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -39,30 +39,36 @@ const Slider = () => {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    if (sliderRef.current) {
+      sliderRef.current.scrollTo({
+        left: sliderRef.current.offsetWidth * current,
+        behavior: "smooth",
+      });
+    }
+  }, [current]);
+
   return (
     <div className="relative h-[300px] overflow-hidden">
       <div
-        className="w-max h-full flex transition-transform duration-1000 ease-in-out"
-        style={{ transform: `translateX(-${current * 100}vw)` }}
+        ref={sliderRef}
+        className="flex overflow-x-scroll scrollbar-hide snap-x snap-mandatory"
+        style={{ scrollSnapType: "x mandatory" }}
       >
-        {slides.map((slide) => (
-          <Link href={slide.url} key={slide.id} className="w-screen h-full">
+        {slides.map((slide, index) => (
+          <Link href={slide.url} key={slide.id} className="snap-start">
             <div
-              className="w-full h-full flex flex-col xl:flex-row gap-16"
-              style={{
-                backgroundImage: `url(${slide.img})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
+              className={`w-[90vw] h-64 flex-shrink-0 p-2 ${
+                current === index ? "scale-100" : "scale-95"
+              } transition-transform duration-300`}
             >
-              {/* Text Container */}
-              <div className="flex flex-col items-center justify-center gap-8 w-full h-full text-center p-4 bg-black bg-opacity-50">
-                <h2 className="text-white text-l lg:text-2xl 2xl:text-2xl">
-                  {slide.description}
-                </h2>
-                <h1 className="text-white text-3xl lg:text-4xl 2xl:text-8xl font-semibold">
-                  {slide.title}
-                </h1>
+              <div className="relative w-full h-full rounded-lg overflow-hidden">
+                <Image
+                  src={slide.img}
+                  alt={`Slide ${slide.id}`}
+                  layout="fill"
+                  objectFit="cover"
+                />
               </div>
             </div>
           </Link>

@@ -1,9 +1,8 @@
 "use client";
 import Breadcrumbs from "@/components/BreadCrumbs";
 import Pagination from "@/components/Pagination";
-import ProductList from "@/components/ProductList";
+import ProductList from "@/components/Products/ProductList";
 import { usePathname } from "next/navigation";
-
 
 function CategoryCatalogsPage() {
   const pathname = usePathname();
