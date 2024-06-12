@@ -38,21 +38,21 @@ const VideoItem = ({ src, onNext }: VideoItemProps) => {
         src={"/test.mp4"}
         className="w-full h-full rounded-lg object-cover"
         controls={false}
-        autoPlay
+        autoPlay={true}
         loop={true}
         muted={true} // Ensure the video is muted by default
-        onClick={() => {
-          const videoElement = videoRef.current;
-          if (videoElement) {
-            if (videoElement.paused) {
-              videoElement.play();
-              setIsPlaying(true);
-            } else {
-              videoElement.pause();
-              setIsPlaying(false);
-            }
-          }
-        }}
+        // onClick={() => {
+        //   const videoElement = videoRef.current;
+        //   if (videoElement) {
+        //     if (videoElement.paused) {
+        //       videoElement.play();
+        //       setIsPlaying(true);
+        //     } else {
+        //       videoElement.pause();
+        //       setIsPlaying(false);
+        //     }
+        //   }
+        // }}
       />
     </div>
   );
