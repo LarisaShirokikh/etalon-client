@@ -81,7 +81,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
           <div className="mt-1 flex">
             {product.price.discountedPrice ? (
               <>
-                <span className="text-red-700 text-s">
+                <span className="text-green-800 font-bold text-s">
                   {product.price.discountedPrice} ₽.
                 </span>
                 <span className="block text-gray-500 text-xs line-through">

@@ -59,7 +59,7 @@ const CatalogItem: React.FC<CatalogItemProps> = ({
   return (
     <Link href={`/catalog/${catalog.slug}`}>
       <div className="w-full p-1 rounded-md overflow-hidden bg-white flex flex-col justify-center items-center">
-        <div className="relative h-32 w-16">
+        <div className="relative mt-2 h-32 w-16">
           <Image
             src={
               catalog.images && catalog.images[0]
@@ -73,12 +73,14 @@ const CatalogItem: React.FC<CatalogItemProps> = ({
             className="rounded-md"
           />
         </div>
-        <div className="p-4">
+        <div className="p-2">
           <h3 className="text-xs text-gray-800 overflow-hidden line-clamp-2">
             {catalog.name}
           </h3>
-          <div className="mt-1 flex">
-            <span className="text-gray-700 text-s">от {catalog.price} ₽.</span>
+          <div className=" flex">
+            <span className="text-green-800 font-bold text-s">
+              от {catalog.price} ₽.
+            </span>
           </div>
         </div>
       </div>

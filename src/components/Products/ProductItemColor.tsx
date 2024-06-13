@@ -62,7 +62,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
   return (
     <Link href={`/${product.slug}`}>
       <div
-        className={`w-full p-1 border ${bgColor} rounded-lg overflow-hidden flex flex-col justify-center items-center`}
+        className={`w-full p-1 ${bgColor} rounded-lg overflow-hidden flex flex-col justify-center items-center`}
       >
         <div className="relative h-48 w-48">
           <Image
@@ -73,14 +73,14 @@ const ProductItem: React.FC<ProductItemProps> = ({
             className="rounded-md"
           />
         </div>
-        <div className="p-4">
+        <div className="p-2">
           <h3 className="text-xs text-gray-800 overflow-hidden line-clamp-2">
             {product.title}
           </h3>
-          <div className="mt-1 flex">
+          <div className=" flex">
             {product.price.discountedPrice ? (
               <>
-                <span className="text-red-700 text-s">
+                <span className="text-green-800 font-bold text-s">
                   {product.price.discountedPrice} ₽.
                 </span>
                 <span className="block text-gray-500 text-xs line-through">

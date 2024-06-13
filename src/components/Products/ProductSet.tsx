@@ -43,18 +43,21 @@ const ProductSet: React.FC<ProductSetProps> = ({ catalogId }) => {
 
   return (
     <div className="grid grid-cols-2 mt-4 gap-1">
-      {productSlugs.map((slug, index) =>
-        index === 3 ? (
-          <VideoItem
-            key={slug}
-            src="/test.mp4"
-            onNext={() => console.log("Next video")}
-          />
-        ) : (
-          // <ProductItemColor key={slug} slug={slug} />
-          <ProductItem key={slug} slug={slug} />
-        )
-      )}
+      {productSlugs.map((slug, index) => {
+        if (index === 2) {
+          return (
+            <VideoItem
+              key={slug}
+              src="/test.mp4"
+              onNext={() => console.log("Next video")}
+            />
+          );
+        } else if (index === 3) {
+          return <ProductItemColor key={slug} slug={slug} />;
+        } else {
+          return <ProductItem key={slug} slug={slug} />;
+        }
+      })}
     </div>
   );
 };
