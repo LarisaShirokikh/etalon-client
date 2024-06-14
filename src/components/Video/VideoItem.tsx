@@ -49,7 +49,6 @@ const VideoItem = ({ slug }: VideoItemProps) => {
       <div className="relative h-64 px-5">
         <div className="relative w-full h-full">
           <video
-            autoPlay 
             muted
             loop
             className="w-full h-full rounded-lg object-cover"

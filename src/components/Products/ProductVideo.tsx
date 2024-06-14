@@ -9,7 +9,6 @@ const ProductVideo = ({ src }: { src: string }) => {
       <div className="relative w-full h-full">
         <video
           src={src}
-          autoPlay
           muted
           loop
           className="w-full h-full rounded-lg object-cover"
