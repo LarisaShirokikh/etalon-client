@@ -92,7 +92,7 @@ const ProductList: React.FC<ProductListProps> = ({
               >
                 <div className="relative h-48 w-48">
                   <Image
-                    src={product.images[0] || "/product.png"}
+                    src={product.images?.[0] || "/product.png"}
                     alt={product.title}
                     layout="fill"
                     objectFit="cover"
@@ -131,7 +131,7 @@ const ProductList: React.FC<ProductListProps> = ({
               >
                 <div className="relative h-48 w-48">
                   <Image
-                    src={product.images[0] || "/product.png"}
+                    src={product.images?.[0] || "/product.png"}
                     alt={product.title}
                     layout="fill"
                     objectFit="cover"

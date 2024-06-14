@@ -1,62 +1,84 @@
 // VideoItem.js
-import React, { useRef, useEffect, useState } from "react";
+import axios from "axios";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import Skeleton from "../Skeleton";
 
 
 interface VideoItemProps {
-  src: string;
-  onNext?: () => void;
+  slug: string;
 }
 
-const VideoItem = ({ src, onNext }: VideoItemProps) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+const VideoItem = ({ slug }: VideoItemProps) => {
+  const [video, setVideo] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const videoElement = videoRef.current;
+    const fetchProduct = async () => {
+      if (!slug) {
+        console.error("No slug provided");
+        return;
+      }
 
-    const handleEnded = () => {
-      if (onNext) onNext();
-    };
+      try {
+        const response = await axios.get(`/api/video`, {
+          params: {
+            slug,
+          },
+        });
 
-    if (videoElement) {
-      videoElement.addEventListener("ended", handleEnded);
-      videoElement.play();
-      setIsPlaying(true);
-    }
-
-    return () => {
-      if (videoElement) {
-        videoElement.removeEventListener("ended", handleEnded);
+        setVideo(response.data);
+      } catch (error) {
+        console.error("Error fetching product:", error);
       }
     };
-  }, [onNext]);
+
+    fetchProduct();
+  }, [ slug]);
+
+  if (!video) {
+    return (
+      <div>
+        <Skeleton />
+      </div>
+    );
+  }
 
   return (
-    <div className="relative h-64 px-5">
-      <video
-        ref={videoRef}
-        src={"/test.mp4"}
-        className="w-full h-full rounded-lg object-cover"
-        controls={false}
-        loop={true}
-        playsInline
-        muted={true} // Ensure the video is muted by default
-        // onClick={() => {
-        //   const videoElement = videoRef.current;
-        //   if (videoElement) {
-        //     if (videoElement.paused) {
-        //       videoElement.play();
-        //       setIsPlaying(true);
-        //     } else {
-        //       videoElement.pause();
-        //       setIsPlaying(false);
-        //     }
-        //   }
-        // }}
-      ></video>
-    </div>
+    <Link href={`/video/${video.slug}`}>
+      <div className="relative h-64 px-5">
+        <div className="relative w-full h-full">
+          <video
+            autoPlay 
+            muted
+            loop
+            className="w-full h-full rounded-lg object-cover"
+          >
+            <source src={video.video[0]} type="video/mp4" />
+          </video>
+          <div className="absolute bottom-0 left-0 w-full p-2 text-white  rounded-b-lg">
+            <h3 className="line-clamp-2 text-xs">{video.title}</h3>
+            <div className="mt-1 flex ">
+              {video.price.discountedPrice ? (
+                <>
+                  <span className="text-white font-bold text-sm mr-2">
+                    {video.price.discountedPrice} ₽
+                  </span>
+                  <span className="text-white text-xs line-through">
+                    {video.price.price} ₽
+                  </span>
+                </>
+              ) : (
+                <span className="text-white text-sm">
+                  {video.price.price} ₽
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </Link>
   );
 };
-
 
 export default VideoItem;

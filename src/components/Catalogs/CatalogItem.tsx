@@ -58,8 +58,8 @@ const CatalogItem: React.FC<CatalogItemProps> = ({
 
   return (
     <Link href={`/catalog/${catalog.slug}`}>
-      <div className="w-full p-1 rounded-md overflow-hidden bg-white flex flex-col justify-center items-center">
-        <div className="relative mt-2 h-32 w-16">
+      <div className="w-48 p-2 rounded-lg overflow-hidden bg-white flex flex-col justify-center items-center">
+        <div className="relative h-48 w-24 sm:h-32 sm:w-32 md:h-40 md:w-24">
           <Image
             src={
               catalog.images && catalog.images[0]
@@ -67,18 +67,17 @@ const CatalogItem: React.FC<CatalogItemProps> = ({
                 : "/catalog.png"
             }
             alt={catalog.name}
-            fill
-            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
-            // objectFit="cover"
+            layout="fill"
+            objectFit="cover"
             className="rounded-md"
           />
         </div>
         <div className="p-2">
-          <h3 className="text-xs text-gray-800 overflow-hidden line-clamp-2">
+          <h3 className="text-sm sm:text-xs md:text-sm text-gray-800 overflow-hidden line-clamp-2">
             {catalog.name}
           </h3>
-          <div className=" flex">
-            <span className="text-green-800 font-bold text-s">
+          <div className="flex">
+            <span className="text-green-800 font-bold text-sm">
               от {catalog.price} ₽.
             </span>
           </div>

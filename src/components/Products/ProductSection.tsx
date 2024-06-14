@@ -4,11 +4,12 @@ import CatalogSet from "../Catalogs/CatalogSet";
 
 const one = "665c67e2517f618c930fba0a";
 const two = "665c680c517f618c930fba0e";
+const three = "665c680c517f618c930fba0e";
 
 const ProductSection = () => (
   <div className="flex flex-col md:flex-row gap-3">
     <div className="flex-1">
-      <ProductSet catalogId={one} />
+      <ProductSet catalogId={one} catalogIdVideo={three} />
     </div>
     <div className="flex-1">
       <ProductSet catalogId={two} />
