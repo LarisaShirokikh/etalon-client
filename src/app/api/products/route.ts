@@ -8,7 +8,6 @@ export async function GET(request: NextRequest) {
   const slug = searchParams.get("slug");
   const catalogId = searchParams.get("catalogId");
   const productId = searchParams.get("productId");
-  // const limit = parseInt(searchParams.get("limit"));
   const skip = parseInt(searchParams.get("skip") || "0");
 
   await mongooseConnect();

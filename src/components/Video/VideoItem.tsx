@@ -4,7 +4,6 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Skeleton from "../Skeleton";
 
-
 interface VideoItemProps {
   slug: string;
 }
@@ -34,7 +33,7 @@ const VideoItem = ({ slug }: VideoItemProps) => {
     };
 
     fetchProduct();
-  }, [ slug]);
+  }, [slug]);
 
   if (!video) {
     return (
@@ -49,12 +48,17 @@ const VideoItem = ({ slug }: VideoItemProps) => {
       <div className="relative h-64 px-5">
         <div className="relative w-full h-full">
           <video
+            autoPlay
+            playsInline
             muted
             loop
+            controls={false}
+            preload="auto"
             className="w-full h-full rounded-lg object-cover"
           >
             <source src={video.video[0]} type="video/mp4" />
           </video>
+
           <div className="absolute bottom-0 left-0 w-full p-2 text-white  rounded-b-lg">
             <h3 className="line-clamp-2 text-xs">{video.title}</h3>
             <div className="mt-1 flex ">

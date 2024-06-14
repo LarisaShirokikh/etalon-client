@@ -1,56 +1,46 @@
 "use client";
-import BrandCloud from "@/components/BrandCloud";
-import CatalogList from "@/components/Catalogs/CatalogList";
-import CategoryList from "@/components/CategoryList";
-import Skeleton from "@/components/Skeleton";
-import Form from "@/components/Form";
-import Link from "next/link";
-import { Suspense, useState, useEffect } from "react";
-import InfoCom from "@/components/InfoCom";
-import ProductSet from "@/components/Products/ProductSet";
-import ProductSection from "@/components/Products/ProductSection";
-import CatalogSection from "@/components/Catalogs/CatalogSection";
+
+import dynamic from "next/dynamic";
+import { useInView } from "react-intersection-observer";
+import { useEffect, useState } from "react";
+
+// Dynamic imports for lazy loading
+const ProductSection = dynamic(
+  () => import("@/components/Products/ProductSection")
+);
+const CatalogSection = dynamic(
+  () => import("@/components/Catalogs/CatalogSection")
+);
 
 const HomePage = () => {
-  const wite = "665b2da0845f4980629d771d";
-  const cottege = "665b2bc8845f4980629d7717";
-  const brue = "665b4315845f4980629d773c";
-  const line = "665c680c517f618c930fba0e";
+  const cat1 = "665c67ad517f618c930fba06";
+  const cat3 = "665c6779517f618c930fba02";
+  const cat4 = "665b4315845f4980629d773c";
+  const cat5 = "665b2b71845f4980629d7714";
+  const cat6 = "665b34e7845f4980629d7720";
+  const cat7 = "6667094753a55b95d26b74d7";
 
-  const [productSections, setProductSections] = useState([0]);
+  const [ref1, inView1] = useInView({ triggerOnce: true });
+  const [ref2, inView2] = useInView({ triggerOnce: true });
 
-  const loadMoreSections = () => {
-    setProductSections((prevSections) => [
-      ...prevSections,
-      prevSections.length,
-    ]);
-  };
+   useEffect(() => {
+     console.log("Component 1 in view:", inView1);
+   }, [inView1]);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (
-        window.innerHeight + window.scrollY >=
-        document.body.offsetHeight - 500
-      ) {
-        setTimeout(loadMoreSections, 1000);
-      }
-    };
+   useEffect(() => {
+     console.log("Component 2 in view:", inView2);
+   }, [inView2]);
 
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  
 
   return (
     <div>
-      <ProductSection />
-      <CatalogSection />
-      <ProductSection />
-
-      {/* {productSections.map((section) => (
-        <ProductSection key={section} />
-      ))} */}
+      <div ref={ref1}>
+        {inView1 && <ProductSection catalogId={cat1} categoryId={cat5} />}
+      </div>
+      <div ref={ref2}>
+        {inView2 && <CatalogSection catalogId={cat3} categoryId={cat6} />}
+      </div>
     </div>
   );
 };

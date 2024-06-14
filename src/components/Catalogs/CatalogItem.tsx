@@ -58,7 +58,7 @@ const CatalogItem: React.FC<CatalogItemProps> = ({
 
   return (
     <Link href={`/catalog/${catalog.slug}`}>
-      <div className="w-48 p-2 rounded-lg overflow-hidden bg-white flex flex-col justify-center items-center">
+      <div className="w-48 p-2 rounded-lg bg-white flex flex-col justify-center items-center">
         <div className="relative h-48 w-24 sm:h-32 sm:w-32 md:h-40 md:w-24">
           <Image
             src={

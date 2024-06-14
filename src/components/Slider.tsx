@@ -75,7 +75,7 @@ const Slider = () => {
         ))}
       </div>
       {/* Slide Indicators */}
-      <div className="absolute left-1/2 transform -translate-x-1/2 bottom-4 flex gap-4">
+      {/* <div className="absolute left-1/2 transform -translate-x-1/2 bottom-4 flex gap-4">
         {slides.map((slide, index) => (
           <div
             className={`w-3 h-3 rounded-full ring-1 ring-gray-600 cursor-pointer flex items-center justify-center transition-transform duration-300 ${
@@ -89,7 +89,7 @@ const Slider = () => {
             )}
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };
