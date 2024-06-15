@@ -13,7 +13,7 @@ const ProductVideo = ({ src }: { src: string }) => {
           playsInline
           muted
           loop
-          controls={true}
+          controls={false}
           preload="auto"
           className="w-full h-full rounded-lg object-cover"
         >

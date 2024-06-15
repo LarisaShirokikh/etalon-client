@@ -40,7 +40,6 @@ const CatalogSet: React.FC<ProductSetProps> = ({ catalogId, categoryId }) => {
   useEffect(() => {
     const fetchCatalogs = async () => {
       try {
-        // Попытка получения данных из localStorage
         const response = await axios.get("/api/catalogs", {
           params: { catalogId },
         });

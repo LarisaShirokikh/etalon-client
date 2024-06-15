@@ -1,10 +1,12 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
-import { useInView } from "react-intersection-observer";
-import { useEffect, useState } from "react";
+import Slider from "@/components/Slider";
+import componentData from "@/utils/componentData"; // Убедитесь, что путь правильный
+import NavMenu from "@/components/Menu/NavMenu";
 
-// Dynamic imports for lazy loading
+// Динамическая загрузка компонентов
 const ProductSection = dynamic(
   () => import("@/components/Products/ProductSection")
 );
@@ -13,34 +15,45 @@ const CatalogSection = dynamic(
 );
 
 const HomePage = () => {
-  const cat1 = "665c67ad517f618c930fba06";
-  const cat3 = "665c6779517f618c930fba02";
-  const cat4 = "665b4315845f4980629d773c";
-  const cat5 = "665b2b71845f4980629d7714";
-  const cat6 = "665b34e7845f4980629d7720";
-  const cat7 = "6667094753a55b95d26b74d7";
+  const [components, setComponents] = useState(componentData.slice(0, 2)); // Начальная загрузка двух компонентов
 
-  const [ref1, inView1] = useInView({ triggerOnce: true });
-  const [ref2, inView2] = useInView({ triggerOnce: true });
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.innerHeight + window.scrollY;
+      const threshold = document.body.offsetHeight - 100;
 
-   useEffect(() => {
-     console.log("Component 1 in view:", inView1);
-   }, [inView1]);
+      if (scrollPosition >= threshold) {
+        setComponents((prevComponents) => [
+          ...prevComponents,
+          componentData[prevComponents.length % componentData.length], // Циклически добавляем компоненты
+        ]);
+      }
+    };
 
-   useEffect(() => {
-     console.log("Component 2 in view:", inView2);
-   }, [inView2]);
-
-  
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [components]);
 
   return (
     <div>
-      <div ref={ref1}>
-        {inView1 && <ProductSection catalogId={cat1} categoryId={cat5} />}
-      </div>
-      <div ref={ref2}>
-        {inView2 && <CatalogSection catalogId={cat3} categoryId={cat6} />}
-      </div>
+      
+      <Slider />
+      {components.map((component, index) => (
+        <div key={index}>
+          {component.type === "ProductSection" && (
+            <ProductSection
+              catalogId={component.catalogId}
+              categoryId={component.categoryId}
+            />
+          )}
+          {component.type === "CatalogSection" && (
+            <CatalogSection
+              catalogId={component.catalogId}
+              categoryId={component.categoryId}
+            />
+          )}
+        </div>
+      ))}
     </div>
   );
 };

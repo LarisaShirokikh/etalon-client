@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Skeleton from "../Skeleton";
-import Pagination from "../Pagination";
 
 interface CatalogListProps {
   limit?: number;
@@ -25,8 +24,12 @@ const CatalogList: React.FC<CatalogListProps> = ({
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
 
+  console.log("catalog list1", categoryId);
+
   useEffect(() => {
-    const fetchCatalogs = async () => {
+    const fetchCatalogs = async (
+      
+    ) => {
       setLoading(true);
       try {
         const response = await axios.get("/api/catalogs", {
@@ -38,6 +41,7 @@ const CatalogList: React.FC<CatalogListProps> = ({
             slug,
           },
         });
+        console.log("catalog list", response.data);
         setCatalogs(response.data.catalogs);
         setTotalPages(Math.ceil(response.data.totalCount / limit));
       } catch (error) {

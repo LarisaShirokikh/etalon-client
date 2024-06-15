@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
@@ -23,3 +25,5 @@ nav[aria-label="breadcrumb"] ol li a {
   text-decoration: none;
   color: inherit;
 }
+
+

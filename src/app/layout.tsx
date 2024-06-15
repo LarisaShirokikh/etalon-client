@@ -1,17 +1,14 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/Menu/Navbar";
 import Footer from "@/components/Footer";
-import { TranslationsProvider } from "@/context/translationsContext"; 
+import { TranslationsProvider } from "@/context/translationsContext";
 import { translations } from "@/utils/translations";
 import YandexMetrika from "@/components/YandexMetrika";
-import Slider from "@/components/Slider";
-import CategoryList from "@/components/CategoryList";
+import NavMenu from "@/components/Menu/NavMenu";
 
 const inter = Inter({ subsets: ["latin"] });
-
-
 
 export const metadata: Metadata = {
   title: "Входные металлические двери в Москве",
@@ -29,8 +26,7 @@ export default function RootLayout({
         <YandexMetrika />
         <TranslationsProvider translations={translations}>
           <Navbar />
-          {/* <CategoryList /> */}
-          <Slider />
+          <NavMenu />
           {children}
           <Footer />
         </TranslationsProvider>

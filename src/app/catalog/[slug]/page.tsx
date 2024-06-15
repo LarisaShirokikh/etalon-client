@@ -11,7 +11,7 @@ function CategoryCatalogsPage() {
   console.log("slug", slug);
   return (
     <div className="mt-12 px-1 sm:px-5">
-      <Breadcrumbs />
+      {/* <Breadcrumbs /> */}
       <ProductPage slug={slug} />
     </div>
   );

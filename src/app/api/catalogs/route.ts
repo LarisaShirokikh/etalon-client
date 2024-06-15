@@ -13,6 +13,8 @@ export async function GET(request: NextRequest) {
 
   await mongooseConnect();
 
+  console.log("catalogs api", categoryId);
+
   if (catalogId) {
     const catalog = await Catalog.findById(catalogId).exec();
     if (catalog) {
@@ -24,13 +26,13 @@ export async function GET(request: NextRequest) {
   let category;
   let catalog;
   if (slug) {
-    catalog = await Catalog.findOne({ slug }).exec();
-    if(catalog) {
-      return NextResponse.json(catalog);
-    }
     category = await Category.findOne({ slug }).exec();
     if (category) {
       return NextResponse.json(category);
+    }
+    catalog = await Catalog.findOne({ slug }).exec();
+    if(catalog) {
+      return NextResponse.json(catalog);
     }
   }
 
@@ -48,7 +50,6 @@ export async function GET(request: NextRequest) {
   dbQuery.limit(limit).skip(skip);
   
   const catalogs = await dbQuery.exec();
-  console.log("dbQuery", catalogs);
   const totalCount = await Catalog.countDocuments().exec();
   return NextResponse.json({ catalogs, totalCount });
 }
