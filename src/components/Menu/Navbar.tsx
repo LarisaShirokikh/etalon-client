@@ -4,6 +4,7 @@ import Image from "next/image";
 import { FaPhoneAlt, FaTelegram } from "react-icons/fa";
 import SearchBar from "../SearchBar";
 import { FaWhatsapp } from "react-icons/fa6";
+import NavMenu from "./NavMenu";
 
 const Navbar = () => {
   return (
@@ -80,6 +81,9 @@ const Navbar = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="hidden md:block">
+        <NavMenu />
       </div>
     </div>
   );

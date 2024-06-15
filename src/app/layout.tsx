@@ -7,6 +7,7 @@ import { TranslationsProvider } from "@/context/translationsContext";
 import { translations } from "@/utils/translations";
 import YandexMetrika from "@/components/YandexMetrika";
 import NavMenu from "@/components/Menu/NavMenu";
+import MobileNavbar from "@/components/Menu/MobileNavbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,8 +27,8 @@ export default function RootLayout({
         <YandexMetrika />
         <TranslationsProvider translations={translations}>
           <Navbar />
-          <NavMenu />
           {children}
+          <MobileNavbar/>
           <Footer />
         </TranslationsProvider>
       </body>

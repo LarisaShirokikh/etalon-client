@@ -9,7 +9,7 @@ function CategoryCatalogsPage() {
 
   console.log("slug", slug);
   return (
-    <div className="mt-12 px-1 sm:px-5">
+    <div className="mt-12 px-1 sm:px-1">
       {/* <Breadcrumbs /> */}
       <CatalogList slug={slug} limit={24} />
     </div>

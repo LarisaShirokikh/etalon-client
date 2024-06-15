@@ -67,8 +67,8 @@ const CatalogList: React.FC<CatalogListProps> = ({
   }
 
   return (
-    <div className="px-4 mt-12 ">
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4  xl:grid-cols-6  gap-4 md:gap-8">
+    <div className="px-2 mt-12 ">
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4  xl:grid-cols-6  gap-2 md:gap-4">
         {catalogs.map((catalog: any) => (
           <Link href={`/catalog/${catalog.slug}`} key={catalog._id}>
             <div className="relative bg-slate-100 w-full h-96 sm:h-86 md:h-96 rounded-lg overflow-hidden">
@@ -84,7 +84,7 @@ const CatalogList: React.FC<CatalogListProps> = ({
                 className="object-cover rounded-lg"
               />
             </div>
-            <h1 className="mt-2 font-light text-base sm:text-sm tracking-wide text-center">
+            <h1 className="mt-1 font-light text-base sm:text-sm tracking-wide text-center">
               {catalog.name}
             </h1>
           </Link>
