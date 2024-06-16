@@ -66,8 +66,8 @@ const Slider = () => {
                 <Image
                   src={slide.img}
                   alt={`Slide ${slide.id}`}
-                  layout="fill"
-                  objectFit="cover"
+                  fill
+                  style={{ objectFit: "cover" }}
                 />
               </div>
             </div>

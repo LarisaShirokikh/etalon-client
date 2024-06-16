@@ -1,3 +1,4 @@
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -6,8 +7,10 @@ import Footer from "@/components/Footer";
 import { TranslationsProvider } from "@/context/translationsContext";
 import { translations } from "@/utils/translations";
 import YandexMetrika from "@/components/YandexMetrika";
-import NavMenu from "@/components/Menu/NavMenu";
+import "@/utils/wdyr";
 import MobileNavbar from "@/components/Menu/MobileNavbar";
+import { authOptions } from "@/lib/authOptions";
+import { getServerSession } from "next-auth";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,19 +19,21 @@ export const metadata: Metadata = {
   description: "Входные металлические двери в Москве",
 };
 
-export default function RootLayout({
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession(authOptions);
   return (
     <html lang="en">
       <body className={inter.className}>
         <YandexMetrika />
         <TranslationsProvider translations={translations}>
-          <Navbar />
+          <Navbar session={session} />
           {children}
-          <MobileNavbar/>
+          <MobileNavbar session={session} />
           <Footer />
         </TranslationsProvider>
       </body>

@@ -3,8 +3,9 @@
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Slider from "@/components/Slider";
-import componentData from "@/utils/componentData"; // Убедитесь, что путь правильный
-import NavMenu from "@/components/Menu/NavMenu";
+import componentData from "@/utils/componentData";
+
+
 
 // Динамическая загрузка компонентов
 const ProductSection = dynamic(

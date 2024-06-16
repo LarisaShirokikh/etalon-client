@@ -99,17 +99,13 @@ const DoorTrimsInfo = () => {
     },
   ];
 
-
-  
-
-
-  const handleMouseDown = (e: { preventDefault: () => void; }) => {
+  const handleMouseDown = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseup", handleMouseUp);
   };
 
-  const handleMouseMove = (e: { clientX: number; }) => {
+  const handleMouseMove = (e: { clientX: number }) => {
     const divider = document.querySelector(".divider") as HTMLElement;
     const container = document.querySelector(".image-container") as HTMLElement;
     if (container) {
@@ -131,7 +127,7 @@ const DoorTrimsInfo = () => {
   };
 
   return (
-    <div  className="mt-12 max-w-3xl mx-auto p-4 text-gray-600">
+    <div className="mt-12 max-w-3xl mx-auto p-4 text-gray-600">
       <h1 className="mt-12 text-2xl md:text-3xl font-bold mb-4 text-center">
         Доборы для входных дверей
       </h1>
@@ -186,7 +182,7 @@ const DoorTrimsInfo = () => {
           <Image
             src="/labirint-do.webp"
             alt="Before"
-            layout="fill"
+            fill
             className={`absolute top-0 left-0 before-image`}
             style={{
               clipPath: `polygon(0 0, var(--percentage) 0, var(--percentage) 100%, 0 100%)`,
@@ -196,7 +192,7 @@ const DoorTrimsInfo = () => {
           <Image
             src="/labirint-posle.webp"
             alt="After"
-            layout="fill"
+            fill
             className={`absolute top-0 left-0 after-image`}
             style={{
               clipPath: `polygon(var(--percentage) 0, 100% 0, 100% 100%, var(--percentage) 100%)`,

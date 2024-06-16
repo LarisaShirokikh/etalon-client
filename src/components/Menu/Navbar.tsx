@@ -4,9 +4,10 @@ import Image from "next/image";
 import { FaPhoneAlt, FaTelegram } from "react-icons/fa";
 import SearchBar from "../SearchBar";
 import { FaWhatsapp } from "react-icons/fa6";
+import { Session } from "next-auth";
 import NavMenu from "./NavMenu";
 
-const Navbar = () => {
+const Navbar = ({ session }: { session: Session | null }) => {
   return (
     <div className="sticky top-0 left-0 right-0 z-50 px-2 md:px-8 lg:px-8 xl:px-16 2xl:px-32 relative bg-white ">
       {/* MOBILE */}

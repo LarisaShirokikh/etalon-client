@@ -6,6 +6,8 @@ import DOMPurify from "dompurify";
 import Skeleton from "../Skeleton";
 import Link from "next/link";
 
+
+
 const PRODUCT_PER_PAGE = 8;
 
 interface ProductListProps {
