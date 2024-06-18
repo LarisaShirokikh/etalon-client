@@ -1,5 +1,5 @@
 
-import type { Metadata } from "next";
+import type { Metadata, NextPageContext } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Menu/Navbar";
@@ -12,12 +12,16 @@ import MobileNavbar from "@/components/Menu/MobileNavbar";
 import { authOptions } from "@/lib/authOptions";
 import { getServerSession } from "next-auth";
 
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Входные металлические двери в Москве",
   description: "Входные металлические двери в Москве",
 };
+
+
+
 
 
 export default async function RootLayout({
@@ -40,3 +44,11 @@ export default async function RootLayout({
     </html>
   );
 }
+function getActivePageCtx() {
+  throw new Error("Function not implemented.");
+}
+
+function buildCookieHeader(name: string, value: string, options: any): any {
+  throw new Error("Function not implemented.");
+}
+
