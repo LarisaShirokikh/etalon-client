@@ -92,14 +92,14 @@ const Navbar = ({ session }: { session: Session | null }) => {
               />
               Москва и МО
             </div>
-            {!session?.user && (
+            {/* {!session?.user && (
               <NavItem
                 onClick={() => signIn("yandex")}
                 icon={<CircleUserRound />}
                 label="Войти"
               />
             )}
-            {session?.user && <UserDropdown session={session} />}
+            {session?.user && <UserDropdown session={session} />} */}
           </div>
         </div>
       </div>

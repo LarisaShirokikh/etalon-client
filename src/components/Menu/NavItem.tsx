@@ -1,29 +1,34 @@
-// components/NavItem.tsx
-import Link from "next/link";
+"use client";
+import { FC, ReactNode } from "react";
 
 interface NavItemProps {
   href?: string;
-  icon: JSX.Element;
-  label: string;
   onClick?: () => void;
+  icon: ReactNode;
+  label: string;
 }
 
-const NavItem: React.FC<NavItemProps> = ({ icon, label, href, onClick }) => {
-  return href ? (
-    <Link href={href}>
-      <div className="flex flex-col items-center text-xs text-gray-600 cursor-pointer">
+const NavItem: FC<NavItemProps> = ({ href, onClick, icon, label }) => {
+  if (href) {
+    return (
+      <a
+        href={href}
+        className="flex flex-col items-center text-gray-600 hover:text-black"
+      >
         {icon}
-        <span className="text-xs mt-1">{label}</span>
-      </div>
-    </Link>
-  ) : (
-    <div
-      className="flex flex-col items-center text-xs text-gray-600 cursor-pointer"
+        <span className="text-xs">{label}</span>
+      </a>
+    );
+  }
+
+  return (
+    <button
       onClick={onClick}
+      className="flex flex-col items-center text-gray-600 hover:text-black"
     >
       {icon}
-      <span className="text-xs mt-1">{label}</span>
-    </div>
+      <span className="text-xs">{label}</span>
+    </button>
   );
 };
 

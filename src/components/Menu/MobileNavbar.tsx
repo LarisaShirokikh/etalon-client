@@ -1,5 +1,4 @@
-// components/MobileNavbar.tsx
-
+"use client";
 import { Home, Search, Heart, LayoutGrid, CircleUserRound } from "lucide-react";
 import { Session } from "next-auth";
 import { signIn } from "next-auth/react";
@@ -14,14 +13,15 @@ const MobileNavbar = ({ session }: { session: Session | null }) => {
         <NavItem href="/search" icon={<Search />} label="Поиск" />
         <NavItem href="/post" icon={<Heart />} label="Избранное" />
         <NavItem href="/notifications" icon={<LayoutGrid />} label="Меню" />
-        {!session?.user && (
+        {!session?.user ? (
           <NavItem
             onClick={() => signIn("yandex")}
             icon={<CircleUserRound />}
             label="Войти"
           />
+        ) : (
+          <UserDropdown session={session} />
         )}
-        {session?.user && <UserDropdown session={session} />}
       </div>
     </nav>
   );
