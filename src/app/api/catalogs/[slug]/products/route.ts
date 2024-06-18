@@ -21,6 +21,7 @@ export async function GET(request: NextRequest) {
         status: 404,
       });
     }
+  
 
     const catalogId = catalog._id;
 
