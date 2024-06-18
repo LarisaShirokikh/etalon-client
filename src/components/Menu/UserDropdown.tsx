@@ -16,11 +16,14 @@ const UserDropdown = ({ session }: { session: Session }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const router = useRouter();
 
+  if (!session || !session.user) {
+  }
+
   return (
     <div className="relative flex items-center">
       <button onClick={() => setShowDropdown((prev) => !prev)}>
         <Image
-          src={session.user.image as string}
+          src={session.user?.image as string}
           alt="avatar"
           width={40}
           height={40}
@@ -36,7 +39,7 @@ const UserDropdown = ({ session }: { session: Session }) => {
           <div className="fixed z-50 bottom-0 right-0 h-96 w-64 bg-white rounded-md text-gray-600 border">
             <div className="flex items-center gap-4 p-4">
               <Image
-                src={session.user.image as string}
+                src={session.user?.image as string}
                 alt="avatar"
                 width={40}
                 height={40}
@@ -44,10 +47,10 @@ const UserDropdown = ({ session }: { session: Session }) => {
               />
               <div className="flex flex-col">
                 <span className="font-semibold">
-                  {session.user.name as string}
+                  {session.user?.name as string}
                 </span>
                 <span className="text-sm text-gray-600">
-                  {session.user.email as string}
+                  {session.user?.email as string}
                 </span>
               </div>
             </div>
