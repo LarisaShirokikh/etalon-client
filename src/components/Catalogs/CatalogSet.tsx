@@ -60,7 +60,7 @@ const CatalogSet: React.FC<ProductSetProps> = ({ catalogId, categoryId }) => {
       <div
         className={`absolute rounded-lg top-0 left-0 w-full h-full ${bgColor} opacity-50`}
       />
-      <div className="relative z-0">
+      <div className="relative z-0 p-3">
         <div className="flex justify-between items-center mb-4">
           <span className="text-xl font-bold text-gray-700">
             Рекомендуем ...
@@ -72,7 +72,7 @@ const CatalogSet: React.FC<ProductSetProps> = ({ catalogId, categoryId }) => {
           </Link>
         </div>
         <div className="overflow-x-auto sm:overflow-hidden">
-          <div className="flex space-x-2 sm:grid sm:grid-cols-2 lg:grid-cols-2 gap-4">
+          <div className="flex z-50 space-x-2 sm:grid sm:grid-cols-2 lg:grid-cols-2 gap-4">
             {catalogs.map((catalog) => (
               <CatalogItem key={catalog.slug} slug={catalog.slug} />
             ))}

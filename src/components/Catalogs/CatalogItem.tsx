@@ -68,7 +68,7 @@ const CatalogItem: React.FC<CatalogItemProps> = ({
             }
             alt={catalog.name}
             layout="fill"
-            objectFit="cover"
+            object-scale-down
             className="rounded-md"
           />
         </div>

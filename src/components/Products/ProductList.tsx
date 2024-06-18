@@ -77,8 +77,8 @@ const ProductList: React.FC<ProductListProps> = ({
               <Image
                 src={product.images[0] || "/product.png"}
                 alt={product.title}
-                layout="fill"
-                objectFit="cover"
+                fill
+                object-scale-down
                 className="rounded-md"
               />
             </div>

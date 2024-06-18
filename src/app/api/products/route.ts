@@ -5,7 +5,7 @@ import { Catalog } from "@/models/Catalog";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const limit = parseInt(searchParams.get("limit") || "24");
+  const limit = parseInt(searchParams.get("limit") || "6");
   const slug = searchParams.get("slug");
   const catalogId = searchParams.get("catalogId");
   const productId = searchParams.get("productId");
@@ -39,11 +39,11 @@ export async function GET(request: NextRequest) {
         dbQuery = dbQuery.where("catalog").equals(catalogId);
       }
 
-      const products = await dbQuery
-        .sort({ _id: -1 })
-        .limit(limit)
-        .skip(page)
-        .exec();
+      if (limit) {
+        dbQuery = dbQuery.sort({ _id: -1 }).limit(limit).skip(page);
+      }
+
+      const products = await dbQuery.exec();
 
       const totalCount = await Product.countDocuments()
         .where("catalog")
@@ -71,7 +71,10 @@ export async function GET(request: NextRequest) {
   }
 
   // Возвращаем все продукты без фильтрации по каталогу
-  const dbQuery = Product.find().sort({ _id: -1 }).skip(page);
+  let dbQuery = Product.find().sort({ _id: -1 });
+  if (limit) {
+    dbQuery = dbQuery.limit(limit);
+  }
   const products = await dbQuery.exec();
 
   const totalCount = await Product.countDocuments().exec();

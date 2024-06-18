@@ -45,8 +45,11 @@ const VideoItem = ({ slug }: VideoItemProps) => {
 
   return (
     <Link href={`/video/${video.slug}`}>
-      <div className="relative h-64 px-5">
-        <div className="relative w-full h-full">
+      <div className="relative h-64 px-4" style={{ maxWidth: "250px" }}>
+        <div
+          className="relative w-full h-full"
+          style={{ height: "300px" }}
+        >
           <video
             autoPlay
             playsInline

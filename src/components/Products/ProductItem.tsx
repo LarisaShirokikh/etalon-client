@@ -74,7 +74,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
             src={product.images[0] || "/product.png"}
             alt={product.title}
             fill
-            style={{ objectFit: "cover" }}
+            object-scale-down
             className="rounded-md"
           />
         </div>

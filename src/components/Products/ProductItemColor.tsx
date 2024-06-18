@@ -76,24 +76,34 @@ const ProductItem: React.FC<ProductItemProps> = ({
   return (
     <div
       className={`relative w-full p-1 ${bgColor} rounded-lg overflow-hidden flex flex-col justify-center items-center`}
+      style={{ maxWidth: "250px" }} // Ensure the card width does not change
     >
-      <Link href={`/${product.slug}`}>
-        <div className="relative h-48 w-48">
-          <Image
-            src={product.images[0] || "/product.png"}
-            alt={product.title}
-            fill
-            style={{ objectFit: "cover" }}
-            className="rounded-md"
-          />
-        </div>
-      </Link>
+      <div
+        className="p-2 bg-white w-full flex justify-center items-center rounded-lg"
+        style={{ height: "200px" }}
+      >
+        {" "}
+        {/* Set a fixed height for the card */}
+        <Link href={`/${product.slug}`}>
+          <div className="relative h-48 w-48 bg-white flex justify-center items-center">
+            <Image
+              src={product.images[0] || "/product.png"}
+              alt={product.title}
+              fill
+              object-fit="contain"
+              className="rounded-md"
+            />
+          </div>
+        </Link>
+      </div>
+
       <div className="p-4 w-full">
         <Link href={`/${product.slug}`}>
           <h3 className="text-xs text-gray-800 overflow-hidden line-clamp-2">
             {product.title}
           </h3>
         </Link>
+
         <div className="mt-1 flex">
           {product.price.discountedPrice ? (
             <>
