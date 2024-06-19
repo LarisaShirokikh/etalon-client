@@ -1,7 +1,7 @@
 "use client";
 
 import Breadcrumbs from "@/components/BreadCrumbs";
-import Button from "@/components/Button";
+import Button from "@/components/Button/Button";
 import FrameInstallationInfo from "@/components/FrameInstallationInfo";
 import ProductDetails from "@/components/Products/ProductDetails";
 import ProductImages from "@/components/Products/ProductImages";
@@ -14,7 +14,6 @@ import axios from "axios";
 import { notFound } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 
-
 const VideoSinglPage = ({ params }: { params: { slug: string } }) => {
   const [video, setVideo] = useState<IProductVideo | null>(null);
   const [loading, setLoading] = useState(true);
@@ -25,7 +24,6 @@ const VideoSinglPage = ({ params }: { params: { slug: string } }) => {
         const response = await axios.get(`/api/video`, {
           params: { slug: params.slug },
         });
-        
 
         setVideo(response.data);
       } catch (error) {

@@ -8,7 +8,7 @@ import {
   FaEnvelope,
   FaWhatsapp,
 } from "react-icons/fa";
-import Button from "./Button";
+import Button from "./Button/Button";
 
 const Footer = () => {
   return (

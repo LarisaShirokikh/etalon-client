@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Modal from "./Modal";
+import Modal from "../Modal";
 import axios from "axios";
 
 interface ButtonProps {
@@ -80,7 +80,7 @@ const Button: React.FC<ButtonProps> = ({ text, className, href }) => {
     <div>
       <a href={href}>
         <button
-          className={`${className} mt-2 mb-2 self-center rounded-lg border border-black bg-transparent text-black py-2 px-4 text-sm hover:bg-black hover:text-white transition-colors`}
+          className={`${className} items-center gap-2 px-4 py-2 bg-gray-100 text-wite rounded-lg shadow hover:bg-gray-500 transition-colors`}
           onClick={handleOpenModal}
         >
           {text}

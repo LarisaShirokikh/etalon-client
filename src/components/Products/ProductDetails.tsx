@@ -1,8 +1,8 @@
 import React from "react";
-import Button from "@/components/Button";
+import Button from "@/components/Button/Button";
 import { IProduct } from "@/interface/Product";
 
-const ProductDetails = ({ item }: { item: IProduct}) => {
+const ProductDetails = ({ item }: { item: IProduct }) => {
   return (
     <div className="w-full lg:w-1/2 flex flex-col gap-6">
       <h1 className="text-3xl font-medium">{item.title}</h1>
