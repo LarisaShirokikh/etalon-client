@@ -27,6 +27,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/components/Products/ProductItemColor.tsx"
-  ],
+, "src/components/YandexMetrika.jsx"  ],
   "exclude": ["node_modules"]
 }
