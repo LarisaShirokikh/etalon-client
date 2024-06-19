@@ -49,7 +49,7 @@ const SearchPage = () => {
         <div className="mb-6">
           <h2 className="text-xl mb-2">Категории</h2>
           <ul className="list-disc pl-5">
-            {categories.map((category) => (
+            {categories.map((category: any) => (
               <li key={category._id}>{category.name}</li>
             ))}
           </ul>
