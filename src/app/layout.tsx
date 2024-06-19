@@ -35,7 +35,7 @@ export default async function RootLayout({
       <body className={inter.className}>
         <YandexMetrika />
         <TranslationsProvider translations={translations}>
-          <Navbar session={session} />
+          <Navbar  />
           {children}
           <MobileNavbar session={session} />
           <Footer />

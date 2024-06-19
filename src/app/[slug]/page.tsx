@@ -1,6 +1,7 @@
 "use client";
 
 
+import BackButton from "@/components/Button/BackButton";
 import FrameInstallationInfo from "@/components/FrameInstallationInfo";
 import ProductDetails from "@/components/Products/ProductDetails";
 import ProductImages from "@/components/Products/ProductImages";
@@ -22,7 +23,6 @@ const SinglePage = ({ params }: { params: { slug: string } }) => {
         const response = await axios.get(`/api/products`, {
           params: { slug: params.slug },
         });
-        console.log("response found:", response.data);
 
         setProduct(response.data);
       } catch (error) {
@@ -52,6 +52,7 @@ const SinglePage = ({ params }: { params: { slug: string } }) => {
 
   return (
     <div className="mt-12 px-1 sm:px-5">
+      <BackButton />
       {/* <Breadcrumbs /> */}
       <div className="px-2 md:px-8 lg:px-16 xl:px-32 2xl:px-64 relative flex flex-col lg:flex-row gap-16">
         {/* IMG */}

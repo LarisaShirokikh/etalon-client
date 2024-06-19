@@ -1,10 +1,13 @@
 "use client";
 import axios from "axios";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { AwaitedReactNode, JSXElementConstructor, ReactElement, ReactNode, ReactPortal, useEffect, useState } from "react";
 import Skeleton from "../Skeleton";
 import Link from "next/link";
 import { Heart } from "lucide-react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 interface ProductItemProps {
   productId?: string;
@@ -66,17 +69,48 @@ const ProductItem: React.FC<ProductItemProps> = ({
     setIsFavorite(!isFavorite);
   };
 
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: false,
+    adaptiveHeight: true,
+    swipe: true,
+    appendDots: (dots: React.ReactNode) => (
+      <div
+        style={{
+          bottom: "-10px",
+        }}
+      >
+        <ul className="space-x-0">{dots}</ul>
+      </div>
+    ),
+  };
+
   return (
     <div className="relative w-full rounded-md overflow-hidden bg-white flex flex-col justify-center items-center">
       <Link href={`/${product.slug}`}>
-        <div className="relative h-48 w-48">
-          <Image
-            src={product.images[0] || "/product.png"}
-            alt={product.title}
-            fill
-            object-scale-down
-            className="rounded-md"
-          />
+        <div className="relative w-48 h-54">
+          <Slider {...settings}>
+            {product.images.map((image: string, index: number) => (
+              <div
+                key={index}
+                className=" flex justify-center items-center"
+              >
+                <div className="relative w-48 h-48">
+                  <Image
+                    src={image || "/product.png"}
+                    alt={`${product.title} image ${index + 1}`}
+                    fill
+                    object-scale-down
+                    className="rounded-md"
+                  />
+                </div>
+              </div>
+            ))}
+          </Slider>
         </div>
       </Link>
       <div className="p-4 w-full">
