@@ -35,13 +35,15 @@ const SearchPage = () => {
 
   return (
     <div className="p-4">
-        <BackButton/>
-      <h1 className="text-2xl pt-4 mb-4">Результаты поиска для "{query}"</h1>
+      <BackButton />
+      <h1 className="text-2xl pt-4 mb-4">
+        Результаты поиска для &quot;{query}&quot;
+      </h1>
 
       {products.length > 0 && (
         <div className="mb-6">
           <h2 className="text-xl mb-2">Продукты</h2>
-          <ProductList/>
+          <ProductList />
         </div>
       )}
 
@@ -59,7 +61,7 @@ const SearchPage = () => {
       {catalogs.length > 0 && (
         <div className="mb-6">
           <h2 className="text-xl mb-2">Каталоги</h2>
-          <CatalogList/>
+          <CatalogList />
         </div>
       )}
 
