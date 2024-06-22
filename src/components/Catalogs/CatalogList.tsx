@@ -68,10 +68,10 @@ const CatalogList: React.FC<CatalogListProps> = ({
 
   return (
     <div className="px-2 mt-12 ">
-      <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-5  xl:grid-cols-8  gap-2 md:gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5  xl:grid-cols-8  gap-2 md:gap-4">
         {catalogs.map((catalog: any) => (
           <Link href={`/catalog/${catalog.slug}`} key={catalog._id}>
-            <div className="relative bg-slate-100 w-full h-72 sm:h-86 md:h-96 rounded-lg overflow-hidden">
+            <div className="relative bg-slate-100 w-full h-96 sm:h-86 md:h-96 rounded-lg overflow-hidden">
               <Image
                 src={
                   catalog.images && catalog.images[0]

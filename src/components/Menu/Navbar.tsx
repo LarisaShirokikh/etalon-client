@@ -34,7 +34,7 @@ const Navbar = () =>
               </Link>
             </div>
             {/* MOBILE CONTACT */}
-            <div className="md:hidden flex flex-row justify-center gap-2 pb-3">
+            <div className="md:hidden flex flex-col items-center gap-2 pb-2">
               <div className="flex items-center gap-4">
                 <a
                   href="tel:+79260217365"
@@ -61,10 +61,13 @@ const Navbar = () =>
                 >
                   <FaWhatsapp size={20} color="1EB100" />
                 </a>
-              </div>
               <div className="flex items-center gap-2 text-gray-700 hover:text-gray-900">
                 <Image src="/map.svg" alt="Location" width={20} height={20} />
-                Москва и МО
+                <span>Москва и МО</span>
+              </div>
+              </div>
+              <div className="w-full px-2">
+                <SearchBar />
               </div>
             </div>
             {/* BIGGER SCREENS */}

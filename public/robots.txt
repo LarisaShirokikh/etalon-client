@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://dverietalon.ru
+
+# Sitemaps
+Sitemap: https://dverietalon.ru/sitemap.xml

@@ -1,74 +1,44 @@
-"use client";
+// components/BreadCrumbs.tsx
 
-import { translations } from "@/utils/translations";
+import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
 
-const Breadcrumbs = () => {
-  const pathname = usePathname();
-
-  type BreadcrumbItem = {
-    breadcrumb: string;
+interface BreadCrumbsProps {
+  paths: {
+    name: string;
     href: string;
-  };
+    icon?: string;
+  }[];
+}
 
-  const [breadcrumbs, setBreadcrumbs] = useState<BreadcrumbItem[]>([]);
-
-  useEffect(() => {
-    if (pathname) {
-      const pathArray = pathname.split("/").filter((path: any) => path);
-      const breadcrumbsArray = pathArray.map((path: any, index: number) => {
-        const href = "/" + pathArray.slice(0, index + 1).join("/");
-        return { breadcrumb: decodeURIComponent(path), href };
-      });
-      setBreadcrumbs(breadcrumbsArray);
-    }
-  }, [pathname]);
-
-  // Функция для преобразования пути в человеко-понятный формат на русском языке
-  const formatBreadcrumb = (breadcrumb: string) => {
-    // Разделяем путь по дефисам и преобразуем каждое слово
-    const words = breadcrumb.split("-");
-    const formattedWords = words.map((word) => {
-      // Делаем первую букву слова заглавной, а остальные строчными
-      return (
-        translations[word.toLowerCase()] ||
-        word.charAt(0).toUpperCase() + word.slice(1)
-      );
-    });
-    // Соединяем слова обратно в строку с пробелами
-    return formattedWords.join(" ");
-  };
-
+const BreadCrumbs: React.FC<BreadCrumbsProps> = ({ paths }) => {
   return (
-    <nav aria-label="breadcrumb">
-      <ol className="flex mt-12  space-x-2 text-base sm:text-sm flex-wrap">
-        <li>
-          <Link
-            href="/"
-            className="text-gray-600 hover:text-gray-800 bg-gray-100 py-2 px-4 rounded-full hover:bg-gray-200 transition-transform duration-300"
-          >
-            Главная
+    <nav className="flex pt-1 pb-2 p-3 items-center space-x-2 text-sm text-gray-500">
+      {paths.map((path, index) => (
+        <span key={index} className="flex items-center">
+          <Link href={path.href}>
+            <div className="flex items-center gap-1 px-2 py-1 bg-gray-200 hover:text-white hover:bg-gray-500 rounded-full transition duration-300">
+              {path.icon && (
+                <div className="relative">
+                  <Image
+                    src={path.icon}
+                    alt={`${path.name} icon`}
+                    width={16}
+                    height={16}
+                    layout="fixed"
+                    className="rounded-full"
+                  />
+                  <div className="absolute inset-0 rounded-full bg-white opacity-0 hover:opacity-20 transition-opacity duration-300"></div>
+                </div>
+              )}
+              {path.name}
+            </div>
           </Link>
-        </li>
-        {breadcrumbs.map((crumb, index) => (
-          <li
-            key={crumb.href}
-            className="flex items-center"
-            style={{ flexWrap: "wrap", marginBottom: "1.6rem" }}
-          >
-            <Link
-              href={crumb.href}
-              className="text-gray-600 hover:text-gray-800 bg-gray-100 py-2 px-4 rounded-full hover:bg-gray-200 transition-transform duration-300"
-            >
-              {formatBreadcrumb(crumb.breadcrumb)}
-            </Link>
-          </li>
-        ))}
-      </ol>
+          {index < paths.length - 1}
+        </span>
+      ))}
     </nav>
   );
 };
 
-export default Breadcrumbs;
+export default BreadCrumbs;

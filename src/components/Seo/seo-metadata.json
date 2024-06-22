@@ -1,0 +1,73 @@
+
+{
+  "home": {
+    "title": "Главная страница - Двери-Эталон",
+    "description": "При покупке двери, доставка в пределах МКАД - бесплатно",
+    "keywords": "входные двери, металлические двери, двери в Москве, бесплатная доставка, качественные двери",
+    "ogTitle": "Входные металлические двери в Москве",
+    "ogDescription": "При покупке двери, доставка в пределах МКАД - бесплатно",
+    "ogImage": "https://dverietalon.ru/public/issida.webp",
+    "ogUrl": "https://dverietalon.ru",
+    "ogSiteName": "Двери-Эталон"
+  },
+  "product": {
+    "title": "Название продукта",
+    "description": "Описание продукта для SEO",
+    "keywords": "ключевые слова, продукт, SEO",
+    "ogTitle": "Название продукта - Двери-Эталон",
+    "ogDescription": "Дополнительное описание продукта для Open Graph",
+    "ogImage": "https://example.com/images/product-og-image.jpg",
+    "ogUrl": "https://example.com/product/123",
+    "ogSiteName": "Двери-Эталон"
+  },
+  "catalog": {
+    "title": "Каталог продукции - Двери-Эталон",
+    "description": "Каталог входных дверей с бесплатной доставкой в Москве",
+    "keywords": "входные двери, металлические двери, каталог, бесплатная доставка, качественные двери",
+    "ogTitle": "Каталог входных дверей - Двери-Эталон",
+    "ogDescription": "Каталог входных дверей с бесплатной доставкой в Москве",
+    "ogImage": "https://dverietalon.ru/public/catalog.webp",
+    "ogUrl": "https://dverietalon.ru/catalog",
+    "ogSiteName": "Двери-Эталон"
+  },
+  "category": {
+    "title": "Категория продуктов - Двери-Эталон",
+    "description": "Категория металлических дверей с бесплатной доставкой",
+    "keywords": "категория дверей, металлические двери, бесплатная доставка, качественные двери",
+    "ogTitle": "Категория металлических дверей - Двери-Эталон",
+    "ogDescription": "Категория металлических дверей с бесплатной доставкой",
+    "ogImage": "https://dverietalon.ru/public/category.webp",
+    "ogUrl": "https://dverietalon.ru/category",
+    "ogSiteName": "Двери-Эталон"
+  },
+  "brend": {
+    "title": "Производитель дверей - Двери-Эталон",
+    "description": "Информация о производителе дверей",
+    "keywords": "производитель дверей, качественные двери, информация о бренде",
+    "ogTitle": "Производитель дверей - Двери-Эталон",
+    "ogDescription": "Информация о производителе дверей",
+    "ogImage": "https://dverietalon.ru/public/brend.webp",
+    "ogUrl": "https://dverietalon.ru/brend",
+    "ogSiteName": "Двери-Эталон"
+  },
+  "search": {
+    "title": "Результаты поиска - Двери-Эталон",
+    "description": "Результаты поиска на сайте Двери-Эталон",
+    "keywords": "поиск входных дверей, результаты поиска, Двери-Эталон",
+    "ogTitle": "Результаты поиска - Двери-Эталон",
+    "ogDescription": "Результаты поиска на сайте Двери-Эталон",
+    "ogImage": "https://dverietalon.ru/public/search.webp",
+    "ogUrl": "https://dverietalon.ru/search",
+    "ogSiteName": "Двери-Эталон"
+  },
+  "service": {
+    "title": "Услуги - Двери-Эталон",
+    "description": "Услуги по установке  дверей и доборов, отделка дверей  в Москве",
+    "keywords": "купить входную дверь, установка входных дверей, доборы, Двери-Эталон, завод входных деверй в москве",
+    "ogTitle": "Услуги - Двери-Эталон",
+    "ogDescription": "Услуги по установке и ремонту дверей в Москве",
+    "ogImage": "https://dverietalon.ru/public/service.webp",
+    "ogUrl": "https://dverietalon.ru/service",
+    "ogSiteName": "Двери-Эталон"
+  }
+}

@@ -17,7 +17,7 @@ const slides = [
   },
   {
     id: 3,
-    img: "/wite.webp",
+    img: "/banner.webp",
     url: "/",
   },
   {
@@ -34,7 +34,7 @@ const Slider = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-    }, 4000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, []);

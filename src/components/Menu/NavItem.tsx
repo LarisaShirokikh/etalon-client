@@ -5,10 +5,9 @@ interface NavItemProps {
   href?: string;
   onClick?: () => void;
   icon: ReactNode;
-  label: string;
 }
 
-const NavItem: FC<NavItemProps> = ({ href, onClick, icon, label }) => {
+const NavItem: FC<NavItemProps> = ({ href, onClick, icon }) => {
   if (href) {
     return (
       <a
@@ -16,7 +15,6 @@ const NavItem: FC<NavItemProps> = ({ href, onClick, icon, label }) => {
         className="flex flex-col items-center text-gray-600 hover:text-black"
       >
         {icon}
-        <span className="text-xs">{label}</span>
       </a>
     );
   }
@@ -27,7 +25,6 @@ const NavItem: FC<NavItemProps> = ({ href, onClick, icon, label }) => {
       className="flex flex-col items-center text-gray-600 hover:text-black"
     >
       {icon}
-      <span className="text-xs">{label}</span>
     </button>
   );
 };

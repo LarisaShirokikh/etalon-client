@@ -58,8 +58,45 @@ const MenuDropdown = () => {
       ></div>
       <div className="fixed z-50 bottom-0 left-0 w-full max-w-xs bg-white rounded-t-xl text-gray-600 shadow-lg border overflow-y-auto transition-transform transform translate-y-0">
         <div className="px-6 py-4 border-b text-lg font-semibold text-gray-700">
-          
           {/* Бренды */}
+        </div>
+        <div className="flex flex-col border-b gap-2 px-6 py-4">
+          <MenuItem
+            icon={School}
+            text="Двери Лабиринт"
+            path="/category/vse-dveri/catalogs"
+            onClick={handleClick}
+          />
+          <MenuItem
+            icon={School}
+            text="Двери Бункер"
+            path="/category/vse-dveri/catalogs"
+            onClick={handleClick}
+          />
+          <MenuItem
+            icon={School}
+            text="Двери Ратибор"
+            path="/category/vse-dveri/catalogs"
+            onClick={handleClick}
+          />
+          <MenuItem
+            icon={School}
+            text="Двери АСД"
+            path="/category/vse-dveri/catalogs"
+            onClick={handleClick}
+          />
+          <MenuItem
+            icon={School}
+            text="Двери Заводские"
+            path="/category/vse-dveri/catalogs"
+            onClick={handleClick}
+          />
+          <MenuItem
+            icon={School}
+            text="Двери Интекрон"
+            path="/category/vse-dveri/catalogs"
+            onClick={handleClick}
+          />
         </div>
         <div className="flex flex-col gap-2 px-6 py-4">
           <MenuItem

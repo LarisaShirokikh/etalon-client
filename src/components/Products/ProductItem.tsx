@@ -65,14 +65,29 @@ const ProductItem: React.FC<ProductItemProps> = ({
     );
   }
 
+  // useEffect(() => {
+  //   if (product) {
+  //     const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+  //     setIsFavorite(favorites.includes(product.id));
+  //   }
+  // }, [product]);
+
   const toggleFavorite = () => {
-    setIsFavorite(!isFavorite);
+    const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+    if (isFavorite) {
+      const newFavorites = favorites.filter((id: string) => id !== product.id);
+      localStorage.setItem("favorites", JSON.stringify(newFavorites));
+      setIsFavorite(false);
+    } else {
+      favorites.push(product.id);
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+      setIsFavorite(true);
+    }
   };
 
   const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,

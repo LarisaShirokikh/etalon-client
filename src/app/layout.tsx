@@ -12,17 +12,33 @@ import MobileNavbar from "@/components/Menu/MobileNavbar";
 import { authOptions } from "@/lib/authOptions";
 import { getServerSession } from "next-auth";
 import Script from "next/script";
-import { Suspense } from "react";
+import { Key, Suspense } from "react";
 
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Входные металлические двери в Москве",
-  description: "Входные металлические двери в Москве",
+  description: "При покупке двери, доставка в пределах МКАД - бесплатно",
+  keywords:
+    "входные двери, металлические двери, двери в Москве, бесплатная доставка, качественные двери",
+  openGraph: {
+    title: "Входные металлические двери в Москве",
+    description: "При покупке двери, доставка в пределах МКАД - бесплатно",
+    type: "website",
+    locale: "ru_RU",
+    url: process.env.PROD_URL || "https://dverietalon.ru", 
+    siteName: "Двери-Эталон",
+    images: [
+      {
+        url: "https://dverietalon.ru/public/issida.webp",
+        width: 800,
+        height: 600,
+        alt: "Каталог входных дверей",
+      },
+    ],
+  },
 };
-
-
 
 
 
@@ -32,8 +48,12 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await getServerSession(authOptions);
+
+
+
   return (
-    <html lang="en">
+    <html lang="ru">
+      
       <body className={inter.className}>
         <Script id="metrika-counter" strategy="afterInteractive">
           {`(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -51,8 +71,7 @@ export default async function RootLayout({
               });`}
         </Script>
         <Suspense fallback={<></>}>
-          
-        <YandexMetrika />
+          <YandexMetrika />
         </Suspense>
         <TranslationsProvider translations={translations}>
           <Navbar />

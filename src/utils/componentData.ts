@@ -9,7 +9,7 @@ const componentData = [
   {
     type: "CatalogSection",
     catalogId: "665c6779517f618c930fba02",
-    categoryId: "665b34e7845f4980629d7720",
+    categoryId: "665b2b71845f4980629d7714",
   },
   {
     type: "ProductSection",
@@ -18,13 +18,13 @@ const componentData = [
   },
   {
     type: "CatalogSection",
-    catalogId: "665b34e7845f4980629d7720",
-    categoryId: "665c6779517f618c930fba02",
+    catalogId: "6674591b5e573d948e47cf31",
+    categoryId: "665b2b71845f4980629d7714",
   },
   {
     type: "ProductSection",
-    catalogId: "6667094753a55b95d26b74d7",
-    categoryId: "665c67ad517f618c930fba06",
+    catalogId: "665c67ad517f618c930fba06",
+    categoryId: "665b2b71845f4980629d7714",
   },
 ];
 

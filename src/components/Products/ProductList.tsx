@@ -66,7 +66,7 @@ const ProductList: React.FC<ProductListProps> = ({
 
   return (
     <div className="">
-      <div className="grid grid-cols-2 m-2 p-2 md:grid-cols-6 sm:grid-cols-2 gap-4 p-2 m-2 rounded-lg">
+      <div className="grid grid-cols-2 m-2 p-2 md:grid-cols-6 sm:grid-cols-2 gap-2 p-1 rounded-lg">
         {products.map((product: any) => (
           <Link
             href={"/" + product.slug}

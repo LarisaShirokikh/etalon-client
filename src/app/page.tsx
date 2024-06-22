@@ -4,8 +4,12 @@ import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Slider from "@/components/Slider";
 import componentData from "@/utils/componentData";
-
-
+import SimpleSlider from "@/components/HomeSlider";
+import BreadCrumbs from "@/components/BreadCrumbs";
+import { Trophy, 
+  DoorClosed,
+  TvMinimalPlay, 
+  Package } from "lucide-react";
 
 // Динамическая загрузка компонентов
 const ProductSection = dynamic(
@@ -16,7 +20,32 @@ const CatalogSection = dynamic(
 );
 
 const HomePage = () => {
-  const [components, setComponents] = useState(componentData.slice(0, 2)); // Начальная загрузка двух компонентов
+  const [components, setComponents] = useState(componentData.slice(0, 2));
+
+  const paths = [
+    {
+      name: "в дом",
+      href: "/category/dlya-doma/catalogs",
+      icon: "/house-plus.svg",
+    },
+    {
+      name: "новинки",
+      href: "/product",
+      icon: "/rss.svg",
+    },
+    {
+      name: "хиты",
+      href: "/category/hity-prodazh/catalogs",
+      icon: "/trophy.svg",
+    },
+    {
+      name: "установки",
+      href: "/video",
+      icon: "/video.svg",
+    },
+  ];
+
+//TODO сделать страницу видео
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,7 +55,7 @@ const HomePage = () => {
       if (scrollPosition >= threshold) {
         setComponents((prevComponents) => [
           ...prevComponents,
-          componentData[prevComponents.length % componentData.length], // Циклически добавляем компоненты
+          componentData[prevComponents.length % componentData.length],
         ]);
       }
     };
@@ -37,8 +66,10 @@ const HomePage = () => {
 
   return (
     <div>
-      
       <Slider />
+      <div className="md:hidden block">
+        <BreadCrumbs paths={paths} />
+      </div>
       {components.map((component, index) => (
         <div key={index}>
           {component.type === "ProductSection" && (

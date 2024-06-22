@@ -6,12 +6,16 @@ import FrameInstallationInfo from "@/components/FrameInstallationInfo";
 import ProductDetails from "@/components/Products/ProductDetails";
 import ProductImages from "@/components/Products/ProductImages";
 import ProductList from "@/components/Products/ProductList";
+import Meta from "@/components/Seo/Meta";
 import ServiceDetails from "@/components/ServiceDetails";
 import Skeleton from "@/components/Skeleton";
 import { IProduct } from "@/interface/Product";
 import axios from "axios";
 import { notFound } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
+
+// This function gets called at build time
+
 
 const SinglePage = ({ params }: { params: { slug: string } }) => {
   const [product, setProduct] = useState<IProduct | null>(null);
@@ -52,8 +56,8 @@ const SinglePage = ({ params }: { params: { slug: string } }) => {
 
   return (
     <div className="mt-12 px-1 sm:px-5">
+      <Meta pageType="product" />
       <BackButton />
-      {/* <Breadcrumbs /> */}
       <div className="px-2 md:px-8 lg:px-16 xl:px-32 2xl:px-64 relative flex flex-col lg:flex-row gap-16">
         {/* IMG */}
         <div className="w-full lg:w-1/2 lg:sticky top-20 h-max p-4 lg:p-0">
