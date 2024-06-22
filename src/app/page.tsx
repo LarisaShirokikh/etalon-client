@@ -19,31 +19,32 @@ const CatalogSection = dynamic(
   () => import("@/components/Catalogs/CatalogSection")
 );
 
+export const paths = [
+  {
+    name: "в дом",
+    href: "/category/dlya-doma/catalogs",
+    icon: "/house-plus.svg",
+  },
+  {
+    name: "новинки",
+    href: "/product",
+    icon: "/rss.svg",
+  },
+  {
+    name: "хиты",
+    href: "/category/hity-prodazh/catalogs",
+    icon: "/trophy.svg",
+  },
+  {
+    name: "установки",
+    href: "/video",
+    icon: "/video.svg",
+  },
+];
+
 const HomePage = () => {
   const [components, setComponents] = useState(componentData.slice(0, 2));
 
-  const paths = [
-    {
-      name: "в дом",
-      href: "/category/dlya-doma/catalogs",
-      icon: "/house-plus.svg",
-    },
-    {
-      name: "новинки",
-      href: "/product",
-      icon: "/rss.svg",
-    },
-    {
-      name: "хиты",
-      href: "/category/hity-prodazh/catalogs",
-      icon: "/trophy.svg",
-    },
-    {
-      name: "установки",
-      href: "/video",
-      icon: "/video.svg",
-    },
-  ];
 
 //TODO сделать страницу видео
 

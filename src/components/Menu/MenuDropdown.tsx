@@ -9,6 +9,7 @@ import {
   Trophy,
   PencilRuler,
   Gift,
+  Layers,
   DoorOpen,
   GalleryHorizontalEnd,
   PhoneCall,
@@ -31,7 +32,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
 }) => (
   <button
     onClick={(e) => onClick(e, path)}
-    className="flex items-center gap-2 px-3 py-2 rounded hover:bg-gray-100 transition-colors duration-200"
+    className="flex items-center gap-2 px-2 py-1 rounded hover:bg-gray-100 transition-colors duration-200"
   >
     <Icon className="text-gray-500" />
     {text}
@@ -57,50 +58,53 @@ const MenuDropdown = () => {
         className="bg-black/40 fixed inset-0 z-40 transition-opacity duration-300 ease-in-out"
       ></div>
       <div className="fixed z-50 bottom-0 left-0 w-full max-w-xs bg-white rounded-t-xl text-gray-600 shadow-lg border overflow-y-auto transition-transform transform translate-y-0">
-        <div className="px-6 py-4 border-b text-lg font-semibold text-gray-700">
-          {/* Бренды */}
-        </div>
-        <div className="flex flex-col border-b gap-2 px-6 py-4">
+        <div className="flex flex-col border-b gap-2 px-4 py-1">
           <MenuItem
             icon={School}
             text="Двери Лабиринт"
-            path="/category/vse-dveri/catalogs"
+            path="/brand/vhodnye-dveri-labirint"
             onClick={handleClick}
           />
           <MenuItem
             icon={School}
             text="Двери Бункер"
-            path="/category/vse-dveri/catalogs"
+            path="/brand/dveri-bunker"
+            onClick={handleClick}
+          />
+          <MenuItem
+            icon={School}
+            text="Двери Аргус"
+            path="/brand/vhodnye-dveri-argus"
             onClick={handleClick}
           />
           <MenuItem
             icon={School}
             text="Двери Ратибор"
-            path="/category/vse-dveri/catalogs"
+            path="/brand/vhodnye-dveri-ratibor"
             onClick={handleClick}
           />
           <MenuItem
             icon={School}
             text="Двери АСД"
-            path="/category/vse-dveri/catalogs"
+            path="/brand/vhodnye-dveri-asd"
             onClick={handleClick}
           />
           <MenuItem
             icon={School}
             text="Двери Заводские"
-            path="/category/vse-dveri/catalogs"
+            path="/brand/vhodnye-dveri-zd"
             onClick={handleClick}
           />
           <MenuItem
             icon={School}
             text="Двери Интекрон"
-            path="/category/vse-dveri/catalogs"
+            path="/brand/vhodnye-dveri-intekron"
             onClick={handleClick}
           />
         </div>
-        <div className="flex flex-col gap-2 px-6 py-4">
+        <div className="flex flex-col gap-2 px-4 py-1">
           <MenuItem
-            icon={School}
+            icon={Layers}
             text="Все двери"
             path="/category/vse-dveri/catalogs"
             onClick={handleClick}
@@ -161,7 +165,7 @@ const MenuDropdown = () => {
           />
         </div>
         <div className="px-6 py-4 border-t text-sm text-gray-500">
-          <div className="flex items-center gap-2 mb-2">
+          <div className="flex items-center gap-2 mb-1">
             <PhoneCall className="text-gray-500" />
             <a href="tel:+79260217365" className="hover:underline">
               +7 (926) 021 7365

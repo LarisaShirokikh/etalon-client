@@ -5,11 +5,11 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Skeleton from "@/components/Skeleton";
 import { ICatalog } from "@/interface/Catalog";
-import Breadcrumbs from "@/components/BreadCrumbs";
 import BrandHeader from "@/components/BrandHeader";
 import { IBrand } from "@/interface/Brand";
-import BackButton from "@/components/Button/BackButton";
 import Meta from "@/components/Seo/Meta";
+import BreadCrumbs from "@/components/BreadCrumbs";
+import { paths } from "@/app/page";
 
 const CatalogPage = ({ params }: { params: { slug: string } }) => {
   const { slug } = params;
@@ -55,7 +55,7 @@ const CatalogPage = ({ params }: { params: { slug: string } }) => {
   return (
     <div className="px-4 mt-12 mb-12">
       <Meta pageType="brend" />
-      <BackButton />
+      <BreadCrumbs paths={paths} />
       <BrandHeader brand={brand} />
       <div className="grid grid-cols-2 mt-12 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 md:gap-8">
         {catalogs.map((catalog) => (

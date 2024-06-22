@@ -1,9 +1,10 @@
 "use client";
+import BreadCrumbs from "@/components/BreadCrumbs";
 import BackButton from "@/components/Button/BackButton";
-import ProductList from "@/components/Products/ProductList";
+import ProductPage from "@/components/Products/ProductPage";
 import Meta from "@/components/Seo/Meta";
-import { Metadata } from "next";
 import { usePathname } from "next/navigation";
+import { paths } from "../page";
 
 
 
@@ -11,14 +12,12 @@ function CategoryCatalogsPage() {
   const pathname = usePathname();
   const slug = pathname.split("/")[2];
 
-  console.log("slug", slug);
   return (
     <div className="mt-12 px-1 sm:px-5">
       <Meta pageType="product" />
-      <BackButton />
-      {/* <Breadcrumbs /> */}
-      <ProductList slug={slug} limit={24} />
-      {/* <Pagination/> */}
+      <BreadCrumbs paths={paths} />
+      {/* <BackButton /> */}
+      <ProductPage limit={12} slug={slug}/>
     </div>
   );
 }

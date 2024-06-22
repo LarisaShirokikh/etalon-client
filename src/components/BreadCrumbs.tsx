@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 interface BreadCrumbsProps {
   paths: {
@@ -14,6 +15,7 @@ interface BreadCrumbsProps {
 const BreadCrumbs: React.FC<BreadCrumbsProps> = ({ paths }) => {
   return (
     <nav className="flex pt-1 pb-2 p-3 items-center space-x-2 text-sm text-gray-500">
+      
       {paths.map((path, index) => (
         <span key={index} className="flex items-center">
           <Link href={path.href}>

@@ -2,9 +2,9 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import ProductList from "@/components/Products/ProductList";
 import CatalogList from "@/components/Catalogs/CatalogList";
 import BackButton from "@/components/Button/BackButton";
+import ProductPage from "@/components/Products/ProductPage";
 
 const SearchPage = () => {
   const searchParams = useSearchParams();
@@ -43,7 +43,7 @@ const SearchPage = () => {
       {products.length > 0 && (
         <div className="mb-6">
           <h2 className="text-xl mb-2">Продукты</h2>
-          <ProductList />
+          <ProductPage />
         </div>
       )}
 

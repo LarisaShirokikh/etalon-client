@@ -1,11 +1,10 @@
 "use client";
 
-import Breadcrumbs from "@/components/BreadCrumbs";
-import Button from "@/components/Button/Button";
+import { paths } from "@/app/page";
+import BreadCrumbs from "@/components/BreadCrumbs";
 import FrameInstallationInfo from "@/components/FrameInstallationInfo";
 import ProductDetails from "@/components/Products/ProductDetails";
-import ProductImages from "@/components/Products/ProductImages";
-import ProductList from "@/components/Products/ProductList";
+import ProductPage from "@/components/Products/ProductPage";
 import ProductVideo from "@/components/Products/ProductVideo";
 import ServiceDetails from "@/components/ServiceDetails";
 import Skeleton from "@/components/Skeleton";
@@ -53,7 +52,7 @@ const VideoSinglPage = ({ params }: { params: { slug: string } }) => {
 
   return (
     <div className="mt-12 px-1 sm:px-5">
-      {/* <Breadcrumbs /> */}
+      <BreadCrumbs paths={paths} />
       <div className="px-2 md:px-8 lg:px-16 xl:px-32 2xl:px-64 relative flex flex-col lg:flex-row gap-16">
         {/* video */}
         <div className="w-full lg:w-1/2 lg:sticky top-20 h-max p-4 lg:p-0">
@@ -65,9 +64,9 @@ const VideoSinglPage = ({ params }: { params: { slug: string } }) => {
       <ServiceDetails />
       <FrameInstallationInfo />
       <div className="mt-24 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
-        <h1 className="text-2xl">Рекомендуем посмотреть</h1>
+        <h1 className="text-2xl">Новинки</h1>
         <Suspense fallback={<Skeleton />}>
-          <ProductList limit={4} />
+          <ProductPage limit={4} />
         </Suspense>
       </div>
     </div>
