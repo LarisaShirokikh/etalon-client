@@ -14,7 +14,7 @@ import { IProduct } from "@/interface/Product";
 import axios from "axios";
 import { notFound } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
-import { paths } from "../page";
+import { paths } from "@/utils/path";
 
 // This function gets called at build time
 

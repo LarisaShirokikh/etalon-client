@@ -4,12 +4,9 @@ import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Slider from "@/components/Slider";
 import componentData from "@/utils/componentData";
-import SimpleSlider from "@/components/HomeSlider";
 import BreadCrumbs from "@/components/BreadCrumbs";
-import { Trophy, 
-  DoorClosed,
-  TvMinimalPlay, 
-  Package } from "lucide-react";
+
+import { paths } from "@/utils/path";
 
 // Динамическая загрузка компонентов
 const ProductSection = dynamic(
@@ -19,28 +16,7 @@ const CatalogSection = dynamic(
   () => import("@/components/Catalogs/CatalogSection")
 );
 
-export const paths = [
-  {
-    name: "в дом",
-    href: "/category/dlya-doma/catalogs",
-    icon: "/house-plus.svg",
-  },
-  {
-    name: "новинки",
-    href: "/product",
-    icon: "/rss.svg",
-  },
-  {
-    name: "хиты",
-    href: "/category/hity-prodazh/catalogs",
-    icon: "/trophy.svg",
-  },
-  {
-    name: "установки",
-    href: "/video",
-    icon: "/video.svg",
-  },
-];
+
 
 const HomePage = () => {
   const [components, setComponents] = useState(componentData.slice(0, 2));

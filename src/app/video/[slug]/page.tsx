@@ -1,6 +1,6 @@
 "use client";
 
-import { paths } from "@/app/page";
+import { paths } from "@/utils/path";
 import BreadCrumbs from "@/components/BreadCrumbs";
 import FrameInstallationInfo from "@/components/FrameInstallationInfo";
 import ProductDetails from "@/components/Products/ProductDetails";

@@ -9,7 +9,7 @@ import BrandHeader from "@/components/BrandHeader";
 import { IBrand } from "@/interface/Brand";
 import Meta from "@/components/Seo/Meta";
 import BreadCrumbs from "@/components/BreadCrumbs";
-import { paths } from "@/app/page";
+import { paths } from "@/utils/path";
 
 const CatalogPage = ({ params }: { params: { slug: string } }) => {
   const { slug } = params;

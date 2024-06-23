@@ -4,7 +4,7 @@ import BackButton from "@/components/Button/BackButton";
 import ProductPage from "@/components/Products/ProductPage";
 import Meta from "@/components/Seo/Meta";
 import { usePathname } from "next/navigation";
-import { paths } from "../page";
+import { paths } from "@/utils/path";
 import { useState } from "react";
 
 

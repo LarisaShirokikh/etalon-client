@@ -3,7 +3,7 @@ import BackButton from "@/components/Button/BackButton";
 import CatalogList from "@/components/Catalogs/CatalogList";
 import Meta from "@/components/Seo/Meta";
 import { usePathname } from "next/navigation";
-import { paths } from "../page";
+import { paths } from "@/utils/path";
 import BreadCrumbs from "@/components/BreadCrumbs";
 
 function CategoryCatalogsPage() {

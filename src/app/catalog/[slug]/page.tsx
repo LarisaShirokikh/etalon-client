@@ -1,5 +1,5 @@
 "use client";
-import { paths } from "@/app/page";
+import { paths } from "@/utils/path";
 import BreadCrumbs from "@/components/BreadCrumbs";
 import BackButton from "@/components/Button/BackButton";
 import ProductPage from "@/components/Products/ProductPage";
