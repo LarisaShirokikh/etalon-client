@@ -11,6 +11,9 @@ export async function GET(request: NextRequest) {
   const productId = searchParams.get("productId");
   const page = parseInt(searchParams.get("page") || "1");
   const skip = (page - 1) * limit;
+  const category = searchParams.get("category");
+  const priceRange = searchParams.get("priceRange");
+  const sortOrder = searchParams.get("sortOrder");
 
   await mongooseConnect();
 
@@ -18,8 +21,12 @@ export async function GET(request: NextRequest) {
     const product = await Product.findById(productId).exec();
     if (product) {
       return NextResponse.json(product);
+    } else {
+      return NextResponse.json({ error: "Product not found" }, { status: 404 });
     }
   }
+
+  let dbQuery = Product.find();
 
   if (slug) {
     const product = await Product.findOne({ slug }).exec();
@@ -28,43 +35,43 @@ export async function GET(request: NextRequest) {
     }
 
     const catalog = await Catalog.findOne({ slug }).exec();
-
     if (catalog) {
-      let dbQuery = Product.find().where("catalog").equals(catalog._id);
-
-      if (catalogId) {
-        dbQuery = dbQuery.where("catalog").equals(catalogId);
-      }
-
-      dbQuery = dbQuery.sort({ _id: -1 }).limit(limit).skip(skip);
-
-      const products = await dbQuery.exec();
-      const totalCount = await Product.countDocuments()
-        .where("catalog")
-        .equals(catalog._id)
-        .exec();
-      return NextResponse.json({ products, totalCount });
+      dbQuery = dbQuery.where("catalog").equals(catalog._id);
+    } else {
+      return NextResponse.json({ error: "Catalog not found" }, { status: 404 });
     }
   }
 
   if (catalogId) {
-    const dbQuery = Product.find()
-      .where("catalog")
-      .equals(catalogId)
-      .sort({ _id: -1 })
-      .limit(limit)
-      .skip(skip);
-    const products = await dbQuery.exec();
-    const totalCount = await Product.countDocuments()
-      .where("catalog")
-      .equals(catalogId)
-      .exec();
-    return NextResponse.json({ products, totalCount });
+    dbQuery = dbQuery.where("catalog").equals(catalogId);
   }
 
-  let dbQuery = Product.find().sort({ _id: -1 }).limit(limit).skip(skip);
+  if (category) {
+    dbQuery = dbQuery.where("category").equals(category);
+  }
+
+  if (priceRange) {
+    const [minPrice, maxPrice] = priceRange.split(",").map(Number);
+    dbQuery = dbQuery.where("price.discountedPrice").gte(minPrice).lte(maxPrice);
+  }
+
+  if (sortOrder) {
+    if (sortOrder === "price-asc") {
+      dbQuery = dbQuery.sort({ "price.discountedPrice": 1 });
+    } else if (sortOrder === "price-desc") {
+      dbQuery = dbQuery.sort({ "price.discountedPrice": -1 });
+    } else if (sortOrder === "rating") {
+      dbQuery = dbQuery.sort({ "price.discountedPrice": -1 });
+    }
+  } else {
+    dbQuery = dbQuery.sort({ _id: -1 });
+  }
+
+  dbQuery = dbQuery.limit(limit).skip(skip);
   const products = await dbQuery.exec();
-  const totalCount = await Product.countDocuments().exec();
+
+  // Count documents based on the same query parameters
+  const totalCount = await Product.countDocuments(dbQuery.getQuery()).exec();
 
   return NextResponse.json({ products, totalCount });
 }
