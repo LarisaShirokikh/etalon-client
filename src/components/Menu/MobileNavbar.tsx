@@ -7,28 +7,33 @@ import UserDropdown from "./UserDropdown";
 import MenuDropdown from "./MenuDropdown";
 import { useState } from "react";
 import SearchBar from "../SearchBar";
+import { useRouter } from "next/navigation";
 
 const MobileNavbar = ({ session }: { session: Session | null }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
+  const router = useRouter();
+
+  const handleFavoriteClick = () => {
+    if (session?.user) {
+      router.push(`/favorite?name=${session.user.name}`);
+    } else {
+      signIn("yandex");
+    }
+  };
 
 
   return (
     <nav className="fixed bottom-0 p-2 w-full bg-white border-t border-gray-200 shadow-lg md:hidden">
-      {showSearch && (
-        <SearchBar/>
-      )}
+      {showSearch && <SearchBar />}
       <div className="flex justify-around py-2">
         <NavItem href="/" icon={<Home />} />
         <NavItem
           onClick={() => setShowSearch((prev) => !prev)}
           icon={<Search />}
         />
-        <NavItem href="/my-favorite" icon={<Heart />} />
-        <NavItem
-          onClick={() => setShowMenu((prev) => !prev)}
-          icon={<LayoutGrid />}
-        />
+        <NavItem onClick={handleFavoriteClick} icon={<Heart />} />
+        <NavItem href="/" icon={<LayoutGrid />} />
         {!session?.user ? (
           <NavItem
             onClick={() => signIn("yandex")}

@@ -1,14 +1,12 @@
-"use client";
 import axios from "axios";
 import Image from "next/image";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Skeleton from "../Skeleton";
 import Link from "next/link";
 import { Heart } from "lucide-react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { IProduct } from "@/interface/Product";
 
 interface ProductItemProps {
   productId?: string;
@@ -17,15 +15,16 @@ interface ProductItemProps {
   catalogId?: string;
   slug?: string;
   searchParams?: any;
+  name?: string; // Добавлено поле для имени пользователя или иного идентификатора
 }
 
 const ProductItem: React.FC<ProductItemProps> = ({
   productId,
-  color,
   categoryId,
   catalogId,
   slug,
   searchParams,
+  name, // Получаем имя пользователя или иной идентификатор
 }) => {
   const [product, setProduct] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -50,39 +49,63 @@ const ProductItem: React.FC<ProductItemProps> = ({
         });
 
         setProduct(response.data);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching product:", error);
+        setLoading(false);
       }
     };
 
     fetchProduct();
   }, [productId, categoryId, catalogId, slug, searchParams]);
 
-  if (!product) {
-    return (
-      <div>
-        <Skeleton />
-      </div>
-    );
-  }
+  useEffect(() => {
+    const checkFavoriteStatus = async () => {
+      try {
+        // Выполняем запрос на проверку статуса избранного товара
+        const response = await axios.get(`/api/favorites/check`, {
+          params: {
+            productId,
+            name, // Передаем имя пользователя или иной идентификатор
+          },
+        });
 
-  // useEffect(() => {
-  //   if (product) {
-  //     const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-  //     setIsFavorite(favorites.includes(product.id));
-  //   }
-  // }, [product]);
+        setIsFavorite(response.data.isFavorite);
+      } catch (error) {
+        console.error("Error checking favorite status:", error);
+      }
+    };
 
-  const toggleFavorite = () => {
-    const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-    if (isFavorite) {
-      const newFavorites = favorites.filter((id: string) => id !== product.id);
-      localStorage.setItem("favorites", JSON.stringify(newFavorites));
-      setIsFavorite(false);
-    } else {
-      favorites.push(product.id);
-      localStorage.setItem("favorites", JSON.stringify(favorites));
-      setIsFavorite(true);
+    // Проверяем статус избранного только если есть имя пользователя или иной идентификатор
+    if (name) {
+      checkFavoriteStatus();
+    }
+  }, [productId, name]);
+
+  const toggleFavorite = async () => {
+    try {
+      // Проверяем, что имя пользователя или иной идентификатор существует
+      if (!name) {
+        console.error("User is not authenticated");
+        return;
+      }
+
+      // Отправляем запрос на добавление или удаление избранного товара
+      if (isFavorite) {
+        await axios.post(`/api/favorites/remove`, {
+          productId,
+          name,
+        });
+        setIsFavorite(false);
+      } else {
+        await axios.post(`/api/favorites/add`, {
+          productId,
+          name,
+        });
+        setIsFavorite(true);
+      }
+    } catch (error) {
+      console.error("Error toggling favorite:", error);
     }
   };
 
@@ -95,15 +118,19 @@ const ProductItem: React.FC<ProductItemProps> = ({
     adaptiveHeight: true,
     swipe: true,
     appendDots: (dots: React.ReactNode) => (
-      <div
-        style={{
-          bottom: "-10px",
-        }}
-      >
+      <div style={{ bottom: "-10px" }}>
         <ul className="space-x-0">{dots}</ul>
       </div>
     ),
   };
+
+  if (loading) {
+    return (
+      <div>
+        <Skeleton />
+      </div>
+    );
+  }
 
   return (
     <div className="relative w-full rounded-md overflow-hidden bg-white flex flex-col justify-center items-center">
@@ -111,10 +138,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
         <div className="relative w-48 h-54">
           <Slider {...settings}>
             {product.images.map((image: string, index: number) => (
-              <div
-                key={index}
-                className=" flex justify-center items-center"
-              >
+              <div key={index} className=" flex justify-center items-center">
                 <div className="relative w-48 h-48">
                   <Image
                     src={image || "/product.png"}
@@ -162,4 +186,5 @@ const ProductItem: React.FC<ProductItemProps> = ({
     </div>
   );
 };
+
 export default ProductItem;

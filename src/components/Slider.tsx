@@ -7,12 +7,12 @@ import { useEffect, useState, useRef } from "react";
 const slides = [
   {
     id: 1,
-    img: "/wite.webp",
+    img: "/slice1.png",
     url: "/",
   },
   {
     id: 2,
-    img: "/issida.webp",
+    img: "/slice.png",
     url: "/",
   },
   {

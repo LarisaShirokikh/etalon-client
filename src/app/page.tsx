@@ -7,6 +7,7 @@ import componentData from "@/utils/componentData";
 import BreadCrumbs from "@/components/BreadCrumbs";
 
 import { paths } from "@/utils/path";
+import HomeSlider from "@/components/HomeSlider";
 
 // Динамическая загрузка компонентов
 const ProductSection = dynamic(
@@ -16,13 +17,10 @@ const CatalogSection = dynamic(
   () => import("@/components/Catalogs/CatalogSection")
 );
 
-
-
 const HomePage = () => {
   const [components, setComponents] = useState(componentData.slice(0, 2));
 
-
-//TODO сделать страницу видео
+  //TODO сделать страницу видео
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,7 +41,7 @@ const HomePage = () => {
 
   return (
     <div>
-      <Slider />
+      <HomeSlider />
       <div className="md:hidden block">
         <BreadCrumbs paths={paths} />
       </div>

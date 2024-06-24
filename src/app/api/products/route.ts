@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { Product } from "@/models/Product";
 import { mongooseConnect } from "@/lib/mongoose";
 import { Catalog } from "@/models/Catalog";
+import { UserFavorites } from "@/models/UserFavorites";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -14,6 +15,7 @@ export async function GET(request: NextRequest) {
   const category = searchParams.get("category");
   const priceRange = searchParams.get("priceRange");
   const sortOrder = searchParams.get("sortOrder");
+  const userName = searchParams.get("name");
 
   await mongooseConnect();
 
@@ -53,6 +55,19 @@ export async function GET(request: NextRequest) {
   if (priceRange) {
     const [minPrice, maxPrice] = priceRange.split(",").map(Number);
     dbQuery = dbQuery.where("price.discountedPrice").gte(minPrice).lte(maxPrice);
+  }
+
+  if (userName) {
+    // Fetch the user favorites by userName and use the productIds to filter products
+    const userFavorites = await UserFavorites.findOne({ userName }).exec();
+    if (userFavorites) {
+      dbQuery = dbQuery.where("_id").in(userFavorites.productIds);
+    } else {
+      return NextResponse.json(
+        { error: "User favorites not found" },
+        { status: 404 }
+      );
+    }
   }
 
   if (sortOrder) {

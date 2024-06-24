@@ -12,15 +12,17 @@ interface ProductListProps {
   searchParams?: any;
   slug?: string;
   filters?: any;
+  name?: string;
 }
 
-const ProductList: React.FC<ProductListProps> = ({
+const ProductPage: React.FC<ProductListProps> = ({
   limit = 24,
   categoryId,
   catalogId,
   slug,
   searchParams,
   filters,
+  name,
 }) => {
   const [products, setProducts] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState(false);
@@ -28,7 +30,10 @@ const ProductList: React.FC<ProductListProps> = ({
   const [totalCount, setTotalCount] = useState(0);
   const [sortOrder, setSortOrder] = useState("price-asc");
 
-  const fetchProducts = async (newPage: number, sortOrder: string) => {
+  const fetchProducts = async (
+    newPage: number, 
+    sortOrder: string, 
+    name?: string) => {
     setLoading(true);
     try {
       const response = await axios.get("/api/products", {
@@ -40,6 +45,7 @@ const ProductList: React.FC<ProductListProps> = ({
           searchParams,
           page: newPage,
           sortOrder,
+          name: name || "",
         },
       });
       if (newPage === 1) {
@@ -59,8 +65,10 @@ const ProductList: React.FC<ProductListProps> = ({
   };
 
   useEffect(() => {
-    fetchProducts(page, sortOrder);
-  }, [page, sortOrder]);
+    if (name) {
+      fetchProducts(page, sortOrder, name);
+    }
+  }, [page, sortOrder, name]);
 
   const handleLoadMore = () => {
     const nextPage = page + 1;
@@ -71,7 +79,7 @@ const ProductList: React.FC<ProductListProps> = ({
     setSortOrder(newSortOrder);
     setPage(1);
     setProducts([]);
-    fetchProducts(1, newSortOrder);
+    fetchProducts(1, newSortOrder, name);
   };
 
   if (products.length === 0 && !loading) {
@@ -86,7 +94,7 @@ const ProductList: React.FC<ProductListProps> = ({
       />
       <div className="grid grid-cols-2 lg:grid-cols-6 md:grid-cols-4 gap-4 p-2 m-2 rounded-lg">
         {products.map((product) => (
-          <ProductItem key={product._id} slug={product.slug} />
+          <ProductItem key={product._id} slug={product.slug} name={name}/>
         ))}
       </div>
       {loading && <Skeleton />}
@@ -105,4 +113,4 @@ const ProductList: React.FC<ProductListProps> = ({
   );
 };
 
-export default ProductList;
+export default ProductPage;

@@ -4,7 +4,7 @@ import Image from "next/image";
 const SimpleSlider = () => {
   const slide = {
     id: 1,
-    imageUrl: "/Frame.png",
+    imageUrl: "/slice.png",
     altText: "Баннер",
   };
 
