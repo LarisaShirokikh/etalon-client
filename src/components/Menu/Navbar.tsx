@@ -66,9 +66,9 @@ const Navbar = () =>
                 <span>Москва и МО</span>
               </div>
               </div>
-              <div className="w-full px-2">
+              {/* <div className="w-full px-2">
                 <SearchBar />
-              </div>
+              </div> */}
             </div>
             {/* BIGGER SCREENS */}
             <div className="hidden md:flex items-center justify-between h-20">
