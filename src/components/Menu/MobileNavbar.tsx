@@ -1,5 +1,5 @@
 "use client";
-import { Home, Search, Heart, LayoutGrid, CircleUserRound } from "lucide-react";
+import { Home, Search, Heart, LayoutGrid, CircleUserRound, Menu } from "lucide-react";
 import { Session } from "next-auth";
 import { signIn } from "next-auth/react";
 import NavItem from "./NavItem";
@@ -22,6 +22,10 @@ const MobileNavbar = ({ session }: { session: Session | null }) => {
     }
   };
 
+  const toggleMenu = () => {
+    setShowMenu((prev) => !prev);
+  };
+
 
   return (
     <nav className="fixed bottom-0 p-2 w-full bg-white border-t border-gray-200 shadow-lg md:hidden">
@@ -33,7 +37,7 @@ const MobileNavbar = ({ session }: { session: Session | null }) => {
           icon={<Search />}
         />
         <NavItem onClick={handleFavoriteClick} icon={<Heart />} />
-        <NavItem href="/" icon={<LayoutGrid />} />
+        <NavItem onClick={toggleMenu} icon={<LayoutGrid />} />
         {!session?.user ? (
           <NavItem
             onClick={() => signIn("yandex")}
