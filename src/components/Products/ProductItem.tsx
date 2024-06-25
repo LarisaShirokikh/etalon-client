@@ -3,7 +3,6 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import Skeleton from "../Skeleton";
 import Link from "next/link";
-import { Heart } from "lucide-react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -15,7 +14,6 @@ interface ProductItemProps {
   catalogId?: string;
   slug?: string;
   searchParams?: any;
-  name?: string; // Добавлено поле для имени пользователя или иного идентификатора
 }
 
 const ProductItem: React.FC<ProductItemProps> = ({
@@ -24,11 +22,13 @@ const ProductItem: React.FC<ProductItemProps> = ({
   catalogId,
   slug,
   searchParams,
-  name, // Получаем имя пользователя или иной идентификатор
 }) => {
   const [product, setProduct] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [isFavorite, setIsFavorite] = useState(false);
+
+  
+
+
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -59,55 +59,48 @@ const ProductItem: React.FC<ProductItemProps> = ({
     fetchProduct();
   }, [productId, categoryId, catalogId, slug, searchParams]);
 
-  useEffect(() => {
-    const checkFavoriteStatus = async () => {
-      try {
-        // Выполняем запрос на проверку статуса избранного товара
-        const response = await axios.get(`/api/favorites/check`, {
-          params: {
-            productId,
-            name, // Передаем имя пользователя или иной идентификатор
-          },
-        });
+  // useEffect(() => {
+  //   const checkFavoriteStatus = async () => {
+  //     try {
+  //       // Выполняем запрос на проверку статуса избранного товара
+  //       const response = await axios.get(`/api/favorite`, {
+  //         params: {
+  //           productId,
+  //           userName, // Передаем имя пользователя или иной идентификатор
+  //         },
+  //       });
 
-        setIsFavorite(response.data.isFavorite);
-      } catch (error) {
-        console.error("Error checking favorite status:", error);
-      }
-    };
+  //       setIsFavorite(response.data.isFavorite);
+  //     } catch (error) {
+  //       console.error("Error checking favorite status:", error);
+  //     }
+  //   };
 
-    // Проверяем статус избранного только если есть имя пользователя или иной идентификатор
-    if (name) {
-      checkFavoriteStatus();
-    }
-  }, [productId, name]);
+  //   // Проверяем статус избранного только если есть имя пользователя или иной идентификатор
+  //   if (userName) {
+  //     checkFavoriteStatus();
+  //   }
+  // }, [productId, userName]);
 
-  const toggleFavorite = async () => {
-    try {
-      // Проверяем, что имя пользователя или иной идентификатор существует
-      if (!name) {
-        console.error("User is not authenticated");
-        return;
-      }
+  //  const toggleFavorite = async () => {
+  //    try {
+  //      if (!authenticated) {
+  //        console.error("User is not authenticated");
+  //        return;
+  //      }
 
-      // Отправляем запрос на добавление или удаление избранного товара
-      if (isFavorite) {
-        await axios.post(`/api/favorites/remove`, {
-          productId,
-          name,
-        });
-        setIsFavorite(false);
-      } else {
-        await axios.post(`/api/favorites/add`, {
-          productId,
-          name,
-        });
-        setIsFavorite(true);
-      }
-    } catch (error) {
-      console.error("Error toggling favorite:", error);
-    }
-  };
+  //      const action = isFavorite ? "remove" : "add";
+  //      await axios.post(`/api/favorite`, {
+  //        productId,
+  //        userName,
+  //        action,
+  //      });
+
+  //      setIsFavorite(!isFavorite);
+  //    } catch (error) {
+  //      console.error("Error toggling favorite:", error);
+  //    }
+  //  };
 
   const settings = {
     dots: true,
@@ -176,13 +169,13 @@ const ProductItem: React.FC<ProductItemProps> = ({
           )}
         </div>
       </div>
-      <button
+      {/* <button
         onClick={toggleFavorite}
         className="absolute top-2 right-2 text-gray-600"
         aria-label="Add to favorites"
       >
-        {isFavorite ? <Heart fill="red" size={20} /> : <Heart size={20} />}
-      </button>
+        {isFavorite ? <Heart color="red" size={20} /> : <Heart size={20} />}
+      </button> */}
     </div>
   );
 };

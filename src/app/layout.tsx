@@ -1,18 +1,14 @@
 
-import type { Metadata, NextPageContext } from "next";
+import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Menu/Navbar";
 import Footer from "@/components/Footer";
-import { TranslationsProvider } from "@/context/translationsContext";
-import { translations } from "@/utils/translations";
 import YandexMetrika from "@/components/YandexMetrika";
 import "@/utils/wdyr";
 import MobileNavbar from "@/components/Menu/MobileNavbar";
-import { authOptions } from "@/lib/authOptions";
-import { getServerSession } from "next-auth";
 import Script from "next/script";
-import { Key, Suspense } from "react";
+import { Suspense } from "react"
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -47,13 +43,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession(authOptions);
-
 
 
   return (
     <html lang="ru">
-      
       <body className={inter.className}>
         <Script id="metrika-counter" strategy="afterInteractive">
           {`(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -73,21 +66,14 @@ export default async function RootLayout({
         <Suspense fallback={<></>}>
           <YandexMetrika />
         </Suspense>
-        <TranslationsProvider translations={translations}>
-          <Navbar />
-          {children}
-          <MobileNavbar session={session} />
-          <Footer />
-        </TranslationsProvider>
+
+        <Navbar />
+        {children}
+        <MobileNavbar />
+        {/* <Footer /> */}
       </body>
     </html>
   );
 }
-function getActivePageCtx() {
-  throw new Error("Function not implemented.");
-}
 
-function buildCookieHeader(name: string, value: string, options: any): any {
-  throw new Error("Function not implemented.");
-}
 

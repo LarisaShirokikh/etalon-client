@@ -80,7 +80,7 @@ const Button: React.FC<ButtonProps> = ({ text, className, href }) => {
     <div>
       <a href={href}>
         <button
-          className={`${className} items-center gap-2 px-4 py-2 bg-gray-100 text-wite rounded-lg shadow hover:bg-gray-500 transition-colors`}
+          className={`${className} items-center gap-2 px-4 py-2 bg-black text-blue-100 rounded-lg shadow hover:bg-wite transition-colors`}
           onClick={handleOpenModal}
         >
           {text}

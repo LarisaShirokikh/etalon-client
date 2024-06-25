@@ -5,25 +5,25 @@ import { IProduct } from "@/interface/Product";
 import ProductItem from "./ProductItem";
 import ProductPrice from "./ProductPrice";
 
-interface ProductListProps {
+
+interface ProductPageProps {
   limit?: number;
   categoryId?: string;
   catalogId?: string;
   searchParams?: any;
   slug?: string;
   filters?: any;
-  name?: string;
 }
 
-const ProductPage: React.FC<ProductListProps> = ({
+const ProductPage: React.FC<ProductPageProps> = ({
   limit = 24,
   categoryId,
   catalogId,
   slug,
   searchParams,
   filters,
-  name,
 }) => {
+  
   const [products, setProducts] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -31,9 +31,10 @@ const ProductPage: React.FC<ProductListProps> = ({
   const [sortOrder, setSortOrder] = useState("price-asc");
 
   const fetchProducts = async (
-    newPage: number, 
-    sortOrder: string, 
-    name?: string) => {
+    newPage: number,
+    sortOrder: string,
+    userName?: string
+  ) => {
     setLoading(true);
     try {
       const response = await axios.get("/api/products", {
@@ -45,7 +46,6 @@ const ProductPage: React.FC<ProductListProps> = ({
           searchParams,
           page: newPage,
           sortOrder,
-          name: name || "",
         },
       });
       if (newPage === 1) {
@@ -65,10 +65,10 @@ const ProductPage: React.FC<ProductListProps> = ({
   };
 
   useEffect(() => {
-    if (name) {
-      fetchProducts(page, sortOrder, name);
-    }
-  }, [page, sortOrder, name]);
+  
+      fetchProducts(page, sortOrder);
+    
+  }, [page, sortOrder]);
 
   const handleLoadMore = () => {
     const nextPage = page + 1;
@@ -79,7 +79,7 @@ const ProductPage: React.FC<ProductListProps> = ({
     setSortOrder(newSortOrder);
     setPage(1);
     setProducts([]);
-    fetchProducts(1, newSortOrder, name);
+    fetchProducts(1, newSortOrder);
   };
 
   if (products.length === 0 && !loading) {
@@ -94,7 +94,7 @@ const ProductPage: React.FC<ProductListProps> = ({
       />
       <div className="grid grid-cols-2 lg:grid-cols-6 md:grid-cols-4 gap-4 p-2 m-2 rounded-lg">
         {products.map((product) => (
-          <ProductItem key={product._id} slug={product.slug} name={name}/>
+          <ProductItem key={product._id} slug={product.slug}  />
         ))}
       </div>
       {loading && <Skeleton />}

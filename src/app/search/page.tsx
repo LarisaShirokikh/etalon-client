@@ -1,12 +1,12 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import axios from "axios";
 import CatalogList from "@/components/Catalogs/CatalogList";
 import BackButton from "@/components/Button/BackButton";
 import ProductPage from "@/components/Products/ProductPage";
 
-const SearchPage = () => {
+const SearchResults = () => {
   const searchParams = useSearchParams();
   const query = searchParams.get("name");
   const [products, setProducts] = useState([]);
@@ -73,5 +73,11 @@ const SearchPage = () => {
     </div>
   );
 };
+
+const SearchPage = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <SearchResults />
+  </Suspense>
+);
 
 export default SearchPage;

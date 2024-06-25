@@ -59,7 +59,7 @@ const UserDropdown = ({ session }: { session: Session }) => {
               </div>
             </div>
             <button
-              onClick={() => router.push("/my-ads")}
+              onClick={() => router.push("/favorite")}
               className="flex gap-2 px-9 pt-2 block text-start w-full"
             >
               <Heart />

@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
 
   let products = [];
   let catalogs = [];
-let categories = [];
+  let categories = [];
   if (name) {
     // Поиск в продуктах
     products = await Product.find({
@@ -20,19 +20,15 @@ let categories = [];
     }).exec();
 
     // Если нет результатов, ищем в категориях
-    
-      categories = await Category.find({
-        name: { $regex: name, $options: "i" },
-      }).exec();
-    
 
-    
-      catalogs = await Catalog.find({
-        name: { $regex: name, $options: "i" },
-      }).exec();
-    
+    categories = await Category.find({
+      name: { $regex: name, $options: "i" },
+    }).exec();
+
+    catalogs = await Catalog.find({
+      name: { $regex: name, $options: "i" },
+    }).exec();
   }
 
   return NextResponse.json({ products, categories, catalogs });
-
 }

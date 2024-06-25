@@ -74,7 +74,7 @@ const Footer = () => {
       </div>
       {/* Bottom Section */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-4 mt-8">
-        <div className="text-sm text-gray-600">
+        <div className="text-sm text-gray-600 mb-5">
           © 2024 Двери Эталон. Магазин входных металлических дверей.
         </div>
       </div>
