@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Modal from "../Modal";
 import axios from "axios";
+import { ShoppingBasket, PencilRuler } from "lucide-react";
 
 interface ButtonProps {
   text: string;
@@ -80,9 +81,10 @@ const Button: React.FC<ButtonProps> = ({ text, className, href }) => {
     <div>
       <a href={href}>
         <button
-          className={`${className} items-center gap-2 px-4 py-2 bg-black text-blue-100 rounded-lg shadow hover:bg-wite transition-colors`}
+          className={`${className} flex items-center gap-2 px-4 py-2 bg-wite text-gray-700 border rounded-full hover:bg-red transition-colors`}
           onClick={handleOpenModal}
         >
+          {<PencilRuler size={20}/>}
           {text}
         </button>
       </a>

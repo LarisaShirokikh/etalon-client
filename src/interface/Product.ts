@@ -9,6 +9,7 @@ interface PriceProperties {
 // Общий интерфейс для продукта
 interface IProduct extends Document {
   _id: string;
+  
   title: string;
   description?: string;
   price: PriceProperties;

@@ -59,48 +59,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
     fetchProduct();
   }, [productId, categoryId, catalogId, slug, searchParams]);
 
-  // useEffect(() => {
-  //   const checkFavoriteStatus = async () => {
-  //     try {
-  //       // Выполняем запрос на проверку статуса избранного товара
-  //       const response = await axios.get(`/api/favorite`, {
-  //         params: {
-  //           productId,
-  //           userName, // Передаем имя пользователя или иной идентификатор
-  //         },
-  //       });
-
-  //       setIsFavorite(response.data.isFavorite);
-  //     } catch (error) {
-  //       console.error("Error checking favorite status:", error);
-  //     }
-  //   };
-
-  //   // Проверяем статус избранного только если есть имя пользователя или иной идентификатор
-  //   if (userName) {
-  //     checkFavoriteStatus();
-  //   }
-  // }, [productId, userName]);
-
-  //  const toggleFavorite = async () => {
-  //    try {
-  //      if (!authenticated) {
-  //        console.error("User is not authenticated");
-  //        return;
-  //      }
-
-  //      const action = isFavorite ? "remove" : "add";
-  //      await axios.post(`/api/favorite`, {
-  //        productId,
-  //        userName,
-  //        action,
-  //      });
-
-  //      setIsFavorite(!isFavorite);
-  //    } catch (error) {
-  //      console.error("Error toggling favorite:", error);
-  //    }
-  //  };
+  
 
   const settings = {
     dots: true,

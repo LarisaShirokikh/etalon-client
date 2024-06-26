@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
 
   await mongooseConnect();
 
-  console.log("catalogs api", slug);
+  console.log("catalogs api", slug, catalogId);
 
   if (catalogId) {
     const catalog = await Catalog.findById(catalogId).exec();

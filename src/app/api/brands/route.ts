@@ -10,6 +10,13 @@ export async function GET(request: NextRequest) {
 
   await mongooseConnect();
 
+  if (brandId) {
+    const brand = await Brand.findById(brandId).exec();
+    if (brand) {
+      return NextResponse.json(brand);
+    }
+  }
+
   const dbQuery = Brand.find();
   dbQuery.limit(limit).skip(page * limit);
 

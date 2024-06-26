@@ -9,6 +9,7 @@ import "@/utils/wdyr";
 import MobileNavbar from "@/components/Menu/MobileNavbar";
 import Script from "next/script";
 import { Suspense } from "react"
+import { CartProvider } from "@/context/CartContext";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -66,10 +67,12 @@ export default async function RootLayout({
         <Suspense fallback={<></>}>
           <YandexMetrika />
         </Suspense>
+<CartProvider>
 
         <Navbar />
         {children}
         <MobileNavbar />
+</CartProvider>
         {/* <Footer /> */}
       </body>
     </html>
