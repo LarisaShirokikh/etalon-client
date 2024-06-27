@@ -9,7 +9,7 @@ interface PriceProperties {
 // Общий интерфейс для продукта
 interface IProduct extends Document {
   _id: string;
-  
+
   title: string;
   description?: string;
   price: PriceProperties;
@@ -27,6 +27,7 @@ interface IProduct extends Document {
   slug: string;
   images?: string[]; // Поле images добавлено, чтобы включить его из интерфейса IProduct
   video?: string[]; // Поле video добавлено, чтобы включить его из интерфейса IProductVideo
+  quantity: number;
 }
 
 // Интерфейс для модели продукта

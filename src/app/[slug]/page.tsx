@@ -83,36 +83,36 @@ const SinglePage = ({ params }: { params: { slug: string } }) => {
         {/* IMG */}
         <div className="w-full lg:w-1/2 lg:sticky top-20 h-max p-4 lg:p-0">
           <ProductImages items={product.images || []} />
+          <div className="flex items-center gap-1 p-3 justify-center ">
+            {brandName && brandSlug && (
+              <div>
+                <Link href={`/brand/${brandSlug}`}>
+                  <div className="flex text-xs items-center gap-1 px-2 py-2 cursor-pointer bg-gray-200 hover:text-white hover:bg-gray-500 rounded-full transition duration-300">
+                    {brandName}
+                    <ChevronRight />
+                  </div>
+                </Link>
+              </div>
+            )}
+            {catalogName && catalogSlug && (
+              <div>
+                <Link href={`/catalog/${catalogSlug}`}>
+                  <div className="flex text-xs items-center gap-1 px-2 py-2 cursor-pointer bg-gray-200 hover:text-white hover:bg-gray-500 rounded-full transition duration-300">
+                    {catalogName}
+                    <ChevronRight />
+                  </div>
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
         {/* TEXTS */}
-        <div className="flex items-center gap-1">
-          {brandName && brandSlug && (
-            <div>
-              <Link href={`/brand/${brandSlug}`}>
-                <div className="flex text-xs items-center gap-1 px-2 py-2 cursor-pointer bg-gray-200 hover:text-white hover:bg-gray-500 rounded-full transition duration-300">
-                  {brandName}
-                  <ChevronRight />
-                </div>
-              </Link>
-            </div>
-          )}
-          {catalogName && catalogSlug && (
-            <div>
-              <Link href={`/catalog/${catalogSlug}`}>
-                <div className="flex text-xs items-center gap-1 px-2 py-2 cursor-pointer bg-gray-200 hover:text-white hover:bg-gray-500 rounded-full transition duration-300">
-                  {catalogName}
-                  <ChevronRight />
-                </div>
-              </Link>
-            </div>
-          )}
-        </div>
         <ProductDetails item={product} />
       </div>
       <ServiceDetails />
       <FrameInstallationInfo />
 
-      <h1 className="text-xl mt-24 p-3">Рекомендуем посмотреть</h1>
+      <h1 className="text-xl mt-14 p-3">Рекомендуем посмотреть</h1>
       <Suspense fallback={<Skeleton />}>
         <ProductPage limit={6} />
       </Suspense>

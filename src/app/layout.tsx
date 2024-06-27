@@ -1,4 +1,3 @@
-
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -8,9 +7,8 @@ import YandexMetrika from "@/components/YandexMetrika";
 import "@/utils/wdyr";
 import MobileNavbar from "@/components/Menu/MobileNavbar";
 import Script from "next/script";
-import { Suspense } from "react"
+import { Suspense } from "react";
 import { CartProvider } from "@/context/CartContext";
-
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +22,7 @@ export const metadata: Metadata = {
     description: "При покупке двери, доставка в пределах МКАД - бесплатно",
     type: "website",
     locale: "ru_RU",
-    url: process.env.PROD_URL || "https://dverietalon.ru", 
+    url: process.env.PROD_URL || "https://dverietalon.ru",
     siteName: "Двери-Эталон",
     images: [
       {
@@ -37,15 +35,11 @@ export const metadata: Metadata = {
   },
 };
 
-
-
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-
   return (
     <html lang="ru">
       <body className={inter.className}>
@@ -67,16 +61,13 @@ export default async function RootLayout({
         <Suspense fallback={<></>}>
           <YandexMetrika />
         </Suspense>
-<CartProvider>
-
-        <Navbar />
-        {children}
-        <MobileNavbar />
-</CartProvider>
-        {/* <Footer /> */}
+        <CartProvider>
+          <Navbar />
+          {children}
+          <MobileNavbar />
+        </CartProvider>
+        <Footer />
       </body>
     </html>
   );
 }
-
-

@@ -25,6 +25,7 @@ interface IProductVideo extends Document {
   loops?: string;
   protection?: string;
   slug: string;
+  quantity: number;
 }
 
 // Интерфейс для модели продукта

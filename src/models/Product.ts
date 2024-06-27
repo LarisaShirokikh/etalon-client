@@ -24,6 +24,7 @@ const ProductSchema = new Schema(
     interior: { type: String },
     loops: { type: String },
     protection: { type: String },
+    quantity: { type: Number }
   },
   {
     timestamps: true,
