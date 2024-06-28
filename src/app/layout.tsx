@@ -9,6 +9,7 @@ import MobileNavbar from "@/components/Menu/MobileNavbar";
 import Script from "next/script";
 import { Suspense } from "react";
 import { CartProvider } from "@/context/CartContext";
+import ToastProvider from "@/context/ToastProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -63,7 +64,10 @@ export default async function RootLayout({
         </Suspense>
         <CartProvider>
           <Navbar />
+        <ToastProvider>
           {children}
+
+        </ToastProvider>
           <MobileNavbar />
         </CartProvider>
         <Footer />

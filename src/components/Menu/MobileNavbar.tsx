@@ -63,7 +63,7 @@ const MobileNavbar = () => {
             onClick={() => setShowSearch((prev) => !prev)}
             icon={<Search />}
           />
-          <NavItem onClick={handleCheckBasket} icon={<ShoppingBasket />} />
+          <NavItem href="/cart" icon={<ShoppingBasket />} />
           <NavItem onClick={toggleMenu} icon={<LayoutGrid />} />
         </div>
         {showMenu && <MenuDropdown />}

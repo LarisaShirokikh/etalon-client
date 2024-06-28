@@ -3,15 +3,120 @@ import React, { useState } from "react";
 import { useCart } from "@/context/CartContext";
 import Image from "next/image";
 import { Trash, Plus, Minus } from "lucide-react";
+import axios from "axios";
+import { toast } from "react-toastify";
+
+interface FormData {
+  name: string;
+  phone: string;
+  address: string;
+  contactMethod: string;
+  isAgreed: boolean;
+  needMeasurement: boolean;
+}
+
+interface FormErrors {
+  name?: string;
+  phone?: string;
+  address?: string;
+  contactMethod?: string;
+  isAgreed?: string;
+}
 
 const Cart = () => {
   const { cartItems, removeFromCart, addToCart, decreaseQuantity, clearCart } =
     useCart();
-  const [orderDetails, setOrderDetails] = useState({
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [formData, setFormData] = useState<FormData>({
     name: "",
-    phone: "",
+    phone: "+7",
     address: "",
+    contactMethod: "phone",
+    isAgreed: true,
+    needMeasurement: false,
   });
+
+  const [formErrors, setFormErrors] = useState<FormErrors>({});
+
+  const validateForm = (): boolean => {
+    let valid = true;
+    const errors: FormErrors = {};
+
+    if (!formData.name.trim()) {
+      errors.name = "Пожалуйста, введите ваше Ф.И.О.";
+      valid = false;
+    }
+
+    const phoneRegex = /^\+?\d{11,}$/;
+    if (!phoneRegex.test(formData.phone)) {
+      errors.phone =
+        "Неверный формат номера телефона. Введите номер в формате +7(___)___-__-__";
+      valid = false;
+    }
+
+    if (!formData.address.trim()) {
+      errors.address = "Пожалуйста, введите ваш адрес";
+      valid = false;
+    }
+
+    if (!formData.contactMethod) {
+      errors.contactMethod = "Выберите способ связи";
+      valid = false;
+    }
+
+    if (!formData.isAgreed) {
+      errors.isAgreed = "Вы должны согласиться с политикой конфиденциальности";
+      valid = false;
+    }
+
+    setFormErrors(errors);
+    return valid;
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    try {
+      const response = await axios.post("/api/order", {
+        ...formData,
+        items: cartItems.map((item) => item._id), // Assuming cartItems have _id property
+      });
+      if (response.data.success) {
+        setIsSubmitted(true);
+        clearCart(); // Clear cart after successful submission
+      } else {
+        toast.error("Ошибка при отправке заказа.");
+      }
+    } catch (error) {
+      console.error("Ошибка:", error);
+      toast.error("Ошибка при отправке заказа.");
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (name === "phone" && !/^[\d+]*$/.test(value)) {
+      // Если введенный символ не является цифрой или "+", игнорируем его
+      return;
+    }
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleContactMethodChange = (method: string) => {
+    setFormData({ ...formData, contactMethod: method });
+  };
+
+  const handleAgreementChange = () => {
+    setFormData({ ...formData, isAgreed: !formData.isAgreed });
+  };
+
+  const handleMeasurementChange = () => {
+    setFormData({ ...formData, needMeasurement: !formData.needMeasurement });
+  };
 
   const calculateTotal = () => {
     return cartItems.reduce((total, item) => {
@@ -35,23 +140,15 @@ const Cart = () => {
     }
   };
 
-  const handleOrderSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Implement order submission logic here
-    console.log("Order details:", orderDetails);
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setOrderDetails((prevDetails) => ({
-      ...prevDetails,
-      [name]: value,
-    }));
-  };
-
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-2xl font-semibold mb-4">Корзина</h1>
+      {isSubmitted ? (
+        <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4">
+          Заказ успешно отправлен. Менеджер свяжется с вами в течение 15-20
+          минут.
+        </div>
+      ) : null}
       {cartItems.length === 0 ? (
         <p className="text-gray-500">Ваша корзина пуста</p>
       ) : (
@@ -133,58 +230,205 @@ const Cart = () => {
       )}
 
       {cartItems.length > 0 && (
-        <form onSubmit={handleOrderSubmit} className="mt-8">
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
-              Имя
-            </label>
-            <input
-              type="text"
-              name="name"
-              value={orderDetails.name}
-              onChange={handleInputChange}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
-              Телефон
-            </label>
-            <input
-              type="text"
-              name="phone"
-              value={orderDetails.phone}
-              onChange={handleInputChange}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
-              Адрес
-            </label>
-            <input
-              type="text"
-              name="address"
-              value={orderDetails.address}
-              onChange={handleInputChange}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              required
-            />
-          </div>
+        <div className="pt-4">
           <div className="flex justify-between items-center">
             <p className="text-xl font-semibold">
               Общая сумма: {calculateTotal()} рублей
             </p>
           </div>
-          <button
-            type="submit"
-            className="bg-blue-400 text-white px-4 py-2 rounded-full hover:bg-blue-500 transition ml-4"
-          >
-            Оформить заказ
-          </button>
-        </form>
+          <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+            <div>
+              <input
+                type="text"
+                placeholder="Ф.И.О."
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                className={`w-full p-2 border rounded-md bg-gray-50 focus:outline-none focus:ring-2 ${
+                  formErrors.name
+                    ? "border-red-500 focus:ring-red-500"
+                    : "focus:ring-blue-500"
+                }`}
+              />
+              {formErrors.name && (
+                <p className="text-red-500 text-xs mt-1">{formErrors.name}</p>
+              )}
+            </div>
+            <div>
+              <input
+                type="text"
+                id="phone"
+                placeholder="+7(___)___-__-__"
+                name="phone"
+                value={formData.phone}
+                onChange={handleInputChange}
+                className={`w-full p-2 border rounded-md bg-gray-50 focus:outline-none focus:ring-2 ${
+                  formErrors.phone
+                    ? "border-red-500 focus:ring-red-500"
+                    : "focus:ring-blue-500"
+                }`}
+              />
+              {formErrors.phone && (
+                <p className="text-red-500 text-xs mt-1">{formErrors.phone}</p>
+              )}
+            </div>
+            <div>
+              <input
+                type="text"
+                id="address"
+                placeholder="Адрес"
+                name="address"
+                value={formData.address}
+                onChange={handleInputChange}
+                className={`w-full p-2 border rounded-md bg-gray-50 focus:outline-none focus:ring-2 ${
+                  formErrors.address
+                    ? "border-red-500 focus:ring-red-500"
+                    : "focus:ring-blue-500"
+                }`}
+              />
+              {formErrors.address && (
+                <p className="text-red-500 text-xs mt-1">
+                  {formErrors.address}
+                </p>
+              )}
+            </div>
+            <h2 className="text-sm">Способ связи</h2>
+            <div className="space-y-2">
+              <div className="flex items-center">
+                <input
+                  type="radio"
+                  id="phoneRadio"
+                  name="contactMethod"
+                  value="phone"
+                  checked={formData.contactMethod === "phone"}
+                  onChange={() => handleContactMethodChange("phone")}
+                  className={`h-4 w-4 ${
+                    formErrors.contactMethod
+                      ? "text-red-600 border-red-500"
+                      : "text-gray-600 border-gray-300"
+                  } focus:ring-2 ${
+                    formErrors.contactMethod
+                      ? "focus:ring-red-500"
+                      : "focus:ring-gray-500"
+                  }`}
+                />
+                <label
+                  htmlFor="phoneRadio"
+                  className="ml-2 block text-sm text-gray-700"
+                >
+                  Звонок по телефону
+                </label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  type="radio"
+                  id="whatsappRadio"
+                  name="contactMethod"
+                  value="whatsapp"
+                  checked={formData.contactMethod === "whatsapp"}
+                  onChange={() => handleContactMethodChange("whatsapp")}
+                  className={`h-4 w-4 ${
+                    formErrors.contactMethod
+                      ? "text-red-600 border-red-500"
+                      : "text-gray-600 border-gray-300"
+                  } focus:ring-2 ${
+                    formErrors.contactMethod
+                      ? "focus:ring-red-500"
+                      : "focus:ring-gray-500"
+                  }`}
+                />
+                <label
+                  htmlFor="whatsappRadio"
+                  className="ml-2 block text-sm text-gray-700"
+                >
+                  Сообщение в WhatsApp
+                </label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  type="radio"
+                  id="telegramRadio"
+                  name="contactMethod"
+                  value="telegram"
+                  checked={formData.contactMethod === "telegram"}
+                  onChange={() => handleContactMethodChange("telegram")}
+                  className={`h-4 w-4 ${
+                    formErrors.contactMethod
+                      ? "text-red-600 border-red-500"
+                      : "text-gray-600 border-gray-300"
+                  } focus:ring-2 ${
+                    formErrors.contactMethod
+                      ? "focus:ring-red-500"
+                      : "focus:ring-gray-500"
+                  }`}
+                />
+                <label
+                  htmlFor="telegramRadio"
+                  className="ml-2 block text-sm text-gray-700"
+                >
+                  Сообщение в Telegram
+                </label>
+              </div>
+              {formErrors.contactMethod && (
+                <p className="text-red-500 text-xs mt-1">
+                  {formErrors.contactMethod}
+                </p>
+              )}
+            </div>
+
+            <div className="flex items-center mb-4">
+              <input
+                type="checkbox"
+                id="measurement"
+                checked={formData.needMeasurement}
+                onChange={handleMeasurementChange}
+                className="h-4 w-4 text-gray-600 focus:ring-gray-500 border-gray-300 rounded"
+              />
+              <label
+                htmlFor="measurement"
+                className="ml-2 block text-sm text-gray-700"
+              >
+                Нужен замер
+              </label>
+            </div>
+            <div className="flex items-center mb-4">
+              <input
+                type="checkbox"
+                id="agreement"
+                checked={formData.isAgreed}
+                onChange={handleAgreementChange}
+                className={`h-4 w-4 ${
+                  formErrors.isAgreed
+                    ? "text-red-600 border-red-500"
+                    : "text-gray-600 border-gray-300"
+                } rounded focus:ring-2 ${
+                  formErrors.isAgreed
+                    ? "focus:ring-red-500"
+                    : "focus:ring-gray-500"
+                }`}
+              />
+              <label
+                htmlFor="agreement"
+                className="ml-2 block text-sm text-gray-700"
+              >
+                Нажимая кнопку отправить заявку вы соглашаетесь с политикой
+                конфиденциальности
+              </label>
+              {formErrors.isAgreed && (
+                <p className="text-red-500 text-xs mt-1">
+                  {formErrors.isAgreed}
+                </p>
+              )}
+            </div>
+
+            <button
+              type="submit"
+              className="w-full py-2 px-4 rounded-md bg-gray-300 text-gray-700 text-sm font-semibold hover:bg-blue-400 transition-colors"
+            >
+              Отправить заказ
+            </button>
+          </form>
+        </div>
       )}
     </div>
   );
