@@ -17,10 +17,10 @@ const CatalogSection: React.FC<ProductSetProps> = ({
           <CatalogSet categoryId={categoryId} />
       </div>
       <div className="flex-1">
-        <ProductSet categoryId={categoryId} catalogId={catalogId} />
+        <ProductSet categoryId={categoryId} catalogId={catalogId} productsData={[]} videosData={[]} />
       </div>
       <div className="flex-1">
-        <ProductSet categoryId={categoryId} catalogId={catalogId} />
+        <ProductSet categoryId={categoryId} catalogId={catalogId} productsData={[]} videosData={[]} />
       </div>
     </div>
   );

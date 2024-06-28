@@ -22,7 +22,7 @@ const DoorTrimsInfo = () => {
     {
       name: "Комплект телескопического погонажа Капучино 853-2 (Крем софт)",
       image:
-        "https://labirintdoors.ru/images/009/156/999/9156999/380x507no_crop/dobory-cappucino.jpg",
+        "https://labirintdoors.ru/images/009/156/999/9156999/560x560/dobory-cappucino.jpg",
       price: "8500 руб.",
     },
     {
@@ -221,7 +221,7 @@ const DoorTrimsInfo = () => {
       <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {trimSets.map((set, index) => (
           <div key={index} className=" p-4 rounded-lg ">
-            <img src={set.image} alt={set.name} className="w-full mb-2" />
+            <Image src={set.image} alt={set.name} className="w-full mb-2" />
             <h3 className="text-lg font-semibold mb-2">{set.name}</h3>
             <p className="text-gray-800">{set.price}</p>
           </div>

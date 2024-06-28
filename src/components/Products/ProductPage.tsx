@@ -1,10 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Skeleton from "../Skeleton";
-import { IProduct } from "@/interface/Product";
 import ProductItem from "./ProductItem";
 import ProductPrice from "./ProductPrice";
-
+import { IProduct } from "@/interface/Product";
 
 interface ProductPageProps {
   limit?: number;
@@ -23,18 +22,13 @@ const ProductPage: React.FC<ProductPageProps> = ({
   searchParams,
   filters,
 }) => {
-  
   const [products, setProducts] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [sortOrder, setSortOrder] = useState("price-asc");
 
-  const fetchProducts = async (
-    newPage: number,
-    sortOrder: string,
-    userName?: string
-  ) => {
+  const fetchProducts = async (newPage: number, sortOrder: string) => {
     setLoading(true);
     try {
       const response = await axios.get("/api/products", {
@@ -49,14 +43,14 @@ const ProductPage: React.FC<ProductPageProps> = ({
         },
       });
       if (newPage === 1) {
-        setProducts(response.data.products);
+        setProducts(response.data.products || []); // Ensure response.data.products is not undefined
       } else {
         setProducts((prevProducts) => [
           ...prevProducts,
-          ...response.data.products,
+          ...(response.data.products || []),
         ]);
       }
-      setTotalCount(response.data.totalCount);
+      setTotalCount(response.data.totalCount || 0); // Ensure response.data.totalCount is defined
     } catch (error) {
       console.error("Error fetching products:", error);
     } finally {
@@ -65,9 +59,7 @@ const ProductPage: React.FC<ProductPageProps> = ({
   };
 
   useEffect(() => {
-  
-      fetchProducts(page, sortOrder);
-    
+    fetchProducts(page, sortOrder);
   }, [page, sortOrder]);
 
   const handleLoadMore = () => {
@@ -94,18 +86,18 @@ const ProductPage: React.FC<ProductPageProps> = ({
       />
       <div className="grid grid-cols-2 lg:grid-cols-6 md:grid-cols-4 gap-4 p-2 m-2 rounded-lg">
         {products.map((product) => (
-          <ProductItem key={product._id} slug={product.slug}  />
+          <ProductItem key={product._id} slug={product.slug} />
         ))}
       </div>
       {loading && <Skeleton />}
       <div className="mt-4 flex justify-center">
         {products.length < totalCount && (
           <button
-            className="rounded-lg  text-gray-700 p-2 text-sm w-40 hover:bg-red-100 cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-200"
+            className="rounded-lg text-gray-700 p-2 text-sm w-40 hover:bg-red-100 cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-200"
             onClick={handleLoadMore}
             disabled={loading}
           >
-            {loading ? "Загрузка..." : "Загрузить еще ..."}
+            {loading ? "Loading..." : "Load More ..."}
           </button>
         )}
       </div>

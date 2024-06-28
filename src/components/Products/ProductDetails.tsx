@@ -70,13 +70,13 @@ const ProductDetails = ({ item }: { item: IProduct }) => {
         </div>
       </div>
       <div className="h-[2px] bg-gray-100 " />
-      <div className="flex justify-between items-center my-4">
+      <div className="flex justify-between gap-2 items-center my-4">
         <Button text="Вызвать замерщика" className="border-gray-700" />
         <button
-          className="flex items-center gap-2 px-2 py-2 bg-gray-500 text-red-50 border rounded-full hover:bg-red-400 transition-colors"
+          className="flex items-center gap-2 px-2 py-1 bg-gray-500 text-red-50 border rounded-lg hover:bg-red-400 transition-colors"
           onClick={handleAddToCart}
         >
-          {<ShoppingBasket />}
+          {<ShoppingBasket size={30}/>}
           <span className="">Добавить в корзину</span>
         </button>
       </div>

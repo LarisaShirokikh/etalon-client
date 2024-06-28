@@ -96,7 +96,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
                     src={image || "/product.png"}
                     alt={`${product.title} image ${index + 1}`}
                     fill
-                    object-scale-down
+                    object-fit="contain"
                     className="rounded-md"
                   />
                 </div>
@@ -107,7 +107,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
       </Link>
       <div className="p-4 w-full">
         <Link href={`/${product.slug}`}>
-          <h3 className="text-xs text-gray-800 overflow-hidden line-clamp-2">
+          <h3 className="text-xs text-gray-800 overflow-hidden line-clamp-1">
             {product.title}
           </h3>
         </Link>

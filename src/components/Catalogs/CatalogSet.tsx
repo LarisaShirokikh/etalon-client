@@ -17,7 +17,7 @@ const getRandomCatalogs = (catalogs: Catalog[], count: number) => {
   return shuffled.slice(0, count);
 };
 
-const CatalogSet: React.FC<ProductSetProps> = ({ catalogId, categoryId }) => {
+const CatalogSet: React.FC<ProductSetProps> = ({  categoryId }) => {
   const [catalogs, setCatalogs] = useState<Catalog[]>([]);
   const [bgColor, setBgColor] = useState<string>("");
 
@@ -41,10 +41,11 @@ const CatalogSet: React.FC<ProductSetProps> = ({ catalogId, categoryId }) => {
     const fetchCatalogs = async () => {
       try {
         const response = await axios.get("/api/catalogs", {
-          params: { catalogId },
+          params: { categoryId },
         });
          const catalogsData = response.data.catalogs;
-        const randomCatalogs = getRandomCatalogs(catalogsData, 4);
+         console.log("catalogsData", catalogsData);
+        const randomCatalogs = getRandomCatalogs(catalogsData, 2);
         setCatalogs(randomCatalogs);
         setBgColor(getRandomColor());
       } catch (error) {
@@ -56,11 +57,9 @@ const CatalogSet: React.FC<ProductSetProps> = ({ catalogId, categoryId }) => {
   }, [categoryId]);
 
   return (
-    <div className={`rounded-lg p-2 m-4 relative overflow-visible`}>
-      <div
-        className={`absolute rounded-lg top-0 left-0 w-full h-full ${bgColor} opacity-50`}
-      />
-      <div className="relative z-0 p-3">
+    <div className="relative p-2 m-4">
+      <div className={`absolute inset-0 ${bgColor} opacity-50 rounded-lg`} />
+      <div className="relative p-3">
         <div className="flex justify-between items-center mb-4">
           <span className="text-xl font-bold text-gray-700">
             Рекомендуем ...
@@ -71,13 +70,18 @@ const CatalogSet: React.FC<ProductSetProps> = ({ catalogId, categoryId }) => {
             </button>
           </Link>
         </div>
-        <div className="overflow-x-auto sm:overflow-hidden">
-          <div className="flex z-50 space-x-2 sm:grid sm:grid-cols-2 lg:grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-3 ">
+          {catalogs.map((catalog) => (
+            <CatalogItem key={catalog.slug} slug={catalog.slug} />
+          ))}
+        </div>
+        {/* <div className="overflow-auto no-scrollbar -mx-8 pl-8 pr-4 relative">
+          <div className="flex space-x-4">
             {catalogs.map((catalog) => (
               <CatalogItem key={catalog.slug} slug={catalog.slug} />
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

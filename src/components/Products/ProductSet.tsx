@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
-import axios from "axios";
+import React, { useMemo } from "react";
 import ProductItem from "./ProductItem";
 import ProductItemColor from "./ProductItemColor";
 import VideoItem from "../Video/VideoItem";
@@ -12,46 +11,36 @@ interface Product {
 interface ProductSetProps {
   catalogId?: string;
   categoryId?: string;
+  productsData: Product[];
+  videosData: Product[];
 }
 
-const getRandomProducts = (products: Product[], count: number) => {
-  if (!products) {
+const getRandomProducts = (products: Product[] | undefined, count: number) => {
+  if (!products || !Array.isArray(products)) {
     return [];
   }
 
-  const shuffled = products.sort(() => 0.5 - Math.random());
+  const shuffled = [...products].sort(() => 0.5 - Math.random());
   return shuffled.slice(0, count);
 };
 
-const ProductSet: React.FC<ProductSetProps> = ({ catalogId, categoryId }) => {
-  const [productSlugs, setProductSlugs] = useState<string[]>([]);
-  const [videoSlugs, setVideoSlugs] = useState<string[]>([])
+const ProductSet: React.FC<ProductSetProps> = ({
+  catalogId,
+  categoryId,
+  productsData,
+  videosData,
+}) => {
+  const randomProducts = useMemo(
+    () => getRandomProducts(productsData, 4),
+    [productsData]
+  );
+  const randomVideos = useMemo(
+    () => getRandomProducts(videosData, 4),
+    [videosData]
+  );
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get("/api/products", {
-          params: { catalogId },
-        });
-        const videoResponse = await axios.get("/api/video");
-
-        const productsData = response.data.products;
-        const videos = videoResponse.data.products;
-
-        const randomProducts = getRandomProducts(productsData, 4);
-        const slugs = randomProducts.map((product: Product) => product.slug);
-        setProductSlugs(slugs);
-
-        const randomVideo = getRandomProducts(videos, 4);
-        const slugsVideo = randomVideo.map((video: Product) => video.slug);
-        setVideoSlugs(slugsVideo);
-      } catch (error) {
-        console.error("Ошибка при загрузке продуктов:", error);
-      }
-    };
-
-    fetchProducts();
-  }, [catalogId, categoryId]);
+  const productSlugs = randomProducts.map((product: Product) => product.slug);
+  const videoSlugs = randomVideos.map((video: Product) => video.slug);
 
   return (
     <div className="grid grid-cols-2 mt-4 gap-1">

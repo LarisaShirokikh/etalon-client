@@ -14,7 +14,6 @@ import { IProduct } from "@/interface/Product";
 import axios from "axios";
 import { notFound } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
-import { paths } from "@/utils/path";
 
 const SinglePage = ({ params }: { params: { slug: string } }) => {
   const [product, setProduct] = useState<IProduct | null>(null);
@@ -81,13 +80,13 @@ const SinglePage = ({ params }: { params: { slug: string } }) => {
       <BackButton />
       <div className="top-2 px-2 md:px-8 lg:px-16 xl:px-32 2xl:px-64 relative flex flex-col lg:flex-row gap-16">
         {/* IMG */}
-        <div className="w-full lg:w-1/2 lg:sticky top-20 h-max p-4 lg:p-0">
+        <div className="w-full lg:w-1/2 lg:sticky top-20 h-max p-2 lg:p-0">
           <ProductImages items={product.images || []} />
-          <div className="flex items-center gap-1 p-3 justify-center ">
+          <div className="flex items-center gap-1 m-1 justify-center ">
             {brandName && brandSlug && (
               <div>
                 <Link href={`/brand/${brandSlug}`}>
-                  <div className="flex text-xs items-center gap-1 px-2 py-2 cursor-pointer bg-gray-200 hover:text-white hover:bg-gray-500 rounded-full transition duration-300">
+                  <div className="flex text-xs items-center gap-1 px-1 py-1 cursor-pointer bg-gray-200 hover:text-white hover:bg-gray-500 rounded-lg transition duration-300">
                     {brandName}
                     <ChevronRight />
                   </div>
@@ -97,7 +96,7 @@ const SinglePage = ({ params }: { params: { slug: string } }) => {
             {catalogName && catalogSlug && (
               <div>
                 <Link href={`/catalog/${catalogSlug}`}>
-                  <div className="flex text-xs items-center gap-1 px-2 py-2 cursor-pointer bg-gray-200 hover:text-white hover:bg-gray-500 rounded-full transition duration-300">
+                  <div className="flex text-xs items-center gap-1 px-1 py-1 cursor-pointer bg-gray-200 hover:text-white hover:bg-gray-500 rounded-lg transition duration-300">
                     {catalogName}
                     <ChevronRight />
                   </div>

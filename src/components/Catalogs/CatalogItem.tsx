@@ -59,7 +59,7 @@ const CatalogItem: React.FC<CatalogItemProps> = ({
   return (
     <Link href={`/catalog/${catalog.slug}`}>
       <div className="w-48 p-2 rounded-lg bg-white flex flex-col justify-center items-center">
-        <div className="relative h-48 w-24 sm:h-32 sm:w-32 md:h-40 md:w-24">
+        <div className="relative h-64 w-40 sm:h-32 sm:w-32 md:h-40 md:w-24">
           <Image
             src={
               catalog.images && catalog.images[0]
@@ -67,8 +67,8 @@ const CatalogItem: React.FC<CatalogItemProps> = ({
                 : "/catalog.png"
             }
             alt={catalog.name}
-            layout="fill"
-            object-scale-down
+            fill
+            object-fit="contain"
             className="rounded-md"
           />
         </div>

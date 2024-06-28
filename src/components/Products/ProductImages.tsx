@@ -13,7 +13,7 @@ const ProductImages = ({ items }: { items: string[] }) => {
           src={items[index]}
           alt=""
           fill
-          object-scale-down
+          object-fit="contain"
           sizes="50vw"
           className="object-contain rounded-md"
         />
@@ -29,7 +29,7 @@ const ProductImages = ({ items }: { items: string[] }) => {
               src={item}
               alt=""
               fill
-              object-scale-down
+              object-fit="contain"
               sizes="30vw"
               className="object-contain rounded-md"
             />

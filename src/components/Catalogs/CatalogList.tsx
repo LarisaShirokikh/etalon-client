@@ -80,7 +80,7 @@ const CatalogList: React.FC<CatalogListProps> = ({
                 }
                 alt={catalog.name}
                 fill
-                object-scale-down
+                object-fit="contain"
                 className=" rounded-lg"
               />
             </div>

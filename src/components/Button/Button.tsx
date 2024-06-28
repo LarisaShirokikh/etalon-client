@@ -81,10 +81,10 @@ const Button: React.FC<ButtonProps> = ({ text, className, href }) => {
     <div>
       <a href={href}>
         <button
-          className={`${className} flex items-center gap-2 px-4 py-2 bg-wite text-gray-700 border rounded-full hover:bg-red transition-colors`}
+          className={`${className} flex items-center gap-2 px-2 py-1 bg-wite text-gray-700 border rounded-lg hover:bg-red transition-colors`}
           onClick={handleOpenModal}
         >
-          {<PencilRuler size={20}/>}
+          {<PencilRuler size={30}/>}
           {text}
         </button>
       </a>
