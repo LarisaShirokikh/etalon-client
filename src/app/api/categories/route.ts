@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
   await mongooseConnect();
 
   const dbQuery = Category.find();
-  dbQuery.limit(limit).skip(page * limit);
+  // dbQuery.limit(limit).skip(page * limit);
 
   const categories = await dbQuery.exec();
 

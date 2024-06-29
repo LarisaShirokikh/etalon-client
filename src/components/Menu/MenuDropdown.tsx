@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useState, MouseEvent } from "react";
+import Image from "next/image";
 import {
   School,
   DoorClosed,
@@ -18,27 +19,37 @@ import {
   ChevronDown,
   ChevronUp,
 } from "lucide-react";
+import Link from "next/link";
 
 interface MenuItemProps {
-  icon: LucideIcon;
+  photo?: string;
+  icon?: LucideIcon;
   text: string;
   path: string;
-  onClick: (event: MouseEvent<HTMLButtonElement>, path: string) => void;
+  onClick: (event: MouseEvent<HTMLDivElement>, path: string) => void;
 }
 
 const MenuItem: React.FC<MenuItemProps> = ({
+  photo,
   icon: Icon,
   text,
   path,
   onClick,
 }) => (
-  <button
-    onClick={(e) => onClick(e, path)}
-    className="flex items-center gap-2 px-2 py-1 rounded hover:bg-gray-100 transition-colors duration-200 w-full text-left"
-  >
-    <Icon className="text-gray-500" />
-    {text}
-  </button>
+  <Link href={path}>
+    <div
+      onClick={(e) => onClick(e, path)}
+      className="flex items-center gap-2 px-2 py-1 rounded hover:bg-gray-100 transition-colors duration-200 w-full text-left"
+    >
+      {photo && (
+        <div className="relative h-12 w-12 rounded-md overflow-hidden">
+          <Image src={photo} alt={text} layout="fill" objectFit="cover" />
+        </div>
+      )}
+      {Icon && <Icon className="text-gray-500" />}
+      <span className="text-sm ">{text}</span>
+    </div>
+  </Link>
 );
 
 interface MenuSectionProps {
@@ -68,7 +79,7 @@ const MenuDropdown = () => {
   const [showDropdown, setShowDropdown] = useState(true);
   const router = useRouter();
 
-  const handleClick = (event: MouseEvent<HTMLButtonElement>, path: string) => {
+  const handleClick = (event: MouseEvent<HTMLDivElement>, path: string) => {
     event.stopPropagation();
     router.push(path);
     setShowDropdown(false);
@@ -86,43 +97,43 @@ const MenuDropdown = () => {
         <div className="flex flex-col gap-2 px-4 py-1">
           <MenuSection title="Бренды">
             <MenuItem
-              icon={School}
+              photo={"/lab.webp"}
               text="Двери Лабиринт"
               path="/brand/vhodnye-dveri-labirint"
               onClick={handleClick}
             />
             <MenuItem
-              icon={School}
+              photo={"/bun.webp"}
               text="Двери Бункер"
               path="/brand/dveri-bunker"
               onClick={handleClick}
             />
             <MenuItem
-              icon={School}
+              photo={"/arg.webp"}
               text="Двери Аргус"
               path="/brand/vhodnye-dveri-argus"
               onClick={handleClick}
             />
             <MenuItem
-              icon={School}
+              photo={"/ratibor.webp"}
               text="Двери Ратибор"
               path="/brand/vhodnye-dveri-ratibor"
               onClick={handleClick}
             />
             <MenuItem
-              icon={School}
+              photo={"/asd.webp"}
               text="Двери АСД"
               path="/brand/vhodnye-dveri-asd"
               onClick={handleClick}
             />
             <MenuItem
-              icon={School}
+              photo={"/zd.webp"}
               text="Двери Заводские"
               path="/brand/vhodnye-dveri-zd"
               onClick={handleClick}
             />
             <MenuItem
-              icon={School}
+              photo={"/intecron.webp"}
               text="Двери Интекрон"
               path="/brand/vhodnye-dveri-intekron"
               onClick={handleClick}
