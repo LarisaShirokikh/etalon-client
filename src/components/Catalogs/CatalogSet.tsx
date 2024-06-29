@@ -44,7 +44,6 @@ const CatalogSet: React.FC<ProductSetProps> = ({  categoryId }) => {
           params: { categoryId },
         });
          const catalogsData = response.data.catalogs;
-         console.log("catalogsData", catalogsData);
         const randomCatalogs = getRandomCatalogs(catalogsData, 2);
         setCatalogs(randomCatalogs);
         setBgColor(getRandomColor());

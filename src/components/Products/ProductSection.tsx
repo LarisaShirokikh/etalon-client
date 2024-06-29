@@ -1,12 +1,13 @@
 import ProductSet from "../Products/ProductSet";
 import CatalogSet from "../Catalogs/CatalogSet";
-import { useMediaQuery } from "@react-hook/media-query";
+import CategoryList from "../CategoryList";
 
 interface ProductSetProps {
   catalogId?: string;
   categoryId?: string;
   productsData: any[];
   videosData: any[];
+  categoryData: any[];
 }
 
 const ProductSection: React.FC<ProductSetProps> = ({
@@ -14,9 +15,9 @@ const ProductSection: React.FC<ProductSetProps> = ({
   categoryId,
   productsData,
   videosData,
+  categoryData,
 }) => {
-  const isMobile = useMediaQuery("(max-width: 768px)");
-  
+  console.log("ProductSection categoryData:", categoryData);
   return (
     <div className="flex flex-col md:flex-row gap-3">
       <div className="flex-1">
@@ -35,11 +36,11 @@ const ProductSection: React.FC<ProductSetProps> = ({
           videosData={videosData}
         />
       </div>
-      
-        <div className="flex-1">
-          <CatalogSet categoryId={categoryId} />
-        </div>
-      
+
+      <div className="flex-1 flex flex-col min-w-96 max-w-104 gap-5">
+        <CatalogSet categoryId={categoryId} />
+        <CategoryList categoryData={categoryData} />
+      </div>
     </div>
   );
 };

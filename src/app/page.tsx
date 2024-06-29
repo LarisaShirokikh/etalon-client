@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
-import Slider from "@/components/Slider";
 import componentData from "@/utils/componentData";
 import BreadCrumbs from "@/components/BreadCrumbs";
 import { paths } from "@/utils/path";
@@ -12,22 +11,27 @@ import axios from "axios";
 const ProductSection = dynamic(
   () => import("@/components/Products/ProductSection")
 );
-const CatalogSection = dynamic(
-  () => import("@/components/Catalogs/CatalogSection")
-);
+
 
 const HomePage = () => {
   const [components, setComponents] = useState(componentData.slice(0, 2));
   const [productsData, setProductsData] = useState([]);
   const [videosData, setVideosData] = useState([]);
+  const [categoryData, setCategoryData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get("/api/products");
         const videoResponse = await axios.get("/api/video");
+        const categoryResponse = await axios.get("/api/categories");
+
         setProductsData(response.data.products);
         setVideosData(videoResponse.data.products);
+        setCategoryData(categoryResponse.data);
+
+        console.log("Fetched Categories:", categoryResponse);
+      
       } catch (error) {
         console.error("Ошибка при загрузке данных:", error);
       }
@@ -66,6 +70,7 @@ const HomePage = () => {
               categoryId={component.categoryId}
               productsData={productsData}
               videosData={videosData}
+              categoryData={categoryData}
             />
           )}
           {component.type === "CatalogSection" && (
@@ -74,14 +79,10 @@ const HomePage = () => {
               categoryId={component.categoryId}
               productsData={productsData}
               videosData={videosData}
+              categoryData={categoryData}
             />
           )}
-          {/* {component.type === "CatalogSection" && (
-            <CatalogSection
-              catalogId={component.catalogId}
-              categoryId={component.categoryId}
-            />
-          )} */}
+          
         </div>
       ))}
     </div>

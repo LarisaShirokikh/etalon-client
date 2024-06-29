@@ -15,7 +15,7 @@ function CategoryPage() {
       <Meta pageType="category" />
       <BackButton />
       {/* <BreadCrumbs paths={paths} /> */}
-      <CategoryList  />
+      <CategoryList categoryData={[]}  />
     </div>
   );
 }
