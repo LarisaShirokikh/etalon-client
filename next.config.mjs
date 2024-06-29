@@ -7,7 +7,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "dveribunker.ru",
+        hostname: "bunkerdoors.ru",
       },
       {
         protocol: "https",
@@ -31,7 +31,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "avatars.yandex.net",
+        hostname: "argusdom.ru",
       },
     ],
   },

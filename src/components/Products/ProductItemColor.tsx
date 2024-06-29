@@ -75,7 +75,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
 
   return (
     <div
-      className={`relative w-full p-1 ${bgColor} rounded-lg overflow-hidden flex flex-col justify-center items-center`}
+      className={`relative p-2 ${bgColor} rounded-lg flex flex-col justify-center items-center`}
       style={{ maxWidth: "250px" }} // Ensure the card width does not change
     >
       <div
@@ -85,7 +85,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
         {" "}
         {/* Set a fixed height for the card */}
         <Link href={`/${product.slug}`}>
-          <div className="relative h-48 w-48 bg-white flex justify-center items-center">
+          <div className="relative size-48 bg-white flex justify-center items-center">
             <Image
               src={product.images[0] || "/product.png"}
               alt={product.title}
@@ -104,7 +104,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
           </h3>
         </Link>
 
-        <div className="mt-1 flex">
+        <div className="mt-1 flex ">
           {product.price.discountedPrice ? (
             <>
               <span className="text-green-800 font-bold text-s">
@@ -121,13 +121,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
           )}
         </div>
       </div>
-      <button
-        onClick={toggleFavorite}
-        className="absolute top-2 right-2 text-gray-600"
-        aria-label="Add to favorites"
-      >
-        {isFavorite ? <Heart fill="red" size={20} /> : <Heart size={20} />}
-      </button>
+  
     </div>
   );
 };

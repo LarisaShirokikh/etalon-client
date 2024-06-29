@@ -1,5 +1,5 @@
 "use client";
-
+import { Loader } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -14,10 +14,13 @@ interface CategoryListProps {
 }
 
 const CategoryList: React.FC<CategoryListProps> = ({ categoryData }) => {
-  console.log("Received Category Data in CategoryList:", categoryData);
 
   if (!categoryData || categoryData.length === 0) {
-    return <div>No categories found</div>;
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
   }
 
   return (

@@ -6,12 +6,13 @@ import { Category } from "@/models/Category";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const limit = parseInt(searchParams.get("limit") || "24");
+  const limitParam = searchParams.get("limit");
+  const limit = limitParam ? parseInt(limitParam) : null;
   const slug = searchParams.get("slug");
   const catalogId = searchParams.get("catalogId");
   const productId = searchParams.get("productId");
   const page = parseInt(searchParams.get("page") || "1");
-  const skip = (page - 1) * limit;
+  const skip = (page - 1) * (limit || 0);
   const category = searchParams.get("category");
   const priceRange = searchParams.get("priceRange");
   const sortOrder = searchParams.get("sortOrder");
@@ -104,7 +105,10 @@ export async function GET(request: NextRequest) {
     dbQuery = dbQuery.sort({ _id: -1 });
   }
 
-  dbQuery = dbQuery.limit(limit).skip(skip);
+  if (limit !== null) {
+    dbQuery = dbQuery.limit(limit).skip(skip);
+  }
+
   const products = await dbQuery.exec();
 
   return NextResponse.json({ products, totalCount });

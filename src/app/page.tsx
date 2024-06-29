@@ -1,43 +1,47 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import dynamic from "next/dynamic";
-import componentData from "@/utils/componentData";
+import axios from "axios";
 import BreadCrumbs from "@/components/BreadCrumbs";
 import { paths } from "@/utils/path";
 import HomeSlider from "@/components/HomeSlider";
-import axios from "axios";
+import componentData from "@/utils/componentData";
 
 const ProductSection = dynamic(
-  () => import("@/components/Products/ProductSection")
+  () => import("@/components/Products/ProductSection"),
+  {
+    ssr: false,
+  }
 );
 
-
 const HomePage = () => {
-  const [components, setComponents] = useState(componentData.slice(0, 2));
+  const [components, setComponents] = useState([componentData[0]]);
   const [productsData, setProductsData] = useState([]);
   const [videosData, setVideosData] = useState([]);
   const [categoryData, setCategoryData] = useState([]);
+  const loaderRef = useRef<HTMLDivElement | null>(null);
+
+  const fetchData = useCallback(async () => {
+    try {
+      const [productResponse, videoResponse, categoryResponse] =
+        await Promise.all([
+          axios.get("/api/products"),
+          axios.get("/api/video"),
+          axios.get("/api/categories"),
+        ]);
+
+      setProductsData(productResponse.data.products);
+      setVideosData(videoResponse.data.products);
+      setCategoryData(categoryResponse.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("/api/products");
-        const videoResponse = await axios.get("/api/video");
-        const categoryResponse = await axios.get("/api/categories");
-
-        setProductsData(response.data.products);
-        setVideosData(videoResponse.data.products);
-        setCategoryData(categoryResponse.data);
-
-        console.log("Fetched Categories:", categoryResponse);
-      
-      } catch (error) {
-        console.error("Ошибка при загрузке данных:", error);
-      }
-    };
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,7 +58,7 @@ const HomePage = () => {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [components]);
+  }, []);
 
   return (
     <div>
@@ -63,28 +67,17 @@ const HomePage = () => {
         <BreadCrumbs paths={paths} />
       </div>
       {components.map((component, index) => (
-        <div key={index}>
-          {component.type === "ProductSection" && (
-            <ProductSection
-              catalogId={component.catalogId}
-              categoryId={component.categoryId}
-              productsData={productsData}
-              videosData={videosData}
-              categoryData={categoryData}
-            />
-          )}
-          {component.type === "CatalogSection" && (
-            <ProductSection
-              catalogId={component.catalogId}
-              categoryId={component.categoryId}
-              productsData={productsData}
-              videosData={videosData}
-              categoryData={categoryData}
-            />
-          )}
-          
-        </div>
+        <ProductSection
+          key={index}
+          productsData={productsData}
+          videosData={videosData}
+          categoryData={categoryData}
+        />
       ))}
+      <div
+        ref={loaderRef}
+        style={{ height: "20px", backgroundColor: "transparent" }}
+      />
     </div>
   );
 };

@@ -5,7 +5,7 @@ import VideoItem from "../Video/VideoItem";
 
 interface Product {
   slug: string;
-  // Дополнительные поля продукта, если они есть
+  // Additional product fields, if any
 }
 
 interface ProductSetProps {
@@ -25,8 +25,6 @@ const getRandomProducts = (products: Product[] | undefined, count: number) => {
 };
 
 const ProductSet: React.FC<ProductSetProps> = ({
-  catalogId,
-  categoryId,
   productsData,
   videosData,
 }) => {

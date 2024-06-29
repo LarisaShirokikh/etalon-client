@@ -61,15 +61,7 @@ const Footer = () => {
         </div>
         {/* Right Section */}
         <div className="w-full lg:w-1/3 flex flex-col gap-4 lg:gap-8">
-          {/* <h1 className="text-lg lg:text-xl font-semibold">Подписаться</h1> */}
-          <div className="flex gap-2">
-            <input
-              type="text"
-              placeholder="Email адрес"
-              className="p-2 lg:p-4 flex-grow"
-            />
-            <Button text="Отправить" />
-          </div>
+          
         </div>
       </div>
       {/* Bottom Section */}

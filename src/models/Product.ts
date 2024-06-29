@@ -1,4 +1,5 @@
 import mongoose, { model, Schema, models } from "mongoose";
+import { Catalog } from "./Catalog";
 
 const PriceSchema = new Schema({
   price: { type: Number },
@@ -30,5 +31,7 @@ const ProductSchema = new Schema(
     timestamps: true,
   }
 );
+
+
 
 export const Product = models?.Product || model("Product", ProductSchema);
