@@ -85,7 +85,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
   }
 
   return (
-    <div className="relative w-full rounded-md overflow-hidden bg-white flex flex-col justify-center items-center">
+    <div className="relative  rounded-md overflow-hidden flex flex-col justify-center items-center">
       <Link href={`/${product.slug}`}>
         <div className="relative w-48 h-54">
           <Slider {...settings}>
@@ -111,7 +111,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
             {product.title}
           </h3>
         </Link>
-        <div className="mt-1 flex">
+        <div className="mt-2 flex">
           {product.price.discountedPrice ? (
             <>
               <span className="text-green-800 font-bold text-s">

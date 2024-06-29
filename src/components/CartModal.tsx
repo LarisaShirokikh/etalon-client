@@ -59,13 +59,13 @@ const CartModal = ({
             <div className="flex flex-row justify-center ml-2 p-2 mt-2 gap-2">
               
                 <Link href="/cart">
-                  <button className="bg-red-500 text-s text-white px-4 py-2 rounded-full hover:bg-red-600 transition">
+                  <button className="bg-red-500 text-s text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">
                     Перейти в корзину
                   </button>
                 </Link>
                 <button
                   onClick={onClose}
-                  className="bg-gray-500 text-s text-white px-4 py-2 rounded-full hover:bg-gray-600 transition"
+                  className="bg-gray-500 text-s text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition"
                 >
                   Вернуться в магазин
                 </button>

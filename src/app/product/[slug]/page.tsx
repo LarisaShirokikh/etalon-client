@@ -12,8 +12,7 @@ import { useState } from "react";
 function CategoryCatalogsPage() {
   const pathname = usePathname();
   const slug = pathname.split("/")[2];
-  
-
+  console.log("slug", slug);
   const [filters, setFilters] = useState({
     sortOrder: "",
   });

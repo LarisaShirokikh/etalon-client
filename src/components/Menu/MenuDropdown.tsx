@@ -132,7 +132,7 @@ const MenuDropdown = () => {
             <MenuItem
               icon={Layers}
               text="Все двери"
-              path="/category/vse-dveri/catalogs"
+              path="/product"
               onClick={handleClick}
             />
             <MenuItem
@@ -144,43 +144,43 @@ const MenuDropdown = () => {
             <MenuItem
               icon={DoorOpen}
               text="Двери в квартиру"
-              path="/category/dlya-kvartiry/catalogs"
+              path="/product/dlya-kvartiry"
               onClick={handleClick}
             />
             <MenuItem
               icon={Snowflake}
               text="Белые двери"
-              path="/category/belye-dveri/catalogs"
+              path="/product/belye-dveri"
               onClick={handleClick}
             />
             <MenuItem
               icon={DoorClosed}
               text="Двери с зеркалом"
-              path="/category/s-zerkalom/catalogs"
+              path="/product/s-zerkalom"
               onClick={handleClick}
             />
             <MenuItem
               icon={GalleryHorizontalEnd}
               text="Трехконтурные"
-              path="/category/3-kontura/catalogs"
+              path="/product/3-kontura"
               onClick={handleClick}
             />
             <MenuItem
               icon={BadgeRussianRuble}
               text="Двери бюджет"
-              path="/category/dveri-byudzhet/catalogs"
+              path="/product/dveri-byudzhet"
               onClick={handleClick}
             />
             <MenuItem
               icon={Trophy}
               text="Хиты продаж"
-              path="/category/hity-prodazh/catalogs"
+              path="/product/hity-prodazh"
               onClick={handleClick}
             />
             <MenuItem
               icon={Gift}
               text="Акция"
-              path="/category/akciya/catalogs"
+              path="/product/akciya"
               onClick={handleClick}
             />
             <MenuItem

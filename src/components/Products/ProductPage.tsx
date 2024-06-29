@@ -28,6 +28,8 @@ const ProductPage: React.FC<ProductPageProps> = ({
   const [totalCount, setTotalCount] = useState(0);
   const [sortOrder, setSortOrder] = useState("price-asc");
 
+  console.log("slug", slug);
+
   const fetchProducts = async (newPage: number, sortOrder: string) => {
     setLoading(true);
     try {
@@ -84,7 +86,7 @@ const ProductPage: React.FC<ProductPageProps> = ({
         onFilterChange={handleFilterChange}
         totalCount={totalCount}
       />
-      <div className="grid grid-cols-2 lg:grid-cols-6 md:grid-cols-4 gap-4 p-2 m-2 rounded-lg">
+      <div className="grid grid-cols-2 lg:grid-cols-6 md:grid-cols-4 gap-2 rounded-lg">
         {products.map((product) => (
           <ProductItem key={product._id} slug={product.slug} />
         ))}
@@ -93,11 +95,11 @@ const ProductPage: React.FC<ProductPageProps> = ({
       <div className="mt-4 flex justify-center">
         {products.length < totalCount && (
           <button
-            className="rounded-lg text-gray-700 p-2 text-sm w-40 hover:bg-red-100 cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-200"
+            className="rounded-lg text-gray-700 p-2 text-sm w-40 hover:bg-gray-100 cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-200"
             onClick={handleLoadMore}
             disabled={loading}
           >
-            {loading ? "Loading..." : "Load More ..."}
+            {loading ? "Загрузить..." : "Загрузить еще ..."}
           </button>
         )}
       </div>

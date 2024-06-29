@@ -57,7 +57,7 @@ const CatalogSet: React.FC<ProductSetProps> = ({  categoryId }) => {
   }, [categoryId]);
 
   return (
-    <div className="relative p-2 m-4">
+    <div className="relative p-2 m-2">
       <div className={`absolute inset-0 ${bgColor} opacity-50 rounded-lg`} />
       <div className="relative p-3">
         <div className="flex justify-between items-center mb-4">
@@ -70,7 +70,7 @@ const CatalogSet: React.FC<ProductSetProps> = ({  categoryId }) => {
             </button>
           </Link>
         </div>
-        <div className="grid grid-cols-2 gap-3 ">
+        <div className="grid grid-cols-2 gap-8 ">
           {catalogs.map((catalog) => (
             <CatalogItem key={catalog.slug} slug={catalog.slug} />
           ))}
