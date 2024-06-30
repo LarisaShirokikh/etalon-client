@@ -1,9 +1,13 @@
 "use client";
 import axios from "axios";
-import Link from "next/link";
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Skeleton from "../Skeleton";
+import Meta from "../Seo/Meta";
+import { paths } from "@/utils/path";
+import CatalogItem from "./CatalogItem";
+import BackButton from "../Button/BackButton";
+import BreadCrumbs from "../BreadCrumbs";
+import { ICatalog } from "@/interface/Catalog";
 
 interface CatalogListProps {
   limit?: number;
@@ -19,12 +23,11 @@ const CatalogList: React.FC<CatalogListProps> = ({
   catalogId,
   slug,
 }) => {
-  const [catalogs, setCatalogs] = useState([]);
+  const [catalogs, setCatalogs] = useState<ICatalog[]>([]);
   const [loading, setLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
 
-  console.log("catalog list1", categoryId);
 
   useEffect(() => {
     const fetchCatalogs = async (
@@ -41,7 +44,6 @@ const CatalogList: React.FC<CatalogListProps> = ({
             slug,
           },
         });
-        console.log("catalog list", response.data);
         setCatalogs(response.data.catalogs);
         setTotalPages(Math.ceil(response.data.totalCount / limit));
       } catch (error) {
@@ -54,9 +56,7 @@ const CatalogList: React.FC<CatalogListProps> = ({
     fetchCatalogs();
   }, [currentPage, limit, categoryId, catalogId, slug]);
 
-  const handlePageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-  };
+  
 
   if (loading) {
     return <Skeleton />;
@@ -67,27 +67,13 @@ const CatalogList: React.FC<CatalogListProps> = ({
   }
 
   return (
-    <div className="px-2 mt-12 ">
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 lg:grid-cols-6  xl:grid-cols-6  gap-2 md:gap-4">
-        {catalogs.map((catalog: any) => (
-          <Link href={`/catalog/${catalog.slug}`} key={catalog._id}>
-            <div className="relative bg-slate-100 w-full h-96  rounded-lg overflow-hidden">
-              <Image
-                src={
-                  catalog.images && catalog.images[0]
-                    ? catalog.images[0]
-                    : "/catalog.png"
-                }
-                alt={catalog.name}
-                fill
-                object-fit="contain"
-                className=" rounded-lg"
-              />
-            </div>
-            <h1 className="mt-1 font-light text-xs sm:text-m md:text-xs tracking-wide text-center">
-              {catalog.name}
-            </h1>
-          </Link>
+    <div className="px-4 mt-12 mb-12">
+      <Meta pageType="brend" />
+      <BreadCrumbs paths={paths} />
+      <BackButton />
+      <div className="grid grid-cols-2 mt-12 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 md:gap-8">
+        {catalogs.map((catalog) => (
+          <CatalogItem key={catalog.slug} slug={catalog.slug} />
         ))}
       </div>
     </div>
