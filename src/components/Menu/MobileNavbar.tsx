@@ -40,7 +40,7 @@ const MobileNavbar = () => {
             label={"Поиск"}
           />
           <NavItem
-            href="https://wa.me/79250217365"
+            href="https://wa.me/79260217365"
             icon={<FaWhatsapp size={24} target="_blank" />}
             label={"Написать"}
           />

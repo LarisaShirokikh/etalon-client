@@ -47,15 +47,15 @@ const Footer = () => {
             <a href="https://t.me/Dveri_Etalon" className="text-gray-700">
               <FaTelegram size={24} target="_blank" />
             </a>
-            <a href="https://wa.me/+79250217365" className="text-gray-700">
+            <a href="https://wa.me/+79260217365" className="text-gray-700">
               <FaWhatsapp size={24} target="_blank" />
             </a>
-            <a href="https://vk.com/your_vk" className="text-gray-700">
+            {/* <a href="https://vk.com/your_vk" className="text-gray-700">
               <FaVk size={24} target="_blank" />
             </a>
             <a href="https://vk.com/your_vk" className="text-gray-700">
               <FaYoutube size={24} target="_blank" />
-            </a>
+            </a> */}
           </div>
         </div>
         {/* Right Section */}

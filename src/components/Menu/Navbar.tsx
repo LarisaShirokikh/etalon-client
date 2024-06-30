@@ -4,21 +4,7 @@ import Image from "next/image";
 import { FaPhoneAlt, FaTelegram } from "react-icons/fa";
 import SearchBar from "../SearchBar";
 import { FaWhatsapp } from "react-icons/fa6";
-import { Session } from "next-auth";
 import NavMenu from "./NavMenu";
-import { signIn } from "next-auth/react";
-import NavItem from "./NavItem";
-import UserDropdown from "./UserDropdown";
-import {
-  Home,
-  Search,
-  Heart,
-  LayoutGrid,
-  CircleUserRound,
-  LogOut,
-  MessageCircleQuestion,
-  MessageCircleMore,
-} from "lucide-react";
 
 const Navbar = () =>
   // { session }: { session: Session | null }
@@ -54,7 +40,7 @@ const Navbar = () =>
                   <FaTelegram size={20} color="00A1FE" />
                 </a>
                 <a
-                  href="https://wa.me/+79250217365"
+                  href="https://wa.me/79260217365"
                   className="text-gray-700 hover:text-gray-900"
                   target="_blank"
                   rel="noopener noreferrer"
