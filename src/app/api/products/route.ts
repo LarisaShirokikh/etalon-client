@@ -30,12 +30,19 @@ export async function GET(request: NextRequest) {
 
   let dbQuery = Product.find();
 
+
+
   switch (slug) {
+    case "new":
+      dbQuery = dbQuery
+        .where("createdAt")
+        .sort({ _id: -1 });
+      break;
     case "s-zerkalom":
       dbQuery = dbQuery.where("title").regex(/с зеркалом/i);
       break;
     case "dveri-byudzhet":
-      dbQuery = dbQuery.where("price.discountedPrice").lte(40000);
+      dbQuery = dbQuery.where("price.discountedPrice").lte(30000);
       break;
     case "hity-prodazh":
     case "akciya":

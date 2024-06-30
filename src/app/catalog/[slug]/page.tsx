@@ -15,6 +15,7 @@ function CategoryCatalogsPage() {
     <div className="mt-12 px-1 sm:px-5">
       <Meta pageType="catalog" />
       <BreadCrumbs paths={paths} />
+      <BackButton />
       <ProductPage slug={slug} />
     </div>
   );

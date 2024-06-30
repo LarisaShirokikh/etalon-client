@@ -1,8 +1,6 @@
 "use client";
 import axios from "axios";
-import Link from "next/link";
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Skeleton from "@/components/Skeleton";
 import { ICatalog } from "@/interface/Catalog";
 import BrandHeader from "@/components/BrandHeader";

@@ -68,9 +68,6 @@ const CatalogList: React.FC<CatalogListProps> = ({
 
   return (
     <div className="px-4 mt-12 mb-12">
-      <Meta pageType="brend" />
-      <BreadCrumbs paths={paths} />
-      <BackButton />
       <div className="grid grid-cols-2 mt-12 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 md:gap-8">
         {catalogs.map((catalog) => (
           <CatalogItem key={catalog.slug} slug={catalog.slug} />

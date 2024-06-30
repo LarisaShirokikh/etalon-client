@@ -7,7 +7,7 @@ export const paths = [
   },
   {
     name: "новинки",
-    href: "/product",
+    href: "/product/new",
     icon: "/rss.svg",
   },
   {
