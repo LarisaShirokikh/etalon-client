@@ -10,6 +10,8 @@ import { IBrand } from "@/interface/Brand";
 import Meta from "@/components/Seo/Meta";
 import BreadCrumbs from "@/components/BreadCrumbs";
 import { paths } from "@/utils/path";
+import BackButton from "@/components/Button/BackButton";
+import CatalogItem from "@/components/Catalogs/CatalogItem";
 
 const CatalogPage = ({ params }: { params: { slug: string } }) => {
   const { slug } = params;
@@ -56,27 +58,11 @@ const CatalogPage = ({ params }: { params: { slug: string } }) => {
     <div className="px-4 mt-12 mb-12">
       <Meta pageType="brend" />
       <BreadCrumbs paths={paths} />
+      <BackButton />
       <BrandHeader brand={brand} />
       <div className="grid grid-cols-2 mt-12 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 md:gap-8">
         {catalogs.map((catalog) => (
-          <Link href={`/catalog/${catalog.slug}`} key={catalog._id}>
-            <div className="relative bg-slate-100 w-full h-96">
-              <Image
-                src={
-                  catalog.images && catalog.images[0]
-                    ? catalog.images[0]
-                    : "/catalog.png"
-                }
-                alt={catalog.name}
-                fill
-                sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
-                className="object-cover"
-              />
-            </div>
-            <h1 className="mt-2 font-light text-m tracking-wide text-center">
-              {catalog.name}
-            </h1>
-          </Link>
+          <CatalogItem key={catalog.slug} slug={catalog.slug} />
         ))}
       </div>
     </div>

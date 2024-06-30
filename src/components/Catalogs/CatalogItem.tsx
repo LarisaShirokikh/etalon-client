@@ -75,7 +75,7 @@ const CatalogItem: React.FC<CatalogItemProps> = ({
             className={`rounded-md ${loaded ? "opacity-100" : "opacity-0"}`}
             onLoad={handleImageLoaded}
           />
-          {/* Placeholder для изображения, пока оно загружается */}
+         
           {!loaded && (
             <div className="absolute inset-0 flex items-center justify-center">
               <img

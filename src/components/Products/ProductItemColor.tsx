@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Skeleton from "../Skeleton";
 import Link from "next/link";
 import { Heart } from "lucide-react";
+import Slider from "react-slick";
 
 interface ProductItemProps {
   productId?: string;
@@ -69,8 +70,19 @@ const ProductItem: React.FC<ProductItemProps> = ({
     return <Skeleton />;
   }
 
-  const toggleFavorite = () => {
-    setIsFavorite(!isFavorite);
+  const settings = {
+    dots: true,
+    infinite: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: false,
+    adaptiveHeight: true,
+    swipe: true,
+    appendDots: (dots: React.ReactNode) => (
+      <div style={{ bottom: "-10px" }}>
+        <ul className="space-x-0">{dots}</ul>
+      </div>
+    ),
   };
 
   return (
@@ -82,17 +94,23 @@ const ProductItem: React.FC<ProductItemProps> = ({
         className="p-2 bg-white w-full flex justify-center items-center rounded-lg"
         style={{ height: "200px" }}
       >
-        {" "}
-        {/* Set a fixed height for the card */}
         <Link href={`/${product.slug}`}>
-          <div className="relative size-48 bg-white flex justify-center items-center">
-            <Image
-              src={product.images[0] || "/product.png"}
-              alt={product.title}
-              fill
-              object-fit="contain"
-              className="rounded-md"
-            />
+          <div className="relative w-48 h-54">
+            <Slider {...settings}>
+              {product.images.map((image: string, index: number) => (
+                <div key={index} className=" flex justify-center items-center">
+                  <div className="relative w-48 h-48 ">
+                    <Image
+                      src={image || "/product.png"}
+                      alt={`${product.title} image ${index + 1}`}
+                      layout="fill"
+                      object-fit="contain"
+                      className="rounded-md"
+                    />
+                  </div>
+                </div>
+              ))}
+            </Slider>
           </div>
         </Link>
       </div>
@@ -121,7 +139,6 @@ const ProductItem: React.FC<ProductItemProps> = ({
           )}
         </div>
       </div>
-  
     </div>
   );
 };
