@@ -10,6 +10,7 @@ import Script from "next/script";
 import { Suspense } from "react";
 import { CartProvider } from "@/context/CartContext";
 import ToastProvider from "@/context/ToastProvider";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -64,10 +65,10 @@ export default async function RootLayout({
         </Suspense>
         <CartProvider>
           <Navbar />
-        <ToastProvider>
-          {children}
-
-        </ToastProvider>
+          <ToastProvider>
+            {children}
+            <SpeedInsights />
+          </ToastProvider>
           <MobileNavbar />
         </CartProvider>
         <Footer />
