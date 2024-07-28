@@ -8,6 +8,8 @@ import { paths } from "@/utils/path";
 import componentData from "@/utils/componentData";
 import { useQuery } from "@tanstack/react-query";
 import { debounce } from "lodash";
+import { Section } from "lucide-react";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const ProductSection = dynamic(
   () => import("@/components/Products/ProductSection"),
@@ -81,7 +83,11 @@ const HomePage = () => {
   }, []);
 
   if (productsLoading || videosLoading || categoriesLoading)
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    );
   if (productsError || videosError || categoriesError)
     return <div>Error loading data...</div>;
 

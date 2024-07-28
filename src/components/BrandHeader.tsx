@@ -30,7 +30,7 @@ const BrandHeader: React.FC<BrandHeaderProps> = ({ brand }) => {
         <h1 className="text-xl sm:text-xl font-semibold text-gray-700 mb-2">
           {brand.name}
         </h1>
-        {/* Дополнительные детали бренда могут быть добавлены здесь */}
+        
       </div>
     </div>
   );

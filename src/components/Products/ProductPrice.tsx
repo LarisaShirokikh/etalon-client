@@ -45,17 +45,7 @@ const ProductPrice: React.FC<PriceProps> = ({ onFilterChange, totalCount }) => {
             <TrendingUp size={20} />
             Дороже
           </div>
-      {/* <div className="flex items-center gap-4">
-        <input
-          type="range"
-          color="#11111"
-          min={0}
-          max={100000}
-          value={minPrice}
-          onChange={handlePriceChange}
-          className="w-full"
-        />
-      </div> */}
+      
         </div>
         <div className="text-gray-200 mb-2 p-2">{productCount} дверей</div>
       </div>

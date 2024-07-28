@@ -4,6 +4,7 @@ import Skeleton from "../Skeleton";
 import ProductItem from "./ProductItem";
 import ProductPrice from "./ProductPrice";
 import { IProduct } from "@/interface/Product";
+import { Loader } from "lucide-react";
 
 interface ProductPageProps {
   limit?: number;
@@ -77,7 +78,7 @@ const ProductPage: React.FC<ProductPageProps> = ({
   };
 
   if (products.length === 0 && !loading) {
-    return <div>No products found</div>;
+    return <div><Loader/></div>;
   }
 
   return (
