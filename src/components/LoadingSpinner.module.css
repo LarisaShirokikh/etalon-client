@@ -10,7 +10,7 @@
   animation: spin 1s linear infinite;
   width: 100px;
   height: 100px;
-  color: #333; /* Золотой цвет */
+  color: #888; 
 }
 
 @keyframes spin {
