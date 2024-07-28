@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import axios from "axios";
 import BreadCrumbs from "@/components/BreadCrumbs";
 import { paths } from "@/utils/path";
-import HomeSlider from "@/components/HomeSlider";
 import componentData from "@/utils/componentData";
+import { useQuery } from "@tanstack/react-query";
+import { debounce } from "lodash";
 
 const ProductSection = dynamic(
   () => import("@/components/Products/ProductSection"),
@@ -14,37 +15,56 @@ const ProductSection = dynamic(
     ssr: false,
   }
 );
+const HomeSlider = dynamic(() => import("@/components/HomeSlider"), {
+  ssr: false,
+});
+
+const fetchProducts = async () => {
+  const { data } = await axios.get("/api/products");
+  return data.products;
+};
+
+const fetchVideos = async () => {
+  const { data } = await axios.get("/api/video");
+  return data.products;
+};
+
+const fetchCategories = async () => {
+  const { data } = await axios.get("/api/categories");
+  return data;
+};
 
 const HomePage = () => {
   const [components, setComponents] = useState([componentData[0]]);
-  const [productsData, setProductsData] = useState([]);
-  const [videosData, setVideosData] = useState([]);
-  const [categoryData, setCategoryData] = useState([]);
   const loaderRef = useRef<HTMLDivElement | null>(null);
 
-  const fetchData = useCallback(async () => {
-    try {
-      const [productResponse, videoResponse, categoryResponse] =
-        await Promise.all([
-          axios.get("/api/products"),
-          axios.get("/api/video"),
-          axios.get("/api/categories"),
-        ]);
-
-      setProductsData(productResponse.data.products);
-      setVideosData(videoResponse.data.products);
-      setCategoryData(categoryResponse.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  }, []);
+  const {
+    data: productsData = [],
+    isLoading: productsLoading,
+    error: productsError,
+  } = useQuery({
+    queryKey: ["products"],
+    queryFn: fetchProducts,
+  });
+  const {
+    data: videosData = [],
+    isLoading: videosLoading,
+    error: videosError,
+  } = useQuery({
+    queryKey: ["videos"],
+    queryFn: fetchVideos,
+  });
+  const {
+    data: categoryData = [],
+    isLoading: categoriesLoading,
+    error: categoriesError,
+  } = useQuery({
+    queryKey: ["categories"],
+    queryFn: fetchCategories,
+  });
 
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-
-  useEffect(() => {
-    const handleScroll = () => {
+    const handleScroll = debounce(() => {
       const scrollPosition = window.innerHeight + window.scrollY;
       const threshold = document.body.offsetHeight - 100;
 
@@ -54,11 +74,16 @@ const HomePage = () => {
           componentData[prevComponents.length % componentData.length],
         ]);
       }
-    };
+    }, 200);
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  if (productsLoading || videosLoading || categoriesLoading)
+    return <div>Loading...</div>;
+  if (productsError || videosError || categoriesError)
+    return <div>Error loading data...</div>;
 
   return (
     <div>

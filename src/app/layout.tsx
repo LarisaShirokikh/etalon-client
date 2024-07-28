@@ -11,6 +11,7 @@ import { Suspense } from "react";
 import { CartProvider } from "@/context/CartContext";
 import ToastProvider from "@/context/ToastProvider";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { ClientProviders } from "@/components/ClientProviders";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,11 +38,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="ru">
       <body className={inter.className}>
@@ -63,15 +64,17 @@ export default async function RootLayout({
         <Suspense fallback={<></>}>
           <YandexMetrika />
         </Suspense>
-        <CartProvider>
-          <Navbar />
-          <ToastProvider>
-            {children}
-            <SpeedInsights />
-          </ToastProvider>
-          <MobileNavbar />
-        </CartProvider>
-        <Footer />
+        <ClientProviders>
+          <CartProvider>
+            <Navbar />
+            <ToastProvider>
+              {children}
+              <SpeedInsights />
+            </ToastProvider>
+            <MobileNavbar />
+          </CartProvider>
+          <Footer />
+        </ClientProviders>
       </body>
     </html>
   );
