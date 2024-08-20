@@ -4,21 +4,16 @@ import ProductItemColor from "./ProductItemColor";
 import VideoItem from "../Video/VideoItem";
 import { IProduct } from "@/interface/Product";
 
-interface Product {
-  id: string;
-  name: string;
-  slug: string;
-  price: number;
-}
+
 
 interface ProductSetProps {
   catalogId?: string;
   categoryId?: string;
-  productsData: Product[];
-  videosData: Product[];
+  productsData: IProduct[];
+  videosData: IProduct[];
 }
 
-const getRandomProducts = (products: Product[] | undefined, count: number) => {
+const getRandomProducts = (products: IProduct[] | undefined, count: number) => {
   if (!products || !Array.isArray(products)) {
     return [];
   }
@@ -40,8 +35,8 @@ const ProductSet: React.FC<ProductSetProps> = ({
     [videosData]
   );
 
-  const productSlugs = randomProducts.map((product: Product) => product.slug);
-  const videoSlugs = randomVideos.map((video: Product) => video.slug);
+  const productSlugs = randomProducts.map((product: IProduct) => product.slug);
+  const videoSlugs = randomVideos.map((video: IProduct) => video.slug);
 
   return (
     <div className="grid grid-cols-2  mt-4 gap-1">
