@@ -105,6 +105,7 @@ const HomePage = () => {
           categoryData={categoryData}
         />
       ))}
+      
       <div
         ref={loaderRef}
         style={{ height: "20px", backgroundColor: "transparent" }}

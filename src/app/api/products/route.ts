@@ -6,19 +6,19 @@ import { Category } from "@/models/Category";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const limitParam = searchParams.get("limit");
-  const limit = limitParam ? parseInt(limitParam) : null;
+  const limit = parseInt(searchParams.get("limit") || "10"); // Ограничение по умолчанию
+  const page = parseInt(searchParams.get("page") || "1");
+  const skip = (page - 1) * limit;
   const slug = searchParams.get("slug");
   const catalogId = searchParams.get("catalogId");
   const productId = searchParams.get("productId");
-  const page = parseInt(searchParams.get("page") || "1");
-  const skip = (page - 1) * (limit || 0);
   const category = searchParams.get("category");
   const priceRange = searchParams.get("priceRange");
   const sortOrder = searchParams.get("sortOrder");
 
   await mongooseConnect();
 
+  // Если указан productId, возвращаем конкретный продукт
   if (productId) {
     const product = await Product.findById(productId).exec();
     if (product) {
@@ -30,39 +30,37 @@ export async function GET(request: NextRequest) {
 
   let dbQuery = Product.find();
 
-
-
-  switch (slug) {
-    case "new":
-      dbQuery = dbQuery
-        .where("createdAt")
-        .sort({ _id: -1 });
-      break;
-    case "s-zerkalom":
-      dbQuery = dbQuery.where("title").regex(/с зеркалом/i);
-      break;
-    case "dveri-byudzhet":
-      dbQuery = dbQuery.where("price.discountedPrice").lte(30000);
-      break;
-    case "hity-prodazh":
-    case "akciya":
-    case "belye-dveri":
-    case "dlya-kvartiry":
-      const category = await Category.findOne({ slug }).exec();
-      if (category) {
-        dbQuery = dbQuery.where("category").in([category._id]);
-      } else {
-        return NextResponse.json(
-          { error: `Category for slug ${slug} not found` },
-          { status: 404 }
-        );
-      }
-      break;
-    case "3-kontura":
-      dbQuery = dbQuery.where("contours").regex(/3 контура/i);
-      break;
-    default:
-      if (slug) {
+  // Логика обработки slugs
+  if (slug) {
+    switch (slug) {
+      case "new":
+        dbQuery = dbQuery.sort({ createdAt: -1 });
+        break;
+      case "s-zerkalom":
+        dbQuery = dbQuery.where("title").regex(/с зеркалом/i);
+        break;
+      case "dveri-byudzhet":
+        dbQuery = dbQuery.where("price.discountedPrice").lte(30000);
+        break;
+      case "hity-prodazh":
+      case "akciya":
+      case "belye-dveri":
+      case "dlya-kvartiry":
+        const foundCategory = await Category.findOne({ slug }).exec();
+        if (foundCategory) {
+          dbQuery = dbQuery.where("category").equals(foundCategory._id);
+        } else {
+          return NextResponse.json(
+            { error: `Category for slug ${slug} not found` },
+            { status: 404 }
+          );
+        }
+        break;
+      case "3-kontura":
+        dbQuery = dbQuery.where("contours").regex(/3 контура/i);
+        break;
+      default:
+        // Если slug не попадает ни под один из перечисленных, проверяем каталог или продукт
         const catalog = await Catalog.findOne({ slug }).exec();
         if (catalog) {
           dbQuery = dbQuery.where("catalog").equals(catalog._id);
@@ -76,10 +74,11 @@ export async function GET(request: NextRequest) {
             { status: 404 }
           );
         }
-      }
-      break;
+        break;
+    }
   }
 
+  // Фильтрация по catalogId, category, и priceRange
   if (catalogId) {
     dbQuery = dbQuery.where("catalog").equals(catalogId);
   }
@@ -96,27 +95,26 @@ export async function GET(request: NextRequest) {
       .lte(maxPrice);
   }
 
-  // Count total documents after filtering
-  const totalCount = await Product.countDocuments(dbQuery.getQuery()).exec();
-
-  // Apply sorting and pagination
+  // Сортировка
   if (sortOrder) {
-    if (sortOrder === "price-asc") {
-      dbQuery = dbQuery.sort({ "price.discountedPrice": 1 });
-    } else if (sortOrder === "price-desc") {
-      dbQuery = dbQuery.sort({ "price.discountedPrice": -1 });
-    } else if (sortOrder === "rating") {
-      dbQuery = dbQuery.sort({ rating: -1 });
-    }
+    const sortOptions: { [key: string]: any } = {
+      "price-asc": { "price.discountedPrice": 1 },
+      "price-desc": { "price.discountedPrice": -1 },
+      rating: { rating: -1 },
+    };
+    dbQuery = dbQuery.sort(sortOptions[sortOrder] || { _id: -1 });
   } else {
     dbQuery = dbQuery.sort({ _id: -1 });
   }
 
-  if (limit !== null) {
-    dbQuery = dbQuery.limit(limit).skip(skip);
-  }
+  // Пагинация
+  dbQuery = dbQuery.limit(limit).skip(skip);
 
-  const products = await dbQuery.exec();
+  // Получение данных и подсчет общего количества продуктов
+  const [products, totalCount] = await Promise.all([
+    dbQuery.exec(),
+    Product.countDocuments(dbQuery.getQuery()).exec(),
+  ]);
 
   return NextResponse.json({ products, totalCount });
 }

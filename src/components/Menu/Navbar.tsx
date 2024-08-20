@@ -16,7 +16,14 @@ const Navbar = () =>
             {/* MOBILE */}
             <div className="h-20 flex hover:cursor-pointer items-center justify-between md:hidden">
               <Link href="/" className="flex tracking-wide gap-2">
-                <Image src="/logo.svg" alt="Логотип" width={200} height={200} />
+                <Image
+                  src="/logo.svg"
+                  alt="Логотип"
+                  width={200}
+                  height={200}
+                  priority
+                  style={{ width: "auto", height: "auto" }}
+                />
               </Link>
             </div>
             {/* MOBILE CONTACT */}
@@ -47,10 +54,10 @@ const Navbar = () =>
                 >
                   <FaWhatsapp size={20} color="1EB100" />
                 </a>
-              <div className="flex items-center gap-2 text-gray-700 hover:text-gray-900">
-                <Image src="/map.svg" alt="Location" width={20} height={20} />
-                <span>Москва и МО</span>
-              </div>
+                <div className="flex items-center gap-2 text-gray-700 hover:text-gray-900">
+                  <Image src="/map.svg" alt="Location" width={20} height={20} />
+                  <span>Москва и МО</span>
+                </div>
               </div>
               {/* <div className="w-full px-2">
                 <SearchBar />

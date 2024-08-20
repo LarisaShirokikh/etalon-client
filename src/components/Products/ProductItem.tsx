@@ -14,6 +14,7 @@ interface ProductItemProps {
   catalogId?: string;
   slug?: string;
   searchParams?: any;
+  limit?: number
 }
 
 const ProductItem: React.FC<ProductItemProps> = ({

@@ -12,6 +12,7 @@ interface CatalogItemProps {
   catalogId?: string;
   slug?: string;
   searchParams?: any;
+  limit?: number
 }
 
 const CatalogItem: React.FC<CatalogItemProps> = ({

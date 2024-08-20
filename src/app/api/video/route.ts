@@ -9,70 +9,68 @@ export async function GET(request: NextRequest) {
   const catalogIdVideo = searchParams.get("catalogIdVideo");
   const catalogId = searchParams.get("catalogId");
   const productId = searchParams.get("productId");
-  // const limit = parseInt(searchParams.get("limit"));
+  const limit = parseInt(searchParams.get("limit") || "10"); // Устанавливаем лимит на количество возвращаемых элементов
   const skip = parseInt(searchParams.get("skip") || "0");
 
   await mongooseConnect();
 
-  // Если предоставлен productId, ищем продукт по этому идентификатору
+  // Если предоставлен productId, ищем видео по этому идентификатору
   if (productId) {
     const product = await Video.findById(productId).exec();
     if (product) {
       return NextResponse.json(product);
+    } else {
+      return NextResponse.json({ error: "Product not found" }, { status: 404 });
     }
   }
 
+  // Если предоставлен slug, ищем видео или каталог по этому slug
   if (slug) {
-    // Проверяем, является ли slug продуктом
+    // Проверяем, является ли slug видео
     const product = await Video.findOne({ slug }).exec();
     if (product) {
       return NextResponse.json(product);
     }
 
-    // Если продукт не найден, ищем каталог по slug
+    // Если видео не найдено, ищем каталог по slug
     const catalog = await Catalog.findOne({ slug }).exec();
-
     if (catalog) {
       let dbQuery = Video.find().where("catalog").equals(catalog._id);
 
-      // Если предоставлен catalogId, добавляем его в запрос
+      // Если предоставлен catalogIdVideo, фильтруем по нему
       if (catalogIdVideo) {
-        dbQuery = dbQuery.where("catalog").equals(catalogId);
+        dbQuery = dbQuery.where("catalog").equals(catalogIdVideo);
       }
 
       const products = await dbQuery
         .sort({ _id: -1 })
-        // .limit(limit)
+        .limit(limit)
         .skip(skip)
         .exec();
 
-      const totalCount = await Video.countDocuments()
-        .where("catalog")
-        .equals(catalog._id)
-        .exec();
+      const totalCount = await Video.countDocuments(dbQuery.getQuery()).exec();
       return NextResponse.json({ products, totalCount });
+    } else {
+      return NextResponse.json({ error: "Catalog not found" }, { status: 404 });
     }
   }
 
-  // Если catalogId предоставлен, фильтруем продукты по нему
+  // Если предоставлен catalogId, фильтруем видео по каталогу
   if (catalogId) {
     const dbQuery = Video.find()
       .where("catalog")
       .equals(catalogId)
       .sort({ _id: -1 })
-      // .limit(limit)
+      .limit(limit)
       .skip(skip);
     const products = await dbQuery.exec();
 
-    const totalCount = await Video.countDocuments()
-      .where("catalog")
-      .equals(catalogId)
-      .exec();
+    const totalCount = await Video.countDocuments(dbQuery.getQuery()).exec();
     return NextResponse.json({ products, totalCount });
   }
 
-  // Возвращаем все продукты без фильтрации по каталогу
-  const dbQuery = Video.find().sort({ _id: -1 }).skip(skip);
+  // Возвращаем все видео, если нет фильтрации
+  const dbQuery = Video.find().sort({ _id: -1 }).limit(limit).skip(skip);
   const products = await dbQuery.exec();
 
   const totalCount = await Video.countDocuments().exec();
