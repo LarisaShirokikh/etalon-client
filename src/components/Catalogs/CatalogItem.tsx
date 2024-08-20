@@ -76,12 +76,14 @@ const CatalogItem: React.FC<CatalogItemProps> = ({
             className={`rounded-md ${loaded ? "opacity-100" : "opacity-0"}`}
             onLoad={handleImageLoaded}
           />
-         
+
           {!loaded && (
             <div className="absolute inset-0 flex items-center justify-center">
-              <img
+              <Image
                 src="/placeholder.png"
                 alt="Placeholder"
+                width={192} // Задайте ширину
+                height={256} // Задайте высоту
                 className="h-full w-full object-contain rounded-md"
               />
             </div>

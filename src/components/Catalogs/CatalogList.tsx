@@ -2,11 +2,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Skeleton from "../Skeleton";
-import Meta from "../Seo/Meta";
-import { paths } from "@/utils/path";
 import CatalogItem from "./CatalogItem";
-import BackButton from "../Button/BackButton";
-import BreadCrumbs from "../BreadCrumbs";
 import { ICatalog } from "@/interface/Catalog";
 
 interface CatalogListProps {

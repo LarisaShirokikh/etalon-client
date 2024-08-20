@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import CatalogItem from "./CatalogItem";
 import Link from "next/link";
@@ -21,39 +21,42 @@ const CatalogSet: React.FC<ProductSetProps> = ({  categoryId }) => {
   const [catalogs, setCatalogs] = useState<Catalog[]>([]);
   const [bgColor, setBgColor] = useState<string>("");
 
-  const colors = [
-    "bg-red-100",
-    "bg-green-100",
-    "bg-blue-100",
-    "bg-yellow-100",
-    "bg-lime-100",
-    "bg-cyan-100",
-    "bg-purple-100",
-    "bg-rose-100",
-    "bg-violet-100",
-  ];
+  const colors = useMemo(
+    () => [
+      "bg-red-100",
+      "bg-green-100",
+      "bg-blue-100",
+      "bg-yellow-100",
+      "bg-lime-100",
+      "bg-cyan-100",
+      "bg-purple-100",
+      "bg-rose-100",
+      "bg-violet-100",
+    ],
+    []
+  );
 
-  const getRandomColor = () => {
+  const getRandomColor = useCallback(() => {
     return colors[Math.floor(Math.random() * colors.length)];
-  };
+  }, [colors]);
 
-  useEffect(() => {
-    const fetchCatalogs = async () => {
-      try {
-        const response = await axios.get("/api/catalogs", {
-          params: { categoryId },
-        });
-         const catalogsData = response.data.catalogs;
-        const randomCatalogs = getRandomCatalogs(catalogsData, 2);
-        setCatalogs(randomCatalogs);
-        setBgColor(getRandomColor());
-      } catch (error) {
-        console.error("Ошибка при загрузке каталогов:", error);
-      }
-    };
+ useEffect(() => {
+   const fetchCatalogs = async () => {
+     try {
+       const response = await axios.get("/api/catalogs", {
+         params: { categoryId },
+       });
+       const catalogsData = response.data.catalogs;
+       const randomCatalogs = getRandomCatalogs(catalogsData, 2);
+       setCatalogs(randomCatalogs);
+       setBgColor(getRandomColor());
+     } catch (error) {
+       console.error("Ошибка при загрузке каталогов:", error);
+     }
+   };
 
-    fetchCatalogs();
-  }, [categoryId]);
+   fetchCatalogs();
+ }, [categoryId]); 
 
   return (
     <div className="relative p-2 m-2">
