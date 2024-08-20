@@ -22,7 +22,6 @@ const Navbar = () =>
                   width={200}
                   height={200}
                   priority
-                  style={{ width: "auto", height: "auto" }}
                 />
               </Link>
             </div>

@@ -2,10 +2,13 @@ import React, { useMemo } from "react";
 import ProductItem from "./ProductItem";
 import ProductItemColor from "./ProductItemColor";
 import VideoItem from "../Video/VideoItem";
+import { IProduct } from "@/interface/Product";
 
 interface Product {
+  id: string;
+  name: string;
   slug: string;
-  // Additional product fields, if any
+  price: number;
 }
 
 interface ProductSetProps {
@@ -29,11 +32,11 @@ const ProductSet: React.FC<ProductSetProps> = ({
   videosData,
 }) => {
   const randomProducts = useMemo(
-    () => getRandomProducts(productsData, 4),
+    () => getRandomProducts(productsData, 6),
     [productsData]
   );
   const randomVideos = useMemo(
-    () => getRandomProducts(videosData, 4),
+    () => getRandomProducts(videosData, 6),
     [videosData]
   );
 
@@ -41,7 +44,7 @@ const ProductSet: React.FC<ProductSetProps> = ({
   const videoSlugs = randomVideos.map((video: Product) => video.slug);
 
   return (
-    <div className="grid grid-cols-2 mt-4 gap-1">
+    <div className="grid grid-cols-2  mt-4 gap-1">
       {productSlugs.slice(0, 2).map((slug) => (
         <ProductItem key={slug} slug={slug} />
       ))}

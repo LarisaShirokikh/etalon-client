@@ -13,8 +13,10 @@ export async function GET(request: NextRequest) {
 
   await mongooseConnect();
 
+  // Логирование для отладки
   console.log("catalogs api", slug, catalogId);
 
+  // Если предоставлен catalogId, возвращаем конкретный каталог
   if (catalogId) {
     const catalog = await Catalog.findById(catalogId).exec();
     if (catalog) {
@@ -22,33 +24,42 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  let category;
-  let catalog;
+  // Если предоставлен slug, ищем соответствующий каталог или категорию
   if (slug) {
-    category = await Category.findOne({ slug }).exec();
-    // if (category) {
-    //   return NextResponse.json(category);
-    // }
-    catalog = await Catalog.findOne({ slug }).exec();
-    if(catalog) {
+    // Выполняем параллельно запросы для поиска категории и каталога
+    const [category, catalog] = await Promise.all([
+      Category.findOne({ slug }).exec(),
+      Catalog.findOne({ slug }).exec(),
+    ]);
+
+    // Если найден каталог, возвращаем его
+    if (catalog) {
       return NextResponse.json(catalog);
+    }
+
+    // Если найдено только category, фильтруем каталоги по ее ID
+    if (category) {
+      const catalogs = await Catalog.find({ parents: category._id })
+        .sort({ _id: -1 })
+        .limit(limit)
+        .skip(skip)
+        .exec();
+
+      const totalCount = await Catalog.countDocuments({
+        parents: category._id,
+      }).exec();
+      return NextResponse.json({ catalogs, totalCount });
     }
   }
 
-  const dbQuery = Catalog.find();
-  if (categoryId) {
-    dbQuery.where("parents").equals(categoryId);
-  }
-  
-  if (category) {
-    // Если найдена категория, фильтруем каталоги по ее categoryId
-    dbQuery.where("parents").equals(category._id);
-  }
-  
-  dbQuery.sort({ _id: -1 });
-  dbQuery.limit(limit).skip(skip);
-  
-  const catalogs = await dbQuery.exec();
-  const totalCount = await Catalog.countDocuments().exec();
+  // Основной запрос на получение каталогов с возможной фильтрацией по categoryId
+  const query = categoryId ? { parents: categoryId } : {};
+  const catalogs = await Catalog.find(query)
+    .sort({ _id: -1 })
+    .limit(limit)
+    .skip(skip)
+    .exec();
+
+  const totalCount = await Catalog.countDocuments(query).exec();
   return NextResponse.json({ catalogs, totalCount });
 }

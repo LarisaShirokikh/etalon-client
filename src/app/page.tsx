@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import dynamic from "next/dynamic";
 import axios from "axios";
 import BreadCrumbs from "@/components/BreadCrumbs";
@@ -8,7 +8,6 @@ import { paths } from "@/utils/path";
 import componentData from "@/utils/componentData";
 import { useQuery } from "@tanstack/react-query";
 import { debounce } from "lodash";
-import { Section } from "lucide-react";
 import LoadingSpinner from "@/components/LoadingSpinner";
 
 const ProductSection = dynamic(
@@ -21,52 +20,26 @@ const HomeSlider = dynamic(() => import("@/components/HomeSlider"), {
   ssr: false,
 });
 
-const fetchProducts = async () => {
-  const { data } = await axios.get("/api/products");
-  return data.products;
-};
-
-const fetchVideos = async () => {
-  const { data } = await axios.get("/api/video");
-  return data.products;
-};
-
-const fetchCategories = async () => {
-  const { data } = await axios.get("/api/categories");
-  return data;
+const fetchAllData = async () => {
+  const [products, videos, categories] = await Promise.all([
+    axios.get("/api/products").then((res) => res.data.products),
+    axios.get("/api/video").then((res) => res.data.products),
+    axios.get("/api/categories").then((res) => res.data),
+  ]);
+  return { products, videos, categories };
 };
 
 const HomePage = () => {
   const [components, setComponents] = useState([componentData[0]]);
   const loaderRef = useRef<HTMLDivElement | null>(null);
 
-  const {
-    data: productsData = [],
-    isLoading: productsLoading,
-    error: productsError,
-  } = useQuery({
-    queryKey: ["products"],
-    queryFn: fetchProducts,
-  });
-  const {
-    data: videosData = [],
-    isLoading: videosLoading,
-    error: videosError,
-  } = useQuery({
-    queryKey: ["videos"],
-    queryFn: fetchVideos,
-  });
-  const {
-    data: categoryData = [],
-    isLoading: categoriesLoading,
-    error: categoriesError,
-  } = useQuery({
-    queryKey: ["categories"],
-    queryFn: fetchCategories,
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["homePageData"],
+    queryFn: fetchAllData,
   });
 
-  useEffect(() => {
-    const handleScroll = debounce(() => {
+  const handleScroll = useCallback(
+    debounce(() => {
       const scrollPosition = window.innerHeight + window.scrollY;
       const threshold = document.body.offsetHeight - 100;
 
@@ -76,20 +49,21 @@ const HomePage = () => {
           componentData[prevComponents.length % componentData.length],
         ]);
       }
-    }, 200);
+    }, 200),
+    []
+  );
 
+  useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [handleScroll]);
 
-  if (productsLoading || videosLoading || categoriesLoading)
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
-  if (productsError || videosError || categoriesError)
-    return <div>Error loading data...</div>;
+  if (isLoading) return <LoadingSpinner />;
+  if (error) return <div>Error loading data...</div>;
+
+  const products = data?.products || [];
+  const videos = data?.videos || [];
+  const categories = data?.categories || [];
 
   return (
     <div>
@@ -100,12 +74,11 @@ const HomePage = () => {
       {components.map((component, index) => (
         <ProductSection
           key={index}
-          productsData={productsData}
-          videosData={videosData}
-          categoryData={categoryData}
+          productsData={products}
+          videosData={videos}
+          categoryData={categories}
         />
       ))}
-      
       <div
         ref={loaderRef}
         style={{ height: "20px", backgroundColor: "transparent" }}
