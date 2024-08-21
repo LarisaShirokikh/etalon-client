@@ -26,12 +26,12 @@ interface ProductSetProps {
 const ProductSection: React.FC<ProductSetProps> = memo(
   ({ productsData, videosData, categoryData }) => {
     return (
-      <div className="flex flex-col md:flex-row gap-3">
-        <Suspense fallback={<LoadingSpinner />}>
+      <div className="flex flex-col md:flex-row gap-3 p-4 md:p-8">
+        <div className="md:w-2/3">
           <ProductSet productsData={productsData} videosData={videosData} />
-        </Suspense>
-        <div className="flex-1 flex flex-col min-w-96 max-w-104 gap-5">
-          <CatalogSet categoryId={"665b2b71845f4980629d7714"} />
+        </div>
+        <div className="md:w-1/3 flex flex-col gap-5">
+          <CatalogSet categoryId="665b2b71845f4980629d7714" />
           <CategoryList categoryData={categoryData} />
         </div>
       </div>

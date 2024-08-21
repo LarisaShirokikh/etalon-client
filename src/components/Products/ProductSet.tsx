@@ -39,15 +39,15 @@ const ProductSet: React.FC<ProductSetProps> = ({
   const videoSlugs = randomVideos.map((video: IProduct) => video.slug);
 
   return (
-    <div className="grid grid-cols-2  mt-4 gap-1">
+    <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
+      {productSlugs.slice(2, 3).map((slug) => (
+        <ProductItemColor key={slug} slug={slug} />
+      ))}
       {productSlugs.slice(0, 2).map((slug) => (
         <ProductItem key={slug} slug={slug} />
       ))}
       {videoSlugs.slice(0, 1).map((slug) => (
         <VideoItem key={slug} slug={slug} />
-      ))}
-      {productSlugs.slice(2, 3).map((slug) => (
-        <ProductItemColor key={slug} slug={slug} />
       ))}
     </div>
   );
