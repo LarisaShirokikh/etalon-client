@@ -8,30 +8,26 @@ const SimpleSlider = () => {
     id: 1,
     imageUrl: "/slice.png",
     altText: "Мобильный баннер",
-    width: 600, // Укажите ширину для мобильного баннера
-    height: 300, // Укажите высоту для мобильного баннера
+    width: 600,
+    height: 300,
   };
 
   const desktopSlide = {
     id: 2,
     imageUrl: "/slice1.png",
     altText: "Десктоп баннер",
-    width: 1200, // Укажите ширину для десктопного баннера
-    height: 600, // Укажите высоту для десктопного баннера
+    width: 1200,
+    height: 600,
   };
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
 
     // Проверяем размер экрана при первом рендере
     handleResize();
 
-    // Добавляем обработчик события изменения размера окна
     window.addEventListener("resize", handleResize);
 
-    // Удаляем обработчик события при размонтировании компонента
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -45,6 +41,7 @@ const SimpleSlider = () => {
         width={slide.width}
         height={slide.height}
         className="w-full rounded-lg"
+        priority // Ускорение загрузки изображения
       />
     </div>
   );

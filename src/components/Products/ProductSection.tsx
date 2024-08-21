@@ -1,10 +1,9 @@
-import { CategoryModel, ICategory } from "@/interface/Category";
 import { IProduct } from "@/interface/Product";
+import { ICategory } from "@/interface/Category";
 import dynamic from "next/dynamic";
 import { Suspense, memo } from "react";
 import LoadingSpinner from "../LoadingSpinner";
 
-// Динамический импорт компонентов
 const ProductSet = dynamic(() => import("../Products/ProductSet"), {
   ssr: false,
   loading: () => <LoadingSpinner />,
@@ -20,7 +19,7 @@ const CategoryList = dynamic(() => import("../CategoryList"), {
 
 interface ProductSetProps {
   productsData: IProduct[];
-  videosData: IProduct[]; 
+  videosData: IProduct[];
   categoryData: ICategory[];
 }
 
@@ -31,7 +30,6 @@ const ProductSection: React.FC<ProductSetProps> = memo(
         <Suspense fallback={<LoadingSpinner />}>
           <ProductSet productsData={productsData} videosData={videosData} />
         </Suspense>
-        ;
         <div className="flex-1 flex flex-col min-w-96 max-w-104 gap-5">
           <CatalogSet categoryId={"665b2b71845f4980629d7714"} />
           <CategoryList categoryData={categoryData} />

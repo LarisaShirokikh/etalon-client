@@ -13,31 +13,27 @@ export async function GET(request: NextRequest) {
 
   await mongooseConnect();
 
-  // Логирование для отладки
-  console.log("catalogs api", slug, catalogId);
+  let response;
 
   // Если предоставлен catalogId, возвращаем конкретный каталог
   if (catalogId) {
-    const catalog = await Catalog.findById(catalogId).exec();
-    if (catalog) {
-      return NextResponse.json(catalog);
+    response = await Catalog.findById(catalogId).exec();
+    if (response) {
+      return NextResponse.json(response);
     }
   }
 
   // Если предоставлен slug, ищем соответствующий каталог или категорию
   if (slug) {
-    // Выполняем параллельно запросы для поиска категории и каталога
     const [category, catalog] = await Promise.all([
       Category.findOne({ slug }).exec(),
       Catalog.findOne({ slug }).exec(),
     ]);
 
-    // Если найден каталог, возвращаем его
     if (catalog) {
       return NextResponse.json(catalog);
     }
 
-    // Если найдено только category, фильтруем каталоги по ее ID
     if (category) {
       const catalogs = await Catalog.find({ parents: category._id })
         .sort({ _id: -1 })
@@ -48,6 +44,7 @@ export async function GET(request: NextRequest) {
       const totalCount = await Catalog.countDocuments({
         parents: category._id,
       }).exec();
+
       return NextResponse.json({ catalogs, totalCount });
     }
   }

@@ -36,6 +36,7 @@ const CategoryList: React.FC<CategoryListProps> = ({ categoryData }) => {
                     alt={item.name}
                     layout="fill"
                     objectFit="cover"
+                    loading="lazy"
                   />
                 </div>
                 <h1 className="absolute top-0 left-0  text-gray-800 py-1 px-2 mt-1">

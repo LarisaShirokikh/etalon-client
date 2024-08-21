@@ -1,20 +1,12 @@
-import Image from "next/image";
 import Link from "next/link";
-import {
-  FaTelegram,
-  FaVk,
-  FaYoutube,
-  FaPhoneAlt,
-  FaEnvelope,
-  FaWhatsapp,
-} from "react-icons/fa";
+import { FaTelegram, FaPhoneAlt, FaEnvelope, FaWhatsapp } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="py-12 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 bg-gray-100 text-sm mt-24">
-      <div className="flex flex-col lg:flex-row justify-between">
+    <footer className="py-8 px-4 md:px-12 lg:px-16 xl:px-24 bg-gray-100 text-sm mt-24">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left Section */}
-        <div className="w-full lg:w-1/3 flex flex-col gap-4 lg:gap-8">
+        <div className="flex flex-col gap-4 lg:gap-6">
           <Link href="/">
             <div className="text-lg lg:text-xl tracking-wide font-semibold">
               ДВЕРИ ЭТАЛОН
@@ -26,7 +18,11 @@ const Footer = () => {
             информационный характер и не является публичной офертой.
           </p>
           <div className="flex gap-4 items-center">
-            <FaEnvelope size={24} className="text-gray-700" />
+            <FaEnvelope
+              size={24}
+              className="text-gray-700"
+              style={{ minWidth: "24px" }}
+            />
             <a
               href="mailto:2081837@gmail.ru"
               className="flex items-center text-gray-700"
@@ -35,7 +31,11 @@ const Footer = () => {
             </a>
           </div>
           <div className="flex gap-4 items-center">
-            <FaPhoneAlt size={24} className="text-gray-700" />
+            <FaPhoneAlt
+              size={24}
+              className="text-gray-700"
+              style={{ minWidth: "24px" }}
+            />
             <a
               href="tel:+79260217365"
               className="flex items-center text-gray-700"
@@ -45,27 +45,21 @@ const Footer = () => {
           </div>
           <div className="flex gap-6 mb-4">
             <a href="https://t.me/Dveri_Etalon" className="text-gray-700">
-              <FaTelegram size={24} target="_blank" />
+              <FaTelegram size={24} style={{ minWidth: "24px" }} />
             </a>
             <a href="https://wa.me/+79260217365" className="text-gray-700">
-              <FaWhatsapp size={24} target="_blank" />
+              <FaWhatsapp size={24} style={{ minWidth: "24px" }} />
             </a>
-            {/* <a href="https://vk.com/your_vk" className="text-gray-700">
-              <FaVk size={24} target="_blank" />
-            </a>
-            <a href="https://vk.com/your_vk" className="text-gray-700">
-              <FaYoutube size={24} target="_blank" />
-            </a> */}
           </div>
         </div>
         {/* Right Section */}
-        <div className="w-full lg:w-1/3 flex flex-col gap-4 lg:gap-8">
-          
+        <div className="flex flex-col gap-4 lg:gap-6">
+          {/* Другие элементы */}
         </div>
       </div>
       {/* Bottom Section */}
-      <div className="flex flex-col md:flex-row items-center justify-between gap-4 mt-8">
-        <div className="text-sm text-gray-600 mb-5">
+      <div className="footer flex flex-col md:flex-row items-center justify-between gap-4 mt-8 pb-16 md:pb-0">
+        <div className="text-sm text-gray-600">
           © 2024 Двери Эталон. Магазин входных металлических дверей.
         </div>
       </div>

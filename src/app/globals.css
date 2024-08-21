@@ -29,3 +29,14 @@ nav[aria-label="breadcrumb"] ol li a {
 }
 
 
+.footer {
+  padding-bottom: 80px;
+}
+
+@media (min-width: 768px) {
+  .footer {
+    padding-bottom: 0;
+  }
+}
+
+
