@@ -7,7 +7,6 @@ import YandexMetrika from "@/components/YandexMetrika";
 import MobileNavbar from "@/components/Menu/MobileNavbar";
 import { Suspense } from "react";
 import { CartProvider } from "@/context/CartContext";
-import ToastProvider from "@/context/ToastProvider";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ClientProviders } from "@/components/ClientProviders";
 
@@ -50,10 +49,10 @@ export default function RootLayout({
         <ClientProviders>
           <CartProvider>
             <Navbar />
-            <ToastProvider>
+            
               {children}
               <SpeedInsights />
-            </ToastProvider>
+            
             <MobileNavbar />
           </CartProvider>
           <Footer />

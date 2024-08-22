@@ -1,55 +1,36 @@
 "use client";
-import { Loader } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
-interface Category {
+interface CategoryItemProps {
   slug: string;
   name: string;
-  images?: string[];
+  image?: string;
 }
 
-interface CategoryListProps {
-  categoryData: Category[];
-}
-
-const CategoryList: React.FC<CategoryListProps> = ({ categoryData }) => {
-
-  if (!categoryData || categoryData.length === 0) {
-    return (
-      <div>
-        <Loader />
-      </div>
-    );
-  }
-
+const CategoryItem: React.FC<CategoryItemProps> = ({ slug, name, image }) => {
   return (
-    <div className="py-1 px-1 w-auto md:px-1 lg:px-1 xl:px-2 2xl:px-2">
-      <div className="flex overflow-auto no-scrollbar gap-2">
-        {categoryData.map((item) => (
-          <div className="flex-shrink-0" key={item.name}>
-            <Link href={`/category/${item.slug}/catalogs`} passHref>
-              <div className="relative rounded-lg overflow-hidden cursor-pointer">
-                <div className="relative w-48 h-48">
-                  <Image
-                    src={item.images?.[0] || "/category-placeholder.png"}
-                    alt={item.name}
-                    layout="fill"
-                    objectFit="cover"
-                    loading="lazy"
-                    className="w-48 h-48"
-                  />
-                </div>
-                <h1 className="absolute top-0 left-0  text-gray-800 py-1 px-2 mt-1">
-                  {item.name}
-                </h1>
-              </div>
-            </Link>
+    <Link href={`/category/${slug}/catalogs`} passHref>
+      <div className="relative rounded-lg overflow-hidden cursor-pointer hover:shadow-xl duration-300 p-3 transform hover:scale-105">
+        <div className=" w-full h-32 sm:h-40 rounded-lg overflow-hidden">
+          <Image
+            src={image || "/category-placeholder.png"}
+            alt={name}
+            layout="fill"
+            objectFit="cover"
+            loading="lazy"
+            className="rounded-lg transition-transform duration-500 ease-in-out hover:scale-110"
+          />
+          {/* Имя категории поверх изображения */}
+          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30">
+            <h1 className="text-center text-white font-semibold text-sm sm:text-base">
+              {name}
+            </h1>
           </div>
-        ))}
+        </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
-export default CategoryList;
+export default CategoryItem;

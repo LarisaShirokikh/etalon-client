@@ -6,15 +6,14 @@ import { Category } from "@/models/Category";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const limit = parseInt(searchParams.get("limit") || "10"); // Ограничение по умолчанию
-  const page = parseInt(searchParams.get("page") || "1");
-  const skip = (page - 1) * limit;
+  const limit = parseInt(searchParams.get("limit") || "12");
   const slug = searchParams.get("slug");
   const catalogId = searchParams.get("catalogId");
   const productId = searchParams.get("productId");
   const category = searchParams.get("category");
   const priceRange = searchParams.get("priceRange");
   const sortOrder = searchParams.get("sortOrder");
+  const randomize = searchParams.get("randomize") === "true"; // Опция для рандомизации
 
   await mongooseConnect();
 
@@ -28,19 +27,22 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  let dbQuery = Product.find();
+  let matchConditions: any = {};
 
-  // Логика обработки slugs
+  // Логика обработки slugs и фильтров
   if (slug) {
     switch (slug) {
       case "new":
-        dbQuery = dbQuery.sort({ createdAt: -1 });
+        matchConditions = { ...matchConditions, createdAt: { $exists: true } };
         break;
       case "s-zerkalom":
-        dbQuery = dbQuery.where("title").regex(/с зеркалом/i);
+        matchConditions = { ...matchConditions, title: /с зеркалом/i };
         break;
       case "dveri-byudzhet":
-        dbQuery = dbQuery.where("price.discountedPrice").lte(30000);
+        matchConditions = {
+          ...matchConditions,
+          "price.discountedPrice": { $lte: 30000 },
+        };
         break;
       case "hity-prodazh":
       case "akciya":
@@ -48,7 +50,7 @@ export async function GET(request: NextRequest) {
       case "dlya-kvartiry":
         const foundCategory = await Category.findOne({ slug }).exec();
         if (foundCategory) {
-          dbQuery = dbQuery.where("category").equals(foundCategory._id);
+          matchConditions = { ...matchConditions, category: foundCategory._id };
         } else {
           return NextResponse.json(
             { error: `Category for slug ${slug} not found` },
@@ -57,13 +59,13 @@ export async function GET(request: NextRequest) {
         }
         break;
       case "3-kontura":
-        dbQuery = dbQuery.where("contours").regex(/3 контура/i);
+        matchConditions = { ...matchConditions, contours: /3 контура/i };
         break;
       default:
         // Если slug не попадает ни под один из перечисленных, проверяем каталог или продукт
         const catalog = await Catalog.findOne({ slug }).exec();
         if (catalog) {
-          dbQuery = dbQuery.where("catalog").equals(catalog._id);
+          matchConditions = { ...matchConditions, catalog: catalog._id };
         } else {
           const product = await Product.findOne({ slug }).exec();
           if (product) {
@@ -80,41 +82,54 @@ export async function GET(request: NextRequest) {
 
   // Фильтрация по catalogId, category, и priceRange
   if (catalogId) {
-    dbQuery = dbQuery.where("catalog").equals(catalogId);
+    matchConditions = { ...matchConditions, catalog: catalogId };
   }
 
   if (category) {
-    dbQuery = dbQuery.where("category").equals(category);
+    matchConditions = { ...matchConditions, category };
   }
 
   if (priceRange) {
     const [minPrice, maxPrice] = priceRange.split(",").map(Number);
-    dbQuery = dbQuery
-      .where("price.discountedPrice")
-      .gte(minPrice)
-      .lte(maxPrice);
-  }
-
-  // Сортировка
-  if (sortOrder) {
-    const sortOptions: { [key: string]: any } = {
-      "price-asc": { "price.discountedPrice": 1 },
-      "price-desc": { "price.discountedPrice": -1 },
-      rating: { rating: -1 },
+    matchConditions = {
+      ...matchConditions,
+      "price.discountedPrice": { $gte: minPrice, $lte: maxPrice },
     };
-    dbQuery = dbQuery.sort(sortOptions[sortOrder] || { _id: -1 });
-  } else {
-    dbQuery = dbQuery.sort({ _id: -1 });
   }
 
-  // Пагинация
-  dbQuery = dbQuery.limit(limit).skip(skip);
+  let products;
+  let totalCount;
 
-  // Получение данных и подсчет общего количества продуктов
-  const [products, totalCount] = await Promise.all([
-    dbQuery.exec(),
-    Product.countDocuments(dbQuery.getQuery()).exec(),
-  ]);
+  if (randomize) {
+    // Используем $sample для случайного выбора продуктов
+    products = await Product.aggregate([
+      { $match: matchConditions },
+      { $sample: { size: limit } },
+    ]);
+
+    // Подсчитываем общее количество подходящих продуктов
+    totalCount = await Product.countDocuments(matchConditions);
+  } else {
+    let dbQuery = Product.find(matchConditions);
+
+    // Сортировка
+    if (sortOrder) {
+      const sortOptions: { [key: string]: any } = {
+        "price-asc": { "price.discountedPrice": 1 },
+        "price-desc": { "price.discountedPrice": -1 },
+        rating: { rating: -1 },
+      };
+      dbQuery = dbQuery.sort(sortOptions[sortOrder] || { _id: -1 });
+    } else {
+      dbQuery = dbQuery.sort({ _id: -1 });
+    }
+
+    // Лимит и получение продуктов
+    dbQuery = dbQuery.limit(limit);
+
+    products = await dbQuery.exec();
+    totalCount = await Product.countDocuments(matchConditions);
+  }
 
   return NextResponse.json({ products, totalCount });
 }

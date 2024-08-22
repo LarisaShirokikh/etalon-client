@@ -21,21 +21,21 @@ const VideoItem = ({ slug }: VideoItemProps) => {
 
       try {
         const response = await axios.get(`/api/video`, {
-          params: {
-            slug,
-          },
+          params: { slug },
         });
 
         setVideo(response.data);
+        setLoading(false);
       } catch (error) {
-        console.error("Error fetching product:", error);
+        console.error("Error fetching video:", error);
+        setLoading(false);
       }
     };
 
     fetchProduct();
   }, [slug]);
 
-  if (!video) {
+  if (loading || !video) {
     return (
       <div>
         <Skeleton />
@@ -45,11 +45,8 @@ const VideoItem = ({ slug }: VideoItemProps) => {
 
   return (
     <Link href={`/video/${video.slug}`}>
-      <div className="relative h-64 px-4" style={{ maxWidth: "250px" }}>
-        <div
-          className="relative w-full h-full"
-          style={{ height: "300px" }}
-        >
+      <div className="relative px-4">
+        <div className="relative w-full h-[280px] md:h-[370px]">
           <video
             autoPlay
             playsInline
@@ -62,9 +59,9 @@ const VideoItem = ({ slug }: VideoItemProps) => {
             <source src={video.video[0]} type="video/mp4" />
           </video>
 
-          <div className="absolute bottom-0 left-0 w-full p-2 text-white  rounded-b-lg">
+          <div className="absolute bottom-0 left-0 w-full p-2 text-white rounded-b-lg bg-gradient-to-t from-black via-transparent to-transparent">
             <h3 className="line-clamp-2 text-xs">{video.title}</h3>
-            <div className="mt-1 flex ">
+            <div className="mt-1 flex">
               {video.price.discountedPrice ? (
                 <>
                   <span className="text-white font-bold text-sm mr-2">

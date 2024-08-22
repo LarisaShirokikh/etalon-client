@@ -32,7 +32,6 @@ const ProductSection: React.FC<ProductSetProps> = memo(
         </div>
         <div className="md:w-1/3 flex flex-col gap-5">
           <CatalogSet categoryId="665b2b71845f4980629d7714" />
-          <CategoryList categoryData={categoryData} />
         </div>
       </div>
     );

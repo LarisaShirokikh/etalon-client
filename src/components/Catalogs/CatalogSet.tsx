@@ -77,7 +77,13 @@ const CatalogSet: React.FC<ProductSetProps> = ({  categoryId }) => {
             <CatalogItem key={catalog.slug} slug={catalog.slug} />
           ))}
         </div>
-        
+        {/* <div className="overflow-auto no-scrollbar -mx-8 pl-8 pr-4 relative">
+          <div className="flex space-x-4">
+            {catalogs.map((catalog) => (
+              <CatalogItem key={catalog.slug} slug={catalog.slug} />
+            ))}
+          </div>
+        </div> */}
       </div>
     </div>
   );
