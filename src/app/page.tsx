@@ -3,22 +3,19 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import dynamic from "next/dynamic";
 import axios from "axios";
-import BreadCrumbs from "@/components/BreadCrumbs";
-import { paths } from "@/utils/path";
 import { useQuery } from "@tanstack/react-query";
-import LoadingSpinner from "@/components/LoadingSpinner";
 import ProductItem from "@/components/Products/ProductItem";
 import VideoItem from "@/components/Video/VideoItem";
 import CatalogItem from "@/components/Catalogs/CatalogItem";
 import Link from "next/link";
 import CategoryItem from "@/components/CategoryList";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
-// Динамический импорт компонента слайдера
+// Динамический импорт слайдера
 const HomeSlider = dynamic(() => import("@/components/HomeSlider"), {
   ssr: false,
 });
 
-// Функция для генерации случайного цвета фона
 const getRandomColor = () => {
   const colors = [
     "bg-red-50",
@@ -31,7 +28,6 @@ const getRandomColor = () => {
   return colors[Math.floor(Math.random() * colors.length)];
 };
 
-// Функция для получения данных с сервера
 const fetchAllData = async (page: number) => {
   const [products, videos, catalogs, categories] = await Promise.all([
     axios
@@ -48,7 +44,6 @@ const fetchAllData = async (page: number) => {
   return { products, videos, catalogs, categories: categories || [] };
 };
 
-// Главная страница
 const HomePage = () => {
   const [layoutItems, setLayoutItems] = useState<any[]>([]);
   const [page, setPage] = useState(1);
@@ -73,10 +68,9 @@ const HomePage = () => {
       let productIndex = 0;
       let videoIndex = 0;
 
-      // Вставляем по два каталога в блок
+      // Вставляем каталоги и категории
       for (let i = 0; i < catalogs.length; i += 2) {
         const catalogGroup = catalogs.slice(i, i + 2);
-
         if (catalogGroup.length > 0) {
           newItems.push({
             type: "catalog-group",
@@ -84,8 +78,7 @@ const HomePage = () => {
             color: getRandomColor(),
           });
 
-          // Добавляем продукты и видео вокруг блоков с каталогами
-          for (let j = 0; j < 3; j++) {
+          for (let j = 0; j < 2; j++) {
             if (productIndex < shuffledProducts.length) {
               newItems.push({
                 type: "product",
@@ -105,10 +98,8 @@ const HomePage = () => {
         }
       }
 
-      // Вставляем блок с категориями аналогично каталогам
       for (let i = 0; i < categories.length; i += 3) {
         const categoryGroup = categories.slice(i, i + 3);
-
         if (categoryGroup.length > 0) {
           newItems.push({
             type: "category-group",
@@ -118,7 +109,6 @@ const HomePage = () => {
         }
       }
 
-      // Добавляем оставшиеся продукты
       while (productIndex < shuffledProducts.length) {
         newItems.push({
           type: "product",
@@ -130,7 +120,7 @@ const HomePage = () => {
       setLayoutItems((prevItems) => [...prevItems, ...newItems]);
       setPage((prevPage) => prevPage + 1);
       setIsFetching(false);
-      setHasMore(products.length > 0); // Если продуктов нет, больше загружать нечего
+      setHasMore(products.length > 0);
     }
   }, [isFetching, page, hasMore]);
 
@@ -158,17 +148,14 @@ const HomePage = () => {
   }, [loaderRef, loadMoreData, hasMore]);
 
   useEffect(() => {
-    loadMoreData(); // Загрузка первой страницы данных при рендере
+    loadMoreData();
   }, []);
 
   return (
     <div>
       <HomeSlider />
-      <div className="md:hidden block">
-        <BreadCrumbs paths={paths} />
-      </div>
-      <div className="flex flex-col lg:flex-row gap-8 p-4">
-        <div className="flex-1 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-10 gap-4">
+      <div className="flex flex-col gap-8 p-4">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {layoutItems.map((item, index) => {
             if (item.type === "catalog-group") {
               return (
@@ -177,9 +164,9 @@ const HomePage = () => {
                   className={`rounded-lg p-4 ${item.color} col-span-2 lg:col-span-3`}
                 >
                   <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-xl font-bold">Популярные каталоги</h2>
+                    <h2 className="text-lg font-bold">Популярные каталоги</h2>
                     <Link href="/catalogs">
-                      <button className="text-sm font-semibold text-gray-700 border border-gray-600 px-3 py-1 rounded-lg hover:bg-gray-50 transition duration-300">
+                      <button className="text-sm font-semibold text-gray-700 border border-gray-600 px-2 py-1 rounded-lg hover:bg-gray-50 transition">
                         Все
                       </button>
                     </Link>
@@ -200,9 +187,9 @@ const HomePage = () => {
                   className={`rounded-lg p-4 ${item.color} col-span-2 lg:col-span-3`}
                 >
                   <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-xl font-bold">Популярные категории</h2>
+                    <h2 className="text-lg font-bold">Популярные категории</h2>
                     <Link href="/categories">
-                      <button className="text-sm font-semibold text-gray-700 border border-gray-600 px-3 py-1 rounded-lg hover:bg-gray-50 transition duration-300">
+                      <button className="text-sm font-semibold text-gray-700 border border-gray-600 px-2 py-1 rounded-lg hover:bg-gray-50 transition">
                         Все
                       </button>
                     </Link>
