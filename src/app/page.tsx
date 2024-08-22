@@ -1,17 +1,23 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import dynamic from "next/dynamic";
 import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
-import ProductItem from "@/components/Products/ProductItem";
-import VideoItem from "@/components/Video/VideoItem";
-import CatalogItem from "@/components/Catalogs/CatalogItem";
-import Link from "next/link";
-import CategoryItem from "@/components/CategoryList";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { Link } from "lucide-react";
 
-// Динамический импорт слайдера
+const ProductItem = dynamic(() => import("@/components/Products/ProductItem"), {
+  ssr: false,
+});
+const VideoItem = dynamic(() => import("@/components/Video/VideoItem"), {
+  ssr: false,
+});
+const CatalogItem = dynamic(() => import("@/components/Catalogs/CatalogItem"), {
+  ssr: false,
+});
+const CategoryItem = dynamic(() => import("@/components/CategoryList"), {
+  ssr: false,
+});
 const HomeSlider = dynamic(() => import("@/components/HomeSlider"), {
   ssr: false,
 });
@@ -61,9 +67,8 @@ const HomePage = () => {
     if (data) {
       const { products, videos, catalogs, categories } = data;
 
-      const shuffledProducts = products?.sort(() => Math.random() - 0.5) || [];
-      const shuffledVideos = videos?.sort(() => Math.random() - 0.5) || [];
-
+      const shuffledProducts = products.sort(() => Math.random() - 0.5);
+      const shuffledVideos = videos.sort(() => Math.random() - 0.5);
       const newItems: any[] = [];
       let productIndex = 0;
       let videoIndex = 0;
