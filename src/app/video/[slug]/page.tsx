@@ -5,13 +5,13 @@ import BreadCrumbs from "@/components/BreadCrumbs";
 import FrameInstallationInfo from "@/components/FrameInstallationInfo";
 import ProductDetails from "@/components/Products/ProductDetails";
 import ProductPage from "@/components/Products/ProductPage";
-import ProductVideo from "@/components/Products/ProductVideo";
 import ServiceDetails from "@/components/ServiceDetails";
 import Skeleton from "@/components/Skeleton";
 import { IProductVideo } from "@/interface/ProductVideo";
 import axios from "axios";
 import { notFound } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
+import VideoItem from "@/components/Video/VideoItem";
 
 const VideoSinglPage = ({ params }: { params: { slug: string } }) => {
   const [video, setVideo] = useState<IProductVideo | null>(null);
@@ -56,7 +56,7 @@ const VideoSinglPage = ({ params }: { params: { slug: string } }) => {
       <div className="px-2 md:px-8 lg:px-16 xl:px-32 2xl:px-64 relative flex flex-col lg:flex-row gap-16">
         {/* video */}
         <div className="w-full lg:w-1/2 lg:sticky top-20 h-max p-4 lg:p-0">
-          <ProductVideo src={video.video[0]} />
+          <VideoItem slug={""} />
         </div>
         {/* TEXTS */}
         <ProductDetails item={video} />
