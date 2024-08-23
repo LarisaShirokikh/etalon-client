@@ -1,6 +1,6 @@
 import axios from "axios";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Skeleton from "../Skeleton";
 import Link from "next/link";
 import Slider from "react-slick";
@@ -9,12 +9,10 @@ import "slick-carousel/slick/slick-theme.css";
 
 interface ProductItemProps {
   productId?: string;
-  color?: string;
   categoryId?: string;
   catalogId?: string;
   slug?: string;
   searchParams?: any;
-  limit?: number
 }
 
 const ProductItem: React.FC<ProductItemProps> = ({
@@ -27,17 +25,11 @@ const ProductItem: React.FC<ProductItemProps> = ({
   const [product, setProduct] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
-  
-
-
-
   useEffect(() => {
-    const fetchProduct = async () => {
-      if (!slug) {
-        console.error("No slug provided");
-        return;
-      }
+    if (!slug) return;
 
+    const fetchProduct = async () => {
+      setLoading(true);
       try {
         const response = await axios.get(`/api/products`, {
           params: {
@@ -50,9 +42,9 @@ const ProductItem: React.FC<ProductItemProps> = ({
         });
 
         setProduct(response.data);
-        setLoading(false);
       } catch (error) {
         console.error("Error fetching product:", error);
+      } finally {
         setLoading(false);
       }
     };
@@ -60,49 +52,72 @@ const ProductItem: React.FC<ProductItemProps> = ({
     fetchProduct();
   }, [productId, categoryId, catalogId, slug, searchParams]);
 
-  
-
-  const settings = {
-    dots: true,
-    infinite: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    arrows: false,
-    adaptiveHeight: true,
-    swipe: true,
-    appendDots: (dots: React.ReactNode) => (
-      <div style={{ bottom: "-10px" }}>
-        <ul className="space-x-0">{dots}</ul>
-      </div>
-    ),
-  };
+  // Мемоизация настроек слайдера для предотвращения ненужных ререндеров
+  const sliderSettings = useMemo(
+    () => ({
+      dots: true,
+      infinite: true,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      arrows: false,
+      adaptiveHeight: true,
+      swipe: true,
+      appendDots: (dots: React.ReactNode) => (
+        <div style={{ bottom: "-10px" }}>
+          <ul className="space-x-0">{dots}</ul>
+        </div>
+      ),
+    }),
+    []
+  );
 
   if (loading) {
     return (
-      <div>
+      <div className="flex justify-center items-center h-64">
         <Skeleton />
       </div>
     );
   }
 
+  if (!product) {
+    return (
+      <div className="flex justify-center items-center h-64 text-gray-500">
+        Product not found
+      </div>
+    );
+  }
+
   return (
-    <div className="relative  rounded-md overflow-hidden flex flex-col justify-center items-center">
+    <div className="relative rounded-md overflow-hidden flex flex-col justify-center items-center">
       <Link href={`/${product.slug}`}>
         <div className="relative w-48 h-54">
-          <Slider {...settings}>
-            {product.images.map((image: string, index: number) => (
-              <div key={index} className=" flex justify-center items-center">
-                <div className="relative w-48 h-48">
-                  <Image
-                    src={image || "/product.png"}
-                    alt={`${product.title} image ${index + 1}`}
-                    fill
-                    object-fit="contain"
-                    className="rounded-md"
-                  />
+          <Slider {...sliderSettings}>
+            {Array.isArray(product.images) && product.images.length > 0 ? (
+              product.images.map((image: string, index: number) => (
+                <div key={index} className="flex justify-center items-center">
+                  <div className="relative w-48 h-48">
+                    <Image
+                      src={image || "/product.png"}
+                      alt={`${product.title} image ${index + 1}`}
+                      fill
+                      objectFit="contain"
+                      className="rounded-md"
+                      loading="lazy"
+                    />
+                  </div>
                 </div>
+              ))
+            ) : (
+              <div className="flex justify-center items-center w-48 h-48">
+                <Image
+                  src="/product.png"
+                  alt="Placeholder"
+                  fill
+                  objectFit="contain"
+                  className="rounded-md"
+                />
               </div>
-            ))}
+            )}
           </Slider>
         </div>
       </Link>
@@ -113,7 +128,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
           </h3>
         </Link>
         <div className="mt-2 flex">
-          {product.price.discountedPrice ? (
+          {product.price?.discountedPrice ? (
             <>
               <span className="text-green-800 font-bold text-s">
                 {product.price.discountedPrice} ₽.
@@ -124,18 +139,11 @@ const ProductItem: React.FC<ProductItemProps> = ({
             </>
           ) : (
             <span className="text-gray-700 text-s">
-              {product.price.price} ₽.
+              {product.price?.price} ₽.
             </span>
           )}
         </div>
       </div>
-      {/* <button
-        onClick={toggleFavorite}
-        className="absolute top-2 right-2 text-gray-600"
-        aria-label="Add to favorites"
-      >
-        {isFavorite ? <Heart color="red" size={20} /> : <Heart size={20} />}
-      </button> */}
     </div>
   );
 };

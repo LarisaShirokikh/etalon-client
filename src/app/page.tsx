@@ -1,54 +1,14 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback, useMemo } from "react";
-import dynamic from "next/dynamic";
-import axios from "axios";
+import { useState, useEffect, useRef, useCallback } from "react";
+import fetchAllData from "@/api/fetchAllData";
+import HomeSlider from "@/components/HomeSlider";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import { Link } from "lucide-react";
-
-const ProductItem = dynamic(() => import("@/components/Products/ProductItem"), {
-  ssr: false,
-});
-const VideoItem = dynamic(() => import("@/components/Video/VideoItem"), {
-  ssr: false,
-});
-const CatalogItem = dynamic(() => import("@/components/Catalogs/CatalogItem"), {
-  ssr: false,
-});
-const CategoryItem = dynamic(() => import("@/components/CategoryList"), {
-  ssr: false,
-});
-const HomeSlider = dynamic(() => import("@/components/HomeSlider"), {
-  ssr: false,
-});
-
-const getRandomColor = () => {
-  const colors = [
-    "bg-red-50",
-    "bg-green-50",
-    "bg-blue-50",
-    "bg-yellow-50",
-    "bg-purple-50",
-    "bg-pink-50",
-  ];
-  return colors[Math.floor(Math.random() * colors.length)];
-};
-
-const fetchAllData = async (page: number) => {
-  const [products, videos, catalogs, categories] = await Promise.all([
-    axios
-      .get(`/api/products?limit=10&page=${page}&randomize=true`)
-      .then((res) => res.data.products),
-    axios.get("/api/video").then((res) => res.data.products),
-    axios
-      .get("/api/catalogs", { params: { limit: 6 } })
-      .then((res) => res.data.catalogs),
-    axios
-      .get("/api/categories", { params: { limit: 6 } })
-      .then((res) => res.data.categories),
-  ]);
-  return { products, videos, catalogs, categories: categories || [] };
-};
+import VideoGroup from "@/components/New/VideoGroup";
+import ProductGroup from "@/components/New/ProductGroup";
+import CategoryGroup from "@/components/New/CategoryGroup";
+import CatalogGroup from "@/components/New/CatalogGroup";
+import { getRandomColor } from "@/utils/getRandomColor";
 
 const HomePage = () => {
   const [layoutItems, setLayoutItems] = useState<any[]>([]);
@@ -73,26 +33,26 @@ const HomePage = () => {
       let productIndex = 0;
       let videoIndex = 0;
 
-      // Вставляем каталоги и категории
       for (let i = 0; i < catalogs.length; i += 2) {
         const catalogGroup = catalogs.slice(i, i + 2);
         if (catalogGroup.length > 0) {
           newItems.push({
             type: "catalog-group",
             data: catalogGroup,
-            color: getRandomColor(),
+            color: getRandomColor(), // Цвет применяется ко всему блоку
           });
 
-          for (let j = 0; j < 2; j++) {
+          for (let j = 0; j < 5; j++) {
             if (productIndex < shuffledProducts.length) {
               newItems.push({
                 type: "product",
                 data: shuffledProducts[productIndex],
+                color: j === 0 ? getRandomColor() : "bg-white", // Только первая карточка цветная
               });
               productIndex++;
             }
 
-            if (j === 1 && videoIndex < shuffledVideos.length) {
+            if (j === 2 && videoIndex < shuffledVideos.length) {
               newItems.push({
                 type: "video",
                 data: shuffledVideos[videoIndex],
@@ -118,6 +78,7 @@ const HomePage = () => {
         newItems.push({
           type: "product",
           data: shuffledProducts[productIndex],
+          color: "bg-white", // Остальные карточки белые
         });
         productIndex++;
       }
@@ -162,86 +123,45 @@ const HomePage = () => {
       <div className="flex flex-col gap-8 p-4">
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {layoutItems.map((item, index) => {
+            
             if (item.type === "catalog-group") {
               return (
-                <div
-                  key={`catalog-group-${index}`}
-                  className={`rounded-lg p-4 ${item.color} col-span-2 lg:col-span-3`}
-                >
-                  <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-lg font-bold">Популярные каталоги</h2>
-                    <Link href="/catalogs">
-                      <button className="text-sm font-semibold text-gray-700 border border-gray-600 px-2 py-1 rounded-lg hover:bg-gray-50 transition">
-                        Все
-                      </button>
-                    </Link>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    {item.data.map((catalog: any) => (
-                      <CatalogItem key={catalog.slug} slug={catalog.slug} />
-                    ))}
-                  </div>
-                </div>
+                <CatalogGroup
+                  key={index}
+                  catalogs={item.data}
+                  color={item.color}
+                />
               );
             }
 
             if (item.type === "category-group") {
               return (
-                <div
-                  key={`category-group-${index}`}
-                  className={`rounded-lg p-4 ${item.color} col-span-2 lg:col-span-3`}
-                >
-                  <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-lg font-bold">Популярные категории</h2>
-                    <Link href="/categories">
-                      <button className="text-sm font-semibold text-gray-700 border border-gray-600 px-2 py-1 rounded-lg hover:bg-gray-50 transition">
-                        Все
-                      </button>
-                    </Link>
-                  </div>
-                  <div className="grid grid-cols-3 gap-4">
-                    {item.data.map((category: any) => (
-                      <CategoryItem
-                        key={category.slug}
-                        slug={category.slug}
-                        name={category.name}
-                        image={category.images?.[0]}
-                      />
-                    ))}
-                  </div>
-                </div>
+                <CategoryGroup
+                  key={index}
+                  categories={item.data}
+                  color={item.color}
+                />
               );
+            }
+            if (item.type === "video") {
+              return <VideoGroup key={index} videos={[item.data]} />;
             }
 
             if (item.type === "product") {
               return (
-                <div
-                  key={`product-${item.data.slug}-${index}`}
-                  className={`rounded-lg p-2 ${
-                    index % 2 === 1 ? getRandomColor() : "bg-white"
-                  }`}
-                >
-                  <ProductItem slug={item.data.slug} />
-                </div>
+                <ProductGroup
+                  key={index}
+                  products={[item.data]}
+                  color={item.color} // Цвет задается для группы
+                />
               );
             }
 
-            if (item.type === "video") {
-              return (
-                <div
-                  key={`video-${item.data.slug}-${index}`}
-                  className="rounded-lg p-2"
-                >
-                  <VideoItem slug={item.data.slug} />
-                </div>
-              );
-            }
 
             return null;
           })}
         </div>
       </div>
-      {/* Элемент для отслеживания скролла и подгрузки */}
       <div ref={loaderRef} className="w-full h-4"></div>
       {isFetching && <LoadingSpinner />}
     </div>

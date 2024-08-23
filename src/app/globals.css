@@ -40,3 +40,73 @@ nav[aria-label="breadcrumb"] ol li a {
 }
 
 
+/* globals.css */
+
+/* Стили для карточек с тенями и скругленными углами */
+.card-base {
+  border-radius: 0.375rem; /* rounded-lg */
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+/* Эффект при наведении */
+.card-base:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* shadow-xl */
+}
+
+/* Стили для заголовка поверх изображения */
+.card-title-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.3); /* bg-opacity-30 */
+}
+
+.card-title-overlay h1 {
+  color: white;
+  font-weight: 600; /* font-semibold */
+  text-align: center;
+}
+
+/* Стандартные стили для изображений внутри карточек */
+.card-image-container {
+  position: relative;
+  width: 100%;
+  height: 8rem; /* 32px sm:h-40 */
+  border-radius: 0.375rem; /* rounded-lg */
+  overflow: hidden;
+}
+
+.card-image {
+  transition: transform 0.5s ease-in-out;
+  object-fit: cover;
+}
+
+.card-image:hover {
+  transform: scale(1.1); /* hover:scale-110 */
+}
+
+/* Стили для контейнера элементов */
+.container-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 колонки по умолчанию */
+  gap: 1rem; /* gap-4 */
+}
+
+@media (min-width: 640px) {
+  /* sm:grid-cols-2 */
+  .container-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  /* md:grid-cols-3 */
+  .container-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
