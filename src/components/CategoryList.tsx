@@ -1,30 +1,33 @@
 "use client";
 import Link from "next/link";
-import Image from "next/image";
 
 interface CategoryItemProps {
   slug: string;
   name: string;
-  image?: string;
 }
 
-const CategoryItem: React.FC<CategoryItemProps> = ({ slug, name, image }) => {
+const gradients = [
+  "from-blue-100 to-purple-50",
+  "from-green-100 to-blue-50",
+  "from-yellow-100 to-red-50",
+  "from-pink-100 to-orange-50",
+  "from-indigo-100 to-cyan-50",
+];
+
+const CategoryItem: React.FC<CategoryItemProps> = ({ slug, name }) => {
+  // Генерация случайного градиента
+  const randomGradient =
+    gradients[Math.floor(Math.random() * gradients.length)];
+
   return (
     <Link href={`/category/${slug}/catalogs`} passHref>
-      <div className="card-base">
-        <div className="card-image-container">
-          <Image
-            src={image || "/category-placeholder.png"}
-            alt={name}
-            layout="fill"
-            className="card-image"
-            loading="lazy"
-          />
-          {/* Имя категории поверх изображения */}
-          <div className="card-title-overlay">
-            <h1 className="text-sm sm:text-base">{name}</h1>
-          </div>
-        </div>
+      <div
+        className={`relative w-full h-full rounded-lg shadow-md hover:shadow-lg bg-gradient-to-br ${randomGradient} flex items-center justify-center transition-transform transform hover:scale-105`}
+      >
+        {/* Название категории */}
+        <h1 className="text-gray-500 text-2xl sm:text-xl font-bold text-center ">
+          {name}
+        </h1>
       </div>
     </Link>
   );

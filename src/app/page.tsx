@@ -3,103 +3,53 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import fetchAllData from "@/api/fetchAllData";
 import HomeSlider from "@/components/HomeSlider";
-import LoadingSpinner from "@/components/LoadingSpinner";
-import VideoGroup from "@/components/New/VideoGroup";
-import ProductGroup from "@/components/New/ProductGroup";
-import CategoryGroup from "@/components/New/CategoryGroup";
-import CatalogGroup from "@/components/New/CatalogGroup";
-import { getRandomColor } from "@/utils/getRandomColor";
+import CatalogItem from "@/components/Catalogs/CatalogItem";
+import CategoryItem from "@/components/CategoryList";
+import ProductItem from "@/components/Products/ProductItem";
+import VideoItem from "@/components/Video/VideoItem";
 
 const HomePage = () => {
-  const [layoutItems, setLayoutItems] = useState<any[]>([]);
+  const [items, setItems] = useState<any[]>([]);
   const [page, setPage] = useState(1);
   const [isFetching, setIsFetching] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
   const loaderRef = useRef<HTMLDivElement | null>(null);
 
-  const loadMoreData = useCallback(async () => {
+  const loadData = useCallback(async () => {
     if (isFetching || !hasMore) return;
 
     setIsFetching(true);
-    const data = await fetchAllData(page);
+    const data = await fetchAllData(page); // Загружаем данные текущей страницы
+    const { products, videos, catalogs, categories } = data;
 
     if (data) {
-      const { products, videos, catalogs, categories } = data;
+      const mixedItems = [
+        ...products.map((product: any) => ({ type: "product", data: product })),
+        ...categories.map((category: any) => ({
+          type: "category",
+          data: category,
+        })),
+        ...catalogs.map((catalog: any) => ({ type: "catalog", data: catalog })),
+        ...videos.map((video: any) => ({ type: "video", data: video })),
+      ].sort(() => Math.random() - 0.5);
 
-      const shuffledProducts = products.sort(() => Math.random() - 0.5);
-      const shuffledVideos = videos.sort(() => Math.random() - 0.5);
-      const newItems: any[] = [];
-      let productIndex = 0;
-      let videoIndex = 0;
-
-      for (let i = 0; i < catalogs.length; i += 2) {
-        const catalogGroup = catalogs.slice(i, i + 2);
-        if (catalogGroup.length > 0) {
-          newItems.push({
-            type: "catalog-group",
-            data: catalogGroup,
-            color: getRandomColor(), // Цвет применяется ко всему блоку
-          });
-
-          for (let j = 0; j < 5; j++) {
-            if (productIndex < shuffledProducts.length) {
-              newItems.push({
-                type: "product",
-                data: shuffledProducts[productIndex],
-                color: j === 0 ? getRandomColor() : "bg-white", // Только первая карточка цветная
-              });
-              productIndex++;
-            }
-
-            if (j === 2 && videoIndex < shuffledVideos.length) {
-              newItems.push({
-                type: "video",
-                data: shuffledVideos[videoIndex],
-              });
-              videoIndex++;
-            }
-          }
-        }
-      }
-
-      for (let i = 0; i < categories.length; i += 3) {
-        const categoryGroup = categories.slice(i, i + 3);
-        if (categoryGroup.length > 0) {
-          newItems.push({
-            type: "category-group",
-            data: categoryGroup,
-            color: getRandomColor(),
-          });
-        }
-      }
-
-      while (productIndex < shuffledProducts.length) {
-        newItems.push({
-          type: "product",
-          data: shuffledProducts[productIndex],
-          color: "bg-white", // Остальные карточки белые
-        });
-        productIndex++;
-      }
-
-      setLayoutItems((prevItems) => [...prevItems, ...newItems]);
+      setItems((prevItems) => [...prevItems, ...mixedItems]);
       setPage((prevPage) => prevPage + 1);
-      setIsFetching(false);
-      setHasMore(products.length > 0);
+      setHasMore(data.products.length > 0 || data.categories.length > 0);
     }
-  }, [isFetching, page, hasMore]);
+
+    setIsFetching(false);
+  }, [isFetching, hasMore, page]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && hasMore) {
-          loadMoreData();
+        if (entries[0].isIntersecting && hasMore && !isFetching) {
+          loadData();
         }
       },
-      {
-        rootMargin: "200px",
-      }
+      { rootMargin: "200px" }
     );
 
     if (loaderRef.current) {
@@ -111,59 +61,70 @@ const HomePage = () => {
         observer.unobserve(loaderRef.current);
       }
     };
-  }, [loaderRef, loadMoreData, hasMore]);
+  }, [loaderRef, loadData, hasMore, isFetching]);
 
-  useEffect(() => {
-    loadMoreData();
+  const renderItem = useCallback((item: any, index: number) => {
+    switch (item.type) {
+      case "product":
+        return (
+          <div
+            key={index}
+            className="group relative rounded-lg bg-white shadow hover:shadow-lg transition"
+          >
+            <ProductItem slug={item.data.slug} />
+          </div>
+        );
+      case "category":
+        return (
+          <div
+            key={index}
+            className="group relativ rounded-lg hover:shadow-lg transition"
+          >
+            <CategoryItem slug={item.data.slug} name={item.data.name} />
+          </div>
+        );
+      case "catalog":
+        return (
+          <div
+            key={index}
+            className="group relative rounded-lg shadow hover:shadow-lg transition"
+          >
+            <CatalogItem slug={item.data.slug} />
+          </div>
+        );
+      case "video":
+        return (
+          <div
+            key={index}
+            className="group relative rounded-lg bg-white text-white hover:shadow-lg transition"
+          >
+            <VideoItem slug={item.data.slug} />
+          </div>
+        );
+      default:
+        return null;
+    }
   }, []);
 
   return (
-    <div>
-      <HomeSlider />
-      <div className="flex flex-col gap-8 p-4">
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {layoutItems.map((item, index) => {
-            
-            if (item.type === "catalog-group") {
-              return (
-                <CatalogGroup
-                  key={index}
-                  catalogs={item.data}
-                  color={item.color}
-                />
-              );
-            }
-
-            if (item.type === "category-group") {
-              return (
-                <CategoryGroup
-                  key={index}
-                  categories={item.data}
-                  color={item.color}
-                />
-              );
-            }
-            if (item.type === "video") {
-              return <VideoGroup key={index} videos={[item.data]} />;
-            }
-
-            if (item.type === "product") {
-              return (
-                <ProductGroup
-                  key={index}
-                  products={[item.data]}
-                  color={item.color} // Цвет задается для группы
-                />
-              );
-            }
-
-
-            return null;
-          })}
-        </div>
+    <div className="p-4">
+      {/* Слайдер */}
+      <div className="mb-8">
+        <HomeSlider />
       </div>
-      <div ref={loaderRef} className="w-full h-4"></div>
-      {isFetching && <LoadingSpinner />}
+
+      {/* Сетка элементов */}
+      <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-6">
+        {items.map(renderItem)}
+      </div>
+
+      {/* Лоадер для бесконечной прокрутки */}
+      <div
+        ref={loaderRef}
+        className="h-10 flex justify-center items-center mt-8"
+      >
+        {isFetching && <span>Загрузка...</span>}
+      </div>
     </div>
   );
 };

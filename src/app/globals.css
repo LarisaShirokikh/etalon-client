@@ -4,7 +4,31 @@
 @import "~slick-carousel/slick/slick.css";
 @import "~slick-carousel/slick/slick-theme.css";
 
+.group:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
+.group:hover .opacity-75 {
+  opacity: 1;
+}
+
+.grid {
+  display: grid;
+  gap: 16px;
+}
+
+.group:hover {
+  transform: scale(1.02);
+}
+
+.group:hover .shadow {
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.transition {
+  transition: all 0.3s ease;
+}
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
