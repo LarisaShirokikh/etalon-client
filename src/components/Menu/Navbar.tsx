@@ -1,136 +1,130 @@
-// components/Navbar.tsx
-import Link from "next/link";
-import Image from "next/image";
-import { FaPhoneAlt, FaTelegram } from "react-icons/fa";
-import SearchBar from "../SearchBar";
-import { FaWhatsapp } from "react-icons/fa6";
-import NavMenu from "./NavMenu";
+"use client";
 
-const Navbar = () =>
-  // { session }: { session: Session | null }
-  {
-    return (
-      <div className="sticky top-0 left-0 right-0 z-50 bg-white">
-        <div className="border-b border-gray-200 shadow-md w-full">
-          <div className="px-2 md:px-8 lg:px-8 xl:px-16 2xl:px-32">
-            {/* MOBILE */}
-            <div className="h-20 flex hover:cursor-pointer items-center justify-between md:hidden">
-              <Link href="/" className="flex tracking-wide gap-2">
-                <Image
-                  src="/logo.svg"
-                  alt="Логотип"
-                  width={200}
-                  height={200}
-                  priority
-                />
-              </Link>
-            </div>
-            {/* MOBILE CONTACT */}
-            <div className="md:hidden flex flex-col items-center gap-2 pb-2">
-              <div className="flex items-center gap-4">
-                <a
-                  href="tel:+79260217365"
-                  className="flex items-center text-gray-700 hover:text-gray-900"
-                >
-                  <FaPhoneAlt size={20} />
-                  <span className="whitespace-nowrap ml-1">
-                    +7 (926) 021 7365
-                  </span>
-                </a>
-                <a
-                  href="https://t.me/Dveri_Etalon"
-                  className="text-gray-700 hover:text-gray-900"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaTelegram size={20} color="00A1FE" />
-                </a>
-                <a
-                  href="https://wa.me/79260217365"
-                  className="text-gray-700 hover:text-gray-900"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaWhatsapp size={20} color="1EB100" />
-                </a>
-                <div className="flex items-center gap-2 text-gray-700 hover:text-gray-900">
-                  <Image src="/map.svg" alt="Location" width={20} height={20} />
-                  <span>Москва и МО</span>
-                </div>
-              </div>
-              {/* <div className="w-full px-2">
-                <SearchBar />
-              </div> */}
-            </div>
-            {/* BIGGER SCREENS */}
-            <div className="hidden md:flex items-center justify-between h-20">
-              {/* LEFT */}
-              <div className="flex items-center gap-8 hover:cursor-pointer">
-                <Link href="/" className="flex items-center gap-3">
-                  <Image
-                    src="/logo.svg"
-                    alt="Логотип"
-                    width={300}
-                    height={300}
-                  />
-                </Link>
-              </div>
-              {/* RIGHT */}
-              <div className="flex items-center gap-8 hover:cursor-pointer">
-                <SearchBar />
-                <div className="flex items-center gap-4">
-                  <a
-                    href="tel:+79260217365"
-                    className="flex items-center text-gray-700 hover:text-gray-900"
-                  >
-                    <FaPhoneAlt size={20} />
-                    <span className="whitespace-nowrap ml-1">
-                      +7 (926) 021 7365
-                    </span>
-                  </a>
-                  <a
-                    href="https://t.me/Dveri_Etalon"
-                    className="text-gray-700 hover:text-gray-900"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FaTelegram size={20} color="00A1FE" />
-                  </a>
-                  <a
-                    href="https://wa.me/+79250217365"
-                    className="text-gray-700 hover:text-gray-900"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FaWhatsapp size={20} color="1EB100" />
-                  </a>
-                  <div className="flex items-center gap-2 text-gray-700 hover:text-gray-900">
-                    <Image
-                      src="/map.svg"
-                      alt="Location"
-                      width={20}
-                      height={20}
-                    />
-                    Москва и МО
-                  </div>
-                  {/* {!session?.user && (
-                  <NavItem
-                    onClick={() => signIn("yandex")}
-                    icon={<CircleUserRound />}
-                    label="Войти"
-                  />
-                )}
-                {session?.user && <UserDropdown session={session} />} */}
-                </div>
-              </div>
-            </div>
-            <div className="hidden md:block">
-              <NavMenu />
-            </div>
+import Link from "next/link";
+import { FaPhoneAlt, FaTelegram, FaWhatsapp, FaBars } from "react-icons/fa";
+import { useState, useEffect } from "react";
+import SearchBar from "../SearchBar";
+
+const Navbar = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  return (
+    <div
+      className={`sticky top-0 left-0 right-0 z-50 transition-all ${
+        scrolled ? "bg-white shadow-md" : "bg-transparent"
+      }`}
+    >
+      <div className="flex items-center justify-between px-4 md:px-8 lg:px-16 h-16">
+        {/* Название вместо логотипа */}
+        <Link href="/" className="flex items-center">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-800 tracking-wide hover:text-gray-900 transition">
+            Двери Эталон
+          </h1>
+        </Link>
+
+        {/* Поиск */}
+        <div className="hidden md:flex flex-1 mx-8">
+          <SearchBar />
+        </div>
+
+        {/* Контакты и меню */}
+        <div className="hidden md:flex items-center gap-4">
+          <a
+            href="tel:+79260217365"
+            className="flex items-center text-gray-700 hover:text-gray-900"
+          >
+            <FaPhoneAlt size={20} />
+            <span className="ml-2">+7 (926) 021 7365</span>
+          </a>
+          <a
+            href="https://t.me/Dveri_Etalon"
+            className="text-gray-700 hover:text-gray-900"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaTelegram size={20} />
+          </a>
+          <a
+            href="https://wa.me/79260217365"
+            className="text-gray-700 hover:text-gray-900"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaWhatsapp size={20} />
+          </a>
+        </div>
+
+        {/* Мобильное меню */}
+        <button
+          className="md:hidden text-gray-700 hover:text-gray-900"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <FaBars size={24} />
+        </button>
+      </div>
+
+      {/* Выпадающее мобильное меню */}
+      {menuOpen && (
+        <div className="md:hidden bg-white shadow-md">
+          <div className="flex flex-col items-center gap-4 py-4">
+            <SearchBar />
+            <a
+              href="tel:+79260217365"
+              className="flex items-center text-gray-700 hover:text-gray-900"
+            >
+              <FaPhoneAlt size={20} />
+              <span className="ml-2">+7 (926) 021 7365</span>
+            </a>
+            <a
+              href="https://t.me/Dveri_Etalon"
+              className="text-gray-700 hover:text-gray-900"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaTelegram size={20} />
+            </a>
+            <a
+              href="https://wa.me/79260217365"
+              className="text-gray-700 hover:text-gray-900"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaWhatsapp size={20} />
+            </a>
           </div>
         </div>
+      )}
+
+      {/* Меню для больших экранов */}
+      <div className="hidden md:block border-t border-gray-200">
+        <div className="flex items-center justify-center gap-8 py-2">
+          <Link href="/categories" className="hover:text-gray-900">
+            Категории
+          </Link>
+          <Link href="/about" className="hover:text-gray-900">
+            О нас
+          </Link>
+          <Link href="/contacts" className="hover:text-gray-900">
+            Контакты
+          </Link>
+          <Link href="/blog" className="hover:text-gray-900">
+            Блог
+          </Link>
+        </div>
       </div>
-    );
-  };
+    </div>
+  );
+};
 
 export default Navbar;

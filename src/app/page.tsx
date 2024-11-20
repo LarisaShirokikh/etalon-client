@@ -107,7 +107,7 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div className="p-4">
+    <div className="container mx-auto px-4 md:px-8">
       {/* Слайдер */}
       <div className="mb-8">
         <HomeSlider />
