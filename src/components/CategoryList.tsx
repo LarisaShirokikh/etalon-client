@@ -25,7 +25,7 @@ const CategoryItem: React.FC<CategoryItemProps> = ({ slug, name }) => {
         className={`relative w-full h-full rounded-lg shadow-md hover:shadow-lg bg-gradient-to-br ${randomGradient} flex items-center justify-center transition-transform transform hover:scale-105`}
       >
         {/* Название категории */}
-        <h1 className="text-gray-500 text-2xl sm:text-xl font-bold text-center ">
+        <h1 className="text-gray-500 text-xl sm:text-xl font-bold text-center ">
           {name}
         </h1>
       </div>

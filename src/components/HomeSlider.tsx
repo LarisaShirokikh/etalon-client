@@ -28,7 +28,7 @@ const CustomBanner = () => {
         <h1 className="text-lg font-bold md:text-4xl lg:text-3xl">
           Монтаж и доставка в пределах МКАД
         </h1>
-        <p className="mt-2 text-6xl font-bold">1900 рублей</p>
+        <p className="mt-2 text-4xl font-bold">1900 рублей</p>
       </div>
     </div>
   );

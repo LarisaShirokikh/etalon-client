@@ -45,7 +45,7 @@ const VideoItem = ({ slug }: VideoItemProps) => {
 
   return (
     <Link href={`/video/${video.slug}`}>
-      <div className="relative px-4">
+      <div className="relative">
         <div className="relative w-full h-[280px] md:h-[370px]">
           <video
             autoPlay
