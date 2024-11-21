@@ -7,9 +7,11 @@ import CatalogItem from "@/components/Catalogs/CatalogItem";
 import CategoryItem from "@/components/CategoryList";
 import ProductItem from "@/components/Products/ProductItem";
 import VideoItem from "@/components/Video/VideoItem";
+import Skeleton from "@/components/Skeleton";
 
 const HomePage = () => {
   const [items, setItems] = useState<any[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
   const [page, setPage] = useState(1);
   const [isFetching, setIsFetching] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -21,22 +23,23 @@ const HomePage = () => {
 
     setIsFetching(true);
     const data = await fetchAllData(page); // Загружаем данные текущей страницы
-    const { products, videos, catalogs, categories } = data;
+    const { products, videos, catalogs, categories: fetchedCategories } = data;
 
     if (data) {
       const mixedItems = [
         ...products.map((product: any) => ({ type: "product", data: product })),
-        ...categories.map((category: any) => ({
-          type: "category",
-          data: category,
-        })),
         ...catalogs.map((catalog: any) => ({ type: "catalog", data: catalog })),
         ...videos.map((video: any) => ({ type: "video", data: video })),
       ].sort(() => Math.random() - 0.5);
 
       setItems((prevItems) => [...prevItems, ...mixedItems]);
       setPage((prevPage) => prevPage + 1);
-      setHasMore(data.products.length > 0 || data.categories.length > 0);
+
+      if (page === 1) {
+        setCategories(fetchedCategories);
+      }
+
+      setHasMore(data.products.length > 0 || data.catalogs.length > 0);
     }
 
     setIsFetching(false);
@@ -74,15 +77,6 @@ const HomePage = () => {
             <ProductItem slug={item.data.slug} />
           </div>
         );
-      case "category":
-        return (
-          <div
-            key={index}
-            className="group relativ rounded-lg hover:shadow-lg transition"
-          >
-            <CategoryItem slug={item.data.slug} name={item.data.name} />
-          </div>
-        );
       case "catalog":
         return (
           <div
@@ -113,6 +107,19 @@ const HomePage = () => {
         <HomeSlider />
       </div>
 
+      {/* Линия категорий */}
+      <div className="overflow-x-auto py-4 mb-8 scrollbar-hide">
+        <div className="flex gap-4">
+          {categories.map((category: any) => (
+            <CategoryItem
+              key={category.slug}
+              slug={category.slug}
+              name={category.name}
+            />
+          ))}
+        </div>
+      </div>
+
       {/* Сетка элементов */}
       <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-6">
         {items.map(renderItem)}
@@ -123,7 +130,7 @@ const HomePage = () => {
         ref={loaderRef}
         className="h-10 flex justify-center items-center mt-8"
       >
-        {isFetching && <span>Загрузка...</span>}
+        {isFetching && <Skeleton/>}
       </div>
     </div>
   );

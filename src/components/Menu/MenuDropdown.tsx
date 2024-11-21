@@ -1,4 +1,5 @@
 "use client";
+
 import { useRouter } from "next/navigation";
 import { useState, MouseEvent } from "react";
 import Image from "next/image";
@@ -15,15 +16,13 @@ import {
   GalleryHorizontalEnd,
   PhoneCall,
   Clock3,
-  LucideIcon,
   ChevronDown,
   ChevronUp,
 } from "lucide-react";
-import Link from "next/link";
 
 interface MenuItemProps {
   photo?: string;
-  icon?: LucideIcon;
+  icon?: any; // Lucide icons are React components
   text: string;
   path: string;
   onClick: (event: MouseEvent<HTMLDivElement>, path: string) => void;
@@ -36,20 +35,18 @@ const MenuItem: React.FC<MenuItemProps> = ({
   path,
   onClick,
 }) => (
-  <Link href={path}>
-    <div
-      onClick={(e) => onClick(e, path)}
-      className="flex items-center gap-2 px-2 py-1 rounded hover:bg-gray-100 transition-colors duration-200 w-full text-left"
-    >
-      {photo && (
-        <div className="relative h-12 w-12 rounded-md overflow-hidden">
-          <Image src={photo} alt={text} layout="fill" objectFit="cover" />
-        </div>
-      )}
-      {Icon && <Icon className="text-gray-500" />}
-      <span className="text-sm ">{text}</span>
-    </div>
-  </Link>
+  <div
+    onClick={(e) => onClick(e, path)}
+    className="flex items-center gap-2 px-2 py-1 rounded hover:bg-gray-100 transition duration-200 w-full text-left cursor-pointer"
+  >
+    {photo && (
+      <div className="relative h-12 w-12 rounded-md overflow-hidden">
+        <Image src={photo} alt={text} layout="fill" objectFit="cover" />
+      </div>
+    )}
+    {Icon && <Icon className="text-gray-500" />}
+    <span className="text-sm">{text}</span>
+  </div>
 );
 
 interface MenuSectionProps {
@@ -59,24 +56,30 @@ interface MenuSectionProps {
 
 const MenuSection: React.FC<MenuSectionProps> = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
+
   return (
     <div className="flex flex-col">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-between px-4 py-2 text-gray-600 hover:bg-gray-100 transition-colors duration-200"
+        className="flex items-center justify-between px-4 py-2 text-gray-600 hover:bg-gray-100 transition duration-200"
       >
         <span>{title}</span>
         {isOpen ? <ChevronUp /> : <ChevronDown />}
       </button>
       {isOpen && (
-        <div className="flex flex-col border-b gap-2 px-4 py-1">{children}</div>
+        <div className="flex flex-col gap-2 px-4 py-1">{children}</div>
       )}
     </div>
   );
 };
 
-const MenuDropdown = () => {
-  const [showDropdown, setShowDropdown] = useState(true);
+const MenuDropdown = ({
+  showDropdown,
+  setShowDropdown,
+}: {
+  showDropdown: boolean;
+  setShowDropdown: (state: boolean) => void;
+}) => {
   const router = useRouter();
 
   const handleClick = (event: MouseEvent<HTMLDivElement>, path: string) => {
@@ -88,13 +91,16 @@ const MenuDropdown = () => {
   if (!showDropdown) return null;
 
   return (
-    <div className="relative flex items-center">
+    <div
+      className="fixed inset-0 bg-black/40 z-40"
+      onClick={() => setShowDropdown(false)}
+    >
       <div
-        onClick={() => setShowDropdown(false)}
-        className="bg-black/40 fixed inset-0 z-40 transition-opacity duration-300 ease-in-out"
-      ></div>
-      <div className="fixed z-50 bottom-0 left-0 w-full max-w-xs bg-white rounded-t-xl text-gray-600 shadow-lg border overflow-y-auto max-h-[calc(100vh-200px)] transition-transform transform translate-y-0">
+        className="absolute top-0 right-0 w-80 max-h-[calc(100vh-20px)] bg-white shadow-lg rounded-tl-lg overflow-y-auto transition-transform transform translate-x-0"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="flex flex-col gap-2 px-4 py-1">
+          {/* Sections */}
           <MenuSection title="Бренды">
             <MenuItem
               photo={"/lab.webp"}
@@ -202,6 +208,7 @@ const MenuDropdown = () => {
             />
           </MenuSection>
         </div>
+        {/* Footer */}
         <div className="px-6 py-4 border-t text-sm text-gray-500">
           <div className="flex items-center gap-2 mb-1">
             <PhoneCall className="text-gray-500" />

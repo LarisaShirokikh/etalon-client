@@ -53,7 +53,7 @@ export default function RootLayout({
               {children}
               <SpeedInsights />
             
-            <MobileNavbar />
+            {/* <MobileNavbar /> */}
           </CartProvider>
           <Footer />
         </ClientProviders>
