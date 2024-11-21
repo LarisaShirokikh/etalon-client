@@ -4,7 +4,6 @@ import "./globals.css";
 import Navbar from "@/components/Menu/Navbar";
 import Footer from "@/components/Footer";
 import YandexMetrika from "@/components/YandexMetrika";
-import MobileNavbar from "@/components/Menu/MobileNavbar";
 import { Suspense } from "react";
 import { CartProvider } from "@/context/CartContext";
 import { SpeedInsights } from "@vercel/speed-insights/next";

@@ -130,7 +130,7 @@ const HomePage = () => {
         ref={loaderRef}
         className="h-10 flex justify-center items-center mt-8"
       >
-        {isFetching && <Skeleton/>}
+        {isFetching && <Skeleton />}
       </div>
     </div>
   );

@@ -92,8 +92,9 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Dropdown Menu */}
-      <MenuDropdown showDropdown={showMenu} setShowDropdown={setShowMenu} />
+      {showMenu && (
+        <MenuDropdown showDropdown={showMenu} setShowDropdown={setShowMenu} />
+      )}
     </div>
   );
 };
