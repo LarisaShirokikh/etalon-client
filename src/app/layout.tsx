@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Menu/Navbar";
 import Footer from "@/components/Footer";
 import YandexMetrika from "@/components/YandexMetrika";
 import { Suspense } from "react";
@@ -47,7 +46,6 @@ export default function RootLayout({
         </Suspense>
         <ClientProviders>
           <CartProvider>
-            <Navbar />
             
               {children}
               <SpeedInsights />

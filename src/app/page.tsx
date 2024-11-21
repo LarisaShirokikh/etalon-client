@@ -8,6 +8,7 @@ import CategoryItem from "@/components/CategoryList";
 import ProductItem from "@/components/Products/ProductItem";
 import VideoItem from "@/components/Video/VideoItem";
 import Skeleton from "@/components/Skeleton";
+import Navbar from "@/components/Menu/Navbar";
 
 const HomePage = () => {
   const [items, setItems] = useState<any[]>([]);
@@ -101,36 +102,39 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div className="container mx-auto px-4 md:px-8">
-      {/* Слайдер */}
-      <div className="mb-8">
+    <div>
+      <div className="">
         <HomeSlider />
       </div>
+      <div className="container mx-auto px-4 md:px-8">
+        {/* Слайдер */}
+        <Navbar />
 
-      {/* Линия категорий */}
-      <div className="overflow-x-auto py-4 mb-8 scrollbar-hide">
-        <div className="flex gap-4">
-          {categories.map((category: any) => (
-            <CategoryItem
-              key={category.slug}
-              slug={category.slug}
-              name={category.name}
-            />
-          ))}
+        {/* Линия категорий */}
+        <div className="overflow-x-auto py-4 mb-8 scrollbar-hide">
+          <div className="flex gap-4">
+            {categories.map((category: any) => (
+              <CategoryItem
+                key={category.slug}
+                slug={category.slug}
+                name={category.name}
+              />
+            ))}
+          </div>
         </div>
-      </div>
 
-      {/* Сетка элементов */}
-      <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-6">
-        {items.map(renderItem)}
-      </div>
+        {/* Сетка элементов */}
+        <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-6">
+          {items.map(renderItem)}
+        </div>
 
-      {/* Лоадер для бесконечной прокрутки */}
-      <div
-        ref={loaderRef}
-        className="h-10 flex justify-center items-center mt-8"
-      >
-        {isFetching && <Skeleton />}
+        {/* Лоадер для бесконечной прокрутки */}
+        <div
+          ref={loaderRef}
+          className="h-10 flex justify-center items-center mt-8"
+        >
+          {isFetching && <Skeleton />}
+        </div>
       </div>
     </div>
   );

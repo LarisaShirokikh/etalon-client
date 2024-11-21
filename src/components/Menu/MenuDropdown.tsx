@@ -96,7 +96,7 @@ const MenuDropdown = ({
       onClick={() => setShowDropdown(false)}
     >
       <div
-        className="absolute top-0 right-0 w-80 max-h-[calc(100vh-20px)] bg-white shadow-lg rounded-tl-lg overflow-y-auto transition-transform transform translate-x-0"
+        className="absolute top-0 right-0 w-80 max-h-[calc(100vh-20px)] bg-white shadow-lg rounded-bl-xl overflow-y-auto transition-transform transform translate-x-0"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex flex-col gap-2 px-4 py-1">
