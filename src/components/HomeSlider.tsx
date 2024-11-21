@@ -1,11 +1,11 @@
 import React from "react";
 
 const gradients = [
-  "from-blue-300 to-purple-100",
-  "from-green-300 to-blue-100",
-  "from-yellow-300 to-red-100",
-  "from-pink-300 to-orange-100",
-  "from-indigo-300 to-cyan-100",
+  "from-blue-100 to-purple-50",
+  "from-green-100 to-blue-50",
+  "from-yellow-100 to-red-50",
+  "from-pink-100 to-orange-50",
+  "from-indigo-100 to-cyan-50",
 ];
 
 const CustomBanner = () => {

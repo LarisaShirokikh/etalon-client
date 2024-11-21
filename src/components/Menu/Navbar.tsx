@@ -37,7 +37,7 @@ const Navbar = () => {
       <div className="flex items-center justify-between px-4 md:px-8 lg:px-16 h-16">
         {/* Название вместо логотипа */}
         <Link href="/" className="flex items-center">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-800 tracking-wide hover:text-gray-900 transition">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-600 tracking-wide hover:text-gray-900 transition">
             Двери Эталон
           </h1>
         </Link>
@@ -49,7 +49,7 @@ const Navbar = () => {
           ) : (
             <button
               onClick={() => setShowSearch(true)}
-              className="text-gray-700 hover:text-gray-900"
+              className="text-gray-600 hover:text-gray-900"
             >
               <FaSearch size={20} />
             </button>
@@ -60,14 +60,14 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-4">
           <a
             href="tel:+79260217365"
-            className="flex items-center text-gray-700 hover:text-gray-900"
+            className="flex items-center text-gray-600 hover:text-gray-900"
           >
             <FaPhoneAlt size={20} />
             <span className="ml-2">+7 (926) 021 7365</span>
           </a>
           <a
             href="https://t.me/Dveri_Etalon"
-            className="text-gray-700 hover:text-gray-900"
+            className="text-gray-600 hover:text-gray-900"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -75,7 +75,7 @@ const Navbar = () => {
           </a>
           <a
             href="https://wa.me/79260217365"
-            className="text-gray-700 hover:text-gray-900"
+            className="text-gray-600 hover:text-gray-900"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -85,7 +85,7 @@ const Navbar = () => {
 
         {/* Бургер-меню */}
         <button
-          className="md:hidden text-gray-700 hover:text-gray-900"
+          className="md:hidden text-gray-600 hover:text-gray-900"
           onClick={() => setShowMenu(!showMenu)}
         >
           <FaBars size={24} />
