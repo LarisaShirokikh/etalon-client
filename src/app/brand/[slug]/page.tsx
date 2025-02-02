@@ -10,14 +10,13 @@ import BreadCrumbs from "@/components/BreadCrumbs";
 import { paths } from "@/utils/path";
 import BackButton from "@/components/Button/BackButton";
 import CatalogItem from "@/components/Catalogs/CatalogItem";
+import CategoryItem from "@/components/Category/CategoryItem";
 
 const CatalogPage = ({ params }: { params: { slug: string } }) => {
   const { slug } = params;
   const [catalogs, setCatalogs] = useState<ICatalog[]>([]);
   const [brand, setBrand] = useState<IBrand | null>(null);
   const [loading, setLoading] = useState(true);
-
-  
 
   useEffect(() => {
     const fetchCatalogsAndBrand = async () => {
@@ -27,7 +26,6 @@ const CatalogPage = ({ params }: { params: { slug: string } }) => {
           axios.get(`/api/brands/${slug}`),
         ]);
 
-        
         setCatalogs(catalogResponse.data);
         setBrand(brandResponse.data);
       } catch (error) {
@@ -55,8 +53,9 @@ const CatalogPage = ({ params }: { params: { slug: string } }) => {
   return (
     <div className="px-4 mt-12 mb-12">
       <Meta pageType="brend" />
-      <BreadCrumbs paths={paths} />
       <BackButton />
+      <CategoryItem slug={""} name={""} />
+      {/* <BreadCrumbs paths={paths} /> */}
       <BrandHeader brand={brand} />
       <div className="grid grid-cols-2 mt-12 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 md:gap-8">
         {catalogs.map((catalog) => (

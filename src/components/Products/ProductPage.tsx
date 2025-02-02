@@ -92,7 +92,9 @@ const ProductPage: React.FC<ProductPageProps> = ({
           <ProductItem key={product._id} slug={product.slug} />
         ))}
       </div>
-      {loading && <Skeleton />}
+      {loading 
+      //&& <Skeleton />
+      }
       <div className="mt-4 flex justify-center">
         {products.length < totalCount && (
           <button

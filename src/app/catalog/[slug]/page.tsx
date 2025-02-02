@@ -5,6 +5,7 @@ import BackButton from "@/components/Button/BackButton";
 import ProductPage from "@/components/Products/ProductPage";
 import Meta from "@/components/Seo/Meta";
 import { usePathname } from "next/navigation";
+import CategoryItem from "@/components/Category/CategoryItem";
 
 function CategoryCatalogsPage() {
   const pathname = usePathname();
@@ -14,8 +15,9 @@ function CategoryCatalogsPage() {
   return (
     <div className="mt-12 px-1 sm:px-5">
       <Meta pageType="catalog" />
-      <BreadCrumbs paths={paths} />
       <BackButton />
+      {/* <CategoryItem slug={""} name={""} /> */}
+      {/* <BreadCrumbs paths={paths} /> */}
       <ProductPage slug={slug} />
     </div>
   );

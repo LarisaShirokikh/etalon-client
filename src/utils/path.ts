@@ -1,6 +1,11 @@
 // src/utils/paths.ts
 export const paths = [
   {
+    name: "главная",
+    href: "/",
+    icon: "/house.png",
+  },
+  {
     name: "в дом",
     href: "/category/dlya-doma/catalogs",
     icon: "/house-plus.svg",

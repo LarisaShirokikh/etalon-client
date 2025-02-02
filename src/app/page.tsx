@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import fetchAllData from "@/api/fetchAllData";
 import HomeSlider from "@/components/HomeSlider";
 import CatalogItem from "@/components/Catalogs/CatalogItem";
-import CategoryItem from "@/components/CategoryList";
+import CategoryItem from "@/components/Category/CategoryItem";
 import ProductItem from "@/components/Products/ProductItem";
 import VideoItem from "@/components/Video/VideoItem";
 import Skeleton from "@/components/Skeleton";
@@ -68,12 +68,15 @@ const HomePage = () => {
   }, [loaderRef, loadData, hasMore, isFetching]);
 
   const renderItem = useCallback((item: any, index: number) => {
+    const isThirdCard = index % 3 === 2; // Проверяем, является ли карточка третьей
+    const randomColor = isThirdCard ? `bg-${getRandomColor()}` : ""; // Генерируем случайный цвет
+
     switch (item.type) {
       case "product":
         return (
           <div
             key={index}
-            className="group relative rounded-lg bg-white shadow hover:shadow-lg transition"
+            className={`group relative rounded-lg shadow hover:shadow-lg transition ${randomColor}`}
           >
             <ProductItem slug={item.data.slug} />
           </div>
@@ -101,14 +104,24 @@ const HomePage = () => {
     }
   }, []);
 
+  const getRandomColor = (): string => {
+    const colors = [
+      "red-50",
+      "blue-50",
+      "green-50",
+      "yellow-50",
+      "purple-50",
+      "pink-50",
+    ];
+    return colors[Math.floor(Math.random() * colors.length)];
+  };
+
   return (
     <div>
-      <div className="">
-        <HomeSlider />
-      </div>
+      <div className="">{/* <HomeSlider /> */}</div>
       <div className="container mx-auto px-4 md:px-8">
         {/* Слайдер */}
-        <Navbar />
+        {/* <Navbar /> */}
 
         {/* Линия категорий */}
         <div className="overflow-x-auto py-4 mb-8 scrollbar-hide">
@@ -133,7 +146,10 @@ const HomePage = () => {
           ref={loaderRef}
           className="h-10 flex justify-center items-center mt-8"
         >
-          {isFetching && <Skeleton />}
+          {
+            isFetching
+            //&& <Skeleton />
+          }
         </div>
       </div>
     </div>

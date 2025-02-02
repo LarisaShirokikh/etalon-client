@@ -1,5 +1,5 @@
 import Link from "next/link";
-import CategoryItem from "@/components/CategoryList";
+import CategoryItem from "@/components/Category/CategoryItem";
 
 const CategoryGroup = ({
   categories,

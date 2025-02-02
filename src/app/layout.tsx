@@ -7,6 +7,8 @@ import { Suspense } from "react";
 import { CartProvider } from "@/context/CartContext";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ClientProviders } from "@/components/ClientProviders";
+import HomeSlider from "@/components/HomeSlider";
+import Navbar from "@/components/Menu/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -46,10 +48,11 @@ export default function RootLayout({
         </Suspense>
         <ClientProviders>
           <CartProvider>
-            
-              {children}
-              <SpeedInsights />
-            
+            <HomeSlider />
+            <Navbar />
+            {children}
+            <SpeedInsights />
+
             {/* <MobileNavbar /> */}
           </CartProvider>
           <Footer />

@@ -6,6 +6,7 @@ import Meta from "@/components/Seo/Meta";
 import { usePathname } from "next/navigation";
 import { paths } from "@/utils/path";
 import { useState } from "react";
+import CategoryItem from "@/components/Category/CategoryItem";
 
 
 
@@ -28,8 +29,9 @@ function CategoryCatalogsPage() {
     <div className="mt-12 px-1 sm:px-2">
       <Meta pageType="product" />
       <BackButton />
-      <BreadCrumbs paths={paths} />
-      
+      <CategoryItem slug={""} name={""} />
+      {/* <BreadCrumbs paths={paths} /> */}
+
       <ProductPage limit={12} slug={slug} filters={filters} />
     </div>
   );

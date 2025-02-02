@@ -4,16 +4,17 @@ import Meta from "@/components/Seo/Meta";
 import { paths } from "@/utils/path";
 import BreadCrumbs from "@/components/BreadCrumbs";
 import Cart from "@/components/Cart";
+import CatalogItem from "@/components/Catalogs/CatalogItem";
+import CategoryItem from "@/components/Category/CategoryItem";
 
 function CartPage() {
-
-  
   return (
     <div className="mt-12 px-1 sm:px-5">
       <Meta pageType="product" />
-      <BreadCrumbs paths={paths} />
-      <BackButton/>
-      <Cart/>
+      <BackButton />
+      <CategoryItem slug={""} name={""} />
+      {/* <BreadCrumbs paths={paths} /> */}
+      <Cart />
     </div>
   );
 }

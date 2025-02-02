@@ -12,7 +12,7 @@ const CatalogSet = dynamic(() => import("../Catalogs/CatalogSet"), {
   ssr: false,
   loading: () => <LoadingSpinner />,
 });
-const CategoryList = dynamic(() => import("../CategoryList"), {
+const CategoryList = dynamic(() => import("../Category/CategoryItem"), {
   ssr: false,
   loading: () => <LoadingSpinner />,
 });
