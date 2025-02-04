@@ -20,13 +20,12 @@ const CategoryItem: React.FC<CategoryItemProps> = ({ slug, name }) => {
     gradients[Math.floor(Math.random() * gradients.length)];
 
   return (
-    
     <Link href={`/category/${slug}/catalogs`} passHref>
       <div
-        className={`relative w-full h-full rounded-lg shadow-md hover:shadow-lg bg-gradient-to-br ${randomGradient} flex items-center justify-center transition-transform transform hover:scale-105`}
+      className={`shadow-m hover:shadow-lg rounded-xl flex items-center justify-center hover:scale-105`}
       >
         {/* Название категории */}
-        <h1 className="text-gray-600 px-6 text-s sm:text-m text-center">
+        <h1 className="text-gray-700 px-6 text-m sm:text-m text-center">
           {name}
         </h1>
       </div>

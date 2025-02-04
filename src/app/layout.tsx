@@ -50,6 +50,7 @@ export default function RootLayout({
           <CartProvider>
             <HomeSlider />
             <Navbar />
+            
             {children}
             <SpeedInsights />
 

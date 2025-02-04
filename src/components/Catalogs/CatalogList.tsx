@@ -54,9 +54,9 @@ const CatalogList: React.FC<CatalogListProps> = ({
 
   
 
-  if (loading) {
-    return <Skeleton />;
-  }
+  // if (loading) {
+  //   return <Skeleton />;
+  // }
 
   if (catalogs.length === 0) {
     return <div>No catalogs found</div>;
